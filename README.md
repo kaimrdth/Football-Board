@@ -1,5 +1,7 @@
 # Football Tactics Board ⚽
 
+![Football Tactics Board](images/main.png)
+
 As an avid football fan, I love analyzing team formations and drawing up lineups before big matches. Whether it's predicting how my favorite club will line up for the weekend fixture or theorizing about national team selections for major tournaments, tactical planning is one of my favorite aspects of the beautiful game.
 
 ## What is this?
