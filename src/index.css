@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Arial', sans-serif;
+    background: #1a1a1a;
+    color: #ffffff;
+    min-height: 100vh;
+  }
+}
+
+@layer components {
+  .glass-surface {
+    background: rgba(255, 255, 255, 0.05);
+    border: 0px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+  }
+
+  .player-dragging {
+    transform: scale(1.25);
+    z-index: 50;
+  }
+
+  .pitch-field {
+    background: linear-gradient(45deg, #80ff6f 0%, #65fd51 50%, #7eec70 100%);
+  }
+}
+
+@layer utilities {
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+}

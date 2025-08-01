@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soccer Tactics Board</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #000000;                         /* coarse‑grain charcoal */
+            --surface: rgba(46, 166, 188, 0);     /* subtle glass‑card */
+            --accent: #306e27;                     /* single cyan accent */
+            --accent-hover: #0095c8;
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: var(--bg);
+            min-height: 100vh;
+            padding: 20px;
+            color: #e0e0e0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .controls {
+            background: var(--surface);
+            border-radius: 3px;
+            padding: 20px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+        }
+
+        .control-section {
+            margin-bottom: 15px;
+        }
+
+        .control-section h3 {
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .control-row {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background: transparent;
+            border: 0px solid var(--accent);
+            color: var(--accent);
+            padding: 10px 20px;
+            border-radius: 2px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: var(--accent);
+            color: #ffffff;
+        }
+
+        input, select {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 2px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+        }
+
+        .pitch-container {
+            background: var(--surface);
+            border-radius: 2px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .pitch {
+            width: 800px;
+            height: 520px;
+            background: linear-gradient(45deg, #80ff6f 0%, #65fd51 50%, #7eec70 100%);
+            border: 1px solid rgb(111, 255, 71);
+            border-radius: 0px;
+            position: relative;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        /* Pitch markings */
+        .center-line {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 1px;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.42);;
+            transform: translateX(-50%);
+        }
+
+        .center-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 140px;   /* 20 yd diameter */
+            height: 140px;
+            border: 1px solid rgb(0, 0, 0);;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .center-spot {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 4px;
+            height: 4px;
+            background: rgb(0, 0, 0);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .penalty-area {
+            position: absolute;
+            width: 125px;   /* 18 yd → 125 px */
+            height: 309px;  /* 44 yd → 309 px */
+            border: 1px solid rgb(0, 0, 0);;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .penalty-area.left {
+            left: 0;
+            border-left: none;
+        }
+
+        .penalty-area.right {
+            right: 0;
+            border-right: none;
+        }
+
+        .goal-area {
+            position: absolute;
+            width: 42px;    /* 6 yd → 42 px */
+            height: 141px;  /* 20 yd → 141 px */
+            border: 1px solid rgb(0, 0, 0);;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .goal-area.left {
+            left: 0;
+            border-left: none;
+        }
+
+        .goal-area.right {
+            right: 0;
+            border-right: none;
+        }
+
+        .penalty-spot {
+            position: absolute;
+            width: 2px;
+            background: rgb(0, 0, 0);;
+            height: 2px;
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .penalty-spot.left {
+            left: 84px;
+        }
+
+        .penalty-spot.right {
+            right: 84px;
+        }
+
+
+
+        .player {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            cursor: move;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: transform 0.2s ease;
+            z-index: 10;
+            line-height: 1;
+            overflow: visible;  /* allow name label to show below the circle */
+        }
+
+        .player-number {
+            font-size: 10px;
+            font-weight: normal;
+        }
+
+        .player-name {
+            position: absolute;
+            top: 100%;              /* place label directly under the circle */
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 10px;
+            margin-top: 2px;
+            white-space: nowrap;
+            color: rgb(0, 0, 0);
+            pointer-events: none;   /* keep label from interfering with drag */
+        }
+
+        .player:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        }
+
+        .player.dragging {
+            transform: scale(1.2);
+            z-index: 1000;
+        }
+
+        .ball {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: white;
+            border-radius: 50%;
+            cursor: move;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+            z-index: 15;
+            transition: transform 0.2s ease;
+        }
+
+        .ball:hover {
+            transform: scale(1.2);
+        }
+
+        .team-section {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            margin: 15% auto;
+            padding: 30px;
+            border-radius: 3px;
+            width: 600px;
+            max-width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            color: white;
+            position: relative;
+        }
+
+        /* Constrain roster modal height and make content scrollable */
+        #rosterModal .modal-content {
+            max-height: 50vh;      /* never exceed viewport height */
+            overflow-y: auto;      /* scroll within modal if too tall */
+        }
+
+        .modal h2 {
+            margin-bottom: 20px;
+            text-align: center;
+            color: #e0e0e0;
+        }
+
+        .modal-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .form-group label {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .modal input {
+            padding: 12px 15px;
+            border: none;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            font-size: 16px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .modal-buttons button {
+            flex: 1;
+            padding: 12px;
+            font-size: 16px;
+        }
+
+        .cancel-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+        }
+
+        .close {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 28px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .close:hover {
+            color: white;       
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Roster modal table */
+        .roster-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 100px;
+            /* Improve roster column sizing */
+            table-layout: fixed;        /* predictable column widths */
+        }
+        .roster-table th:nth-child(1),
+        .roster-table td:nth-child(1) { width: 70px; }   /* Team */
+        .roster-table th:nth-child(3),
+        .roster-table td:nth-child(3) { width: 60px; }   /* Number */
+        .roster-table th:nth-child(4),
+        .roster-table td:nth-child(4) { width: 75px; }   /* Color */
+        
+        /* Narrow the embedded color picker so it doesn't stretch the cell */
+        .roster-table input[type="color"] {
+            width: 100%;
+            min-width: 40px;
+            padding: 0;
+        }
+        .roster-table th,
+        .roster-table td {
+            padding: 6px 8px;
+            text-align: left;
+        }
+        .roster-table tr:nth-child(even) {
+            background: rgba(0, 0, 0, 0.579);
+        }
+        .roster-table input[type="text"],
+        .roster-table input[type="number"],
+        .roster-table input[type="color"] {
+            width: 100%;
+            padding: 4px 6px;
+            box-sizing: border-box;
+            border: none;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1></h1>
+        
+        <div class="controls">
+            <div class="team-section">
+                <div class="team-info team-red">
+                    <p></p>
+                </div>
+                
+                <div class="team-info team-blue">
+                    <p></p>
+                </div>
+            </div>
+            
+            <div class="control-section">
+                <div class="control-row">
+                    <button onclick="resetBall()">Reset Ball</button>
+                    <button onclick="clearAll()">Clear All</button>
+                    <button onclick="switchSides()">Switch Sides</button>
+                    <button onclick="resetFormations()">Reset Formations</button>
+                    <button onclick="openRosterModal()">Edit Roster</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="pitch-container">
+            <div class="pitch" id="pitch">
+                <!-- Pitch markings -->
+                <div class="center-line"></div>
+                <div class="center-circle"></div>
+                <div class="center-spot"></div>
+                
+                <div class="penalty-area left"></div>
+                <div class="penalty-area right"></div>
+                <div class="goal-area left"></div>
+                <div class="goal-area right"></div>
+                <div class="penalty-spot left"></div>
+                <div class="penalty-spot right"></div>
+                
+                <div class="corner-arc top-left"></div>
+                <div class="corner-arc top-right"></div>
+                <div class="corner-arc bottom-left"></div>
+                <div class="corner-arc bottom-right"></div>
+                
+                <!-- Ball -->
+                <div class="ball" id="ball"></div>
+            </div>
+        </div>
+
+        <!-- Player Edit Modal -->
+        <div id="playerModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2>Edit Player</h2>
+                <div class="modal-form">
+                    <div class="form-group">
+                        <label for="editPlayerName">Player Name:</label>
+                        <input type="text" id="editPlayerName" placeholder="Enter player name">
+                    </div>
+                    <div class="form-group">
+                        <label for="editPlayerNumber">Jersey Number:</label>
+                        <input type="number" id="editPlayerNumber" min="1" max="99" placeholder="1-99">
+                    </div>
+                    <div class="form-group">
+                        <label for="editPlayerColor">Player Color:</label>
+                        <input type="color" id="editPlayerColor">
+                    </div>
+                    <div class="modal-buttons">
+                        <button class="cancel-btn" onclick="closeModal()">Cancel</button>
+                        <button onclick="savePlayerChanges()">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Roster Modal -->
+        <div id="rosterModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeRosterModal()">&times;</span>
+                <h2>Roster</h2>
+                <table class="roster-table">
+                    <thead>
+                        <tr><th>Team</th><th>Name</th><th>#</th><th>Color</th></tr>
+                    </thead>
+                    <tbody id="rosterTableBody"></tbody>
+                </table>
+                <div class="modal-buttons">
+                    <button class="cancel-btn" onclick="closeRosterModal()">Cancel</button>
+                    <button onclick="saveRosterChanges()">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let teams = { red: [], blue: [] };
+        let draggedElement = null;
+        let isDragging = false;
+        let dragOffset = { x: 0, y: 0 };
+        let editingPlayer = null;
+
+        // Formation positions (x, y coordinates as percentages of pitch size)
+        const formations = {
+            '4-4-2': [
+                { x: 0, y: 50 },   // Goalkeeper
+                { x: 20, y: 20 },  // Right back
+                { x: 20, y: 40 },  // Center back
+                { x: 20, y: 60 },  // Center back
+                { x: 20, y: 80 },  // Left back
+                { x: 45, y: 20 },  // Right mid
+                { x: 35, y: 40 },  // Center mid
+                { x: 35, y: 60 },  // Center mid
+                { x: 45, y: 80 },  // Left mid
+                { x: 50, y: 40 },  // Right forward
+                { x: 50, y: 60 }   // Left forward
+            ],
+            '4-3-3': [
+                { x: 0, y: 50 },   // Goalkeeper
+                { x: 20, y: 20 },  // Right back
+                { x: 20, y: 40 },  // Center back
+                { x: 20, y: 60 },  // Center back
+                { x: 20, y: 80 },  // Left back
+                { x: 33, y: 20 },  // Right mid
+                { x: 33, y: 50 },  // Center mid
+                { x: 33, y: 80 },  // Left mid
+                { x: 45, y: 25 },  // Right wing
+                { x: 45, y: 50 },  // Center forward
+                { x: 45, y: 75 }   // Left wing
+            ]
+        };
+
+        function createPlayer(team, number, x, y, name = null) {
+            const player = {
+                id: `player_${team}_${number}`,
+                number: number,
+                name: name || `Player ${number}`,
+                color: team === 'red' ? 'rgba(255, 68, 68, 0.8)' : 'rgba(68, 68, 255, 0.8)',
+                team: team
+            };
+            
+            teams[team].push(player);
+            createPlayerElement(player, x, y);
+            return player;
+        }
+
+        function createPlayerElement(player, x, y) {
+            const pitch = document.getElementById('pitch');
+            const playerEl = document.createElement('div');
+            playerEl.className = 'player';
+            playerEl.id = player.id;
+            playerEl.style.backgroundColor = player.color;
+            
+            // Create number and name elements
+            const numberEl = document.createElement('div');
+            numberEl.className = 'player-number';
+            numberEl.textContent = player.number;
+            
+            const nameEl = document.createElement('div');
+            nameEl.className = 'player-name';
+            nameEl.textContent = player.name;
+            
+            playerEl.appendChild(numberEl);
+            playerEl.appendChild(nameEl);
+            
+            playerEl.title = `${player.name} (#${player.number}) - ${player.team.charAt(0).toUpperCase() + player.team.slice(1)} Team`;
+            
+            playerEl.style.left = x + 'px';
+            playerEl.style.top = y + 'px';
+            
+            setupDragAndDrop(playerEl);
+            setupPlayerDoubleClick(playerEl, player);
+            pitch.appendChild(playerEl);
+        }
+
+        function setupPlayerDoubleClick(playerEl, player) {
+            playerEl.addEventListener('dblclick', function(e) {
+                e.stopPropagation();
+                e.preventDefault();
+                openPlayerModal(player);
+            });
+        }
+
+        function setupDragAndDrop(element) {
+            element.addEventListener('mousedown', startDrag);
+            element.addEventListener('touchstart', startDrag, { passive: false });
+        }
+
+        function startDrag(e) {
+            e.preventDefault();
+            isDragging = true;
+            draggedElement = e.target.closest('.player') || e.target.closest('.ball') || e.target;
+            draggedElement.classList.add('dragging');
+            
+            const rect = draggedElement.getBoundingClientRect();
+            const pitchRect = document.getElementById('pitch').getBoundingClientRect();
+            
+            const clientX = e.type === 'mousedown' ? e.clientX : e.touches[0].clientX;
+            const clientY = e.type === 'mousedown' ? e.clientY : e.touches[0].clientY;
+            
+            dragOffset.x = clientX - rect.left;
+            dragOffset.y = clientY - rect.top;
+            
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', stopDrag);
+            document.addEventListener('touchmove', drag, { passive: false });
+            document.addEventListener('touchend', stopDrag);
+        }
+
+        function drag(e) {
+            if (!isDragging || !draggedElement) return;
+            
+            e.preventDefault();
+            const pitchRect = document.getElementById('pitch').getBoundingClientRect();
+            
+            const clientX = e.type === 'mousemove' ? e.clientX : e.touches[0].clientX;
+            const clientY = e.type === 'mousemove' ? e.clientY : e.touches[0].clientY;
+            
+            let x = clientX - pitchRect.left - dragOffset.x;
+            let y = clientY - pitchRect.top - dragOffset.y;
+            
+            // Boundary constraints
+            const elementWidth = draggedElement.offsetWidth;
+            const elementHeight = draggedElement.offsetHeight;
+            
+            x = Math.max(0, Math.min(x, 800 - elementWidth));
+            y = Math.max(0, Math.min(y, 520 - elementHeight));
+            
+            draggedElement.style.left = x + 'px';
+            draggedElement.style.top = y + 'px';
+        }
+
+        function stopDrag() {
+            if (draggedElement) {
+                draggedElement.classList.remove('dragging');
+                draggedElement = null;
+            }
+            isDragging = false;
+            
+            document.removeEventListener('mousemove', drag);
+            document.removeEventListener('mouseup', stopDrag);
+            document.removeEventListener('touchmove', drag);
+            document.removeEventListener('touchend', stopDrag);
+        }
+
+        function setFormation(team, formation) {
+            const positions = formations[formation];
+            const teamPlayers = teams[team];
+            
+            for (let i = 0; i < Math.min(teamPlayers.length, positions.length); i++) {
+                const player = teamPlayers[i];
+                const position = positions[i];
+                const playerEl = document.getElementById(player.id);
+                
+                if (playerEl) {
+                    let x, y;
+                    if (team === 'red') {
+                        x = (position.x / 100) * 760; // 800 - 40 (player width)
+                        y = (position.y / 100) * 480; // 520 - 40 (player height)
+                    } else {
+                        // Mirror for blue team
+                        x = ((100 - position.x) / 100) * 760;
+                        y = (position.y / 100) * 480;
+                    }
+                    
+                    playerEl.style.left = x + 'px';
+                    playerEl.style.top = y + 'px';
+                }
+            }
+        }
+
+        function clearAll() {
+            ['red', 'blue'].forEach(team => {
+                teams[team].forEach(player => {
+                    const playerEl = document.getElementById(player.id);
+                    if (playerEl) playerEl.remove();
+                });
+                teams[team] = [];
+            });
+            resetBall();
+        }
+
+        function resetBall() {
+            const ball = document.getElementById('ball');
+            ball.style.left = '390px'; // Center of pitch
+            ball.style.top = '250px';
+        }
+
+        function switchSides() {
+            ['red', 'blue'].forEach(team => {
+                teams[team].forEach(player => {
+                    const playerEl = document.getElementById(player.id);
+                    if (playerEl) {
+                        const currentX = parseInt(playerEl.style.left);
+                        const newX = 800 - currentX - 40; // Mirror position
+                        playerEl.style.left = newX + 'px';
+                    }
+                });
+            });
+        }
+
+        function resetFormations() {
+            clearAll();
+            loadDefaultTeams();
+        }
+
+        function openPlayerModal(player) {
+            editingPlayer = player;
+            document.getElementById('editPlayerName').value = player.name;
+            document.getElementById('editPlayerNumber').value = player.number;
+            document.getElementById('editPlayerColor').value = player.color;
+            document.getElementById('playerModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('playerModal').style.display = 'none';
+            editingPlayer = null;
+        }
+
+        function savePlayerChanges() {
+            if (!editingPlayer) return;
+            
+            const newName = document.getElementById('editPlayerName').value || `Player ${editingPlayer.number}`;
+            const newNumber = document.getElementById('editPlayerNumber').value || editingPlayer.number;
+            const newColor = document.getElementById('editPlayerColor').value;
+            
+            // Update player data
+            editingPlayer.name = newName;
+            editingPlayer.number = newNumber;
+            editingPlayer.color = newColor;
+            
+            // Update player element
+            const playerEl = document.getElementById(editingPlayer.id);
+            if (playerEl) {
+                playerEl.style.backgroundColor = newColor;
+                
+                // Update number and name
+                const numberEl = playerEl.querySelector('.player-number');
+                const nameEl = playerEl.querySelector('.player-name');
+                
+                if (numberEl) numberEl.textContent = newNumber;
+                if (nameEl) nameEl.textContent = newName;
+                
+                playerEl.title = `${newName} (#${newNumber}) - ${editingPlayer.team.charAt(0).toUpperCase() + editingPlayer.team.slice(1)} Team`;
+            }
+            
+            closeModal();
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('playerModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        function loadDefaultTeams() {
+            // Create Red team (4-4-2 formation)
+            for (let i = 1; i <= 11; i++) {
+                const position = formations['4-4-2'][i - 1];
+                const x = (position.x / 100) * 760;
+                const y = (position.y / 100) * 480;
+                createPlayer('red', i, x, y, null, i === 1);
+            }
+            
+            // Create Blue team (4-3-3 formation, mirrored)
+            for (let i = 1; i <= 11; i++) {
+                const position = formations['4-3-3'][i - 1];
+                const x = ((100 - position.x) / 100) * 760;
+                const y = (position.y / 100) * 480;
+                createPlayer('blue', i, x, y, null, i === 1);
+            }
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            const ball = document.getElementById('ball');
+            setupDragAndDrop(ball);
+            resetBall();
+            loadDefaultTeams();
+        });
+        /* ─── Roster Modal Functions ─────────────────────────── */
+        function openRosterModal() {
+            populateRosterTable();
+            document.getElementById('rosterModal').style.display = 'block';
+        }
+        function closeRosterModal() {
+            document.getElementById('rosterModal').style.display = 'none';
+        }
+        function populateRosterTable() {
+            const tbody = document.getElementById('rosterTableBody');
+            tbody.innerHTML = '';
+            ['red', 'blue'].forEach(team => {
+                teams[team].forEach(player => {
+                    const row = document.createElement('tr');
+                    row.dataset.playerId = player.id;
+                    row.innerHTML = `
+                        <td style="color:${player.color}">${team.charAt(0).toUpperCase() + team.slice(1)}</td>
+                        <td><input type="text" value="${player.name}"></td>
+                        <td><input type="number" min="1" max="99" value="${player.number}"></td>
+                        <td><input type="color" value="${player.color}"></td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            });
+        }
+        function saveRosterChanges() {
+            const rows = document.querySelectorAll('#rosterTableBody tr');
+            rows.forEach(row => {
+                const id = row.dataset.playerId;
+                const inputs = row.querySelectorAll('input');
+                const newName   = inputs[0].value.trim() || 'Player';
+                const newNumber = inputs[1].value.trim() || '0';
+                const newColor  = inputs[2].value;
+                ['red','blue'].forEach(team => {
+                    const player = teams[team].find(p => p.id === id);
+                    if (player) {
+                        player.name   = newName;
+                        player.number = newNumber;
+                        player.color  = newColor;
+                        const el = document.getElementById(id);
+                        if (el) {
+                            el.style.backgroundColor = newColor;
+                            el.querySelector('.player-number').textContent = newNumber;
+                            el.querySelector('.player-name').textContent   = newName;
+                            el.title = `${newName} (#${newNumber}) - ${team.charAt(0).toUpperCase() + team.slice(1)} Team`;
+                        }
+                    }
+                });
+            });
+            closeRosterModal();
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const playerModal  = document.getElementById('playerModal');
+            const rosterModal  = document.getElementById('rosterModal');
+            if (event.target === playerModal) {
+                closeModal();
+            }
+            if (event.target === rosterModal) {
+                closeRosterModal();
+            }
+        }
+    </script>
+</body>
+</html>
