@@ -6,7 +6,7 @@ As an avid football fan, I love analyzing team formations and drawing up lineups
 
 ## What is this?
 
-This is a modern, interactive Soccer Tactics Board application built with React and TypeScript. It provides a clean, responsive interface where you can:
+This is a modern, interactive Football Tactics Board application built with React and TypeScript. It provides a clean, responsive interface where you can:
 
 - **Position players** on a realistic football pitch using smooth drag-and-drop
 - **Switch between teams** (home/away) with distinct colors
