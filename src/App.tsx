@@ -1,8 +1,13 @@
 import DragContext from './components/DragContext';
 import Pitch from './components/Pitch';
 import Controls from './components/Controls';
+import PlayerEditModal from './components/PlayerEditModal';
+import { useGameStore } from './stores/gameStore';
 
 function App() {
+  const selectedPlayer = useGameStore(state => state.selectedPlayer);
+  const selectPlayer = useGameStore(state => state.selectPlayer);
+
   return (
     <div className="min-h-screen p-5" style={{ background: '#1a1a1a', color: '#ffffff' }}>
       <div className="max-w-7xl mx-auto">
@@ -31,6 +36,11 @@ function App() {
           <Controls />
           <Pitch />
         </DragContext>
+        
+        <PlayerEditModal 
+          player={selectedPlayer}
+          onClose={() => selectPlayer(null)}
+        />
       </div>
     </div>
   );

@@ -15,6 +15,8 @@ const Player = React.memo(({ player, isDragging = false, style }: PlayerProps) =
   const selectedPlayer = useGameStore(state => state.selectedPlayer);
   
   const isSelected = selectedPlayer?.id === player.id;
+  const [clickCount, setClickCount] = React.useState(0);
+  const clickTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
 
   const dragData: DragData = {
     type: 'player',
@@ -33,10 +35,30 @@ const Player = React.memo(({ player, isDragging = false, style }: PlayerProps) =
     disabled: isDragging, // Disable when in overlay
   });
 
-  const handleDoubleClick = React.useCallback((e: React.MouseEvent) => {
+  const handleClick = React.useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
-    selectPlayer(player);
-  }, [player, selectPlayer]);
+    
+    setClickCount(prev => prev + 1);
+    
+    if (clickTimeoutRef.current) {
+      clearTimeout(clickTimeoutRef.current);
+    }
+    
+    clickTimeoutRef.current = setTimeout(() => {
+      if (clickCount + 1 >= 2) {
+        selectPlayer(player);
+      }
+      setClickCount(0);
+    }, 300);
+  }, [player, selectPlayer, clickCount]);
+
+  React.useEffect(() => {
+    return () => {
+      if (clickTimeoutRef.current) {
+        clearTimeout(clickTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const transformStyle = transform ? {
     transform: `translate3d(${transform.x}px, ${transform.y}px, 0) scale(1.1)`,
@@ -74,7 +96,7 @@ const Player = React.memo(({ player, isDragging = false, style }: PlayerProps) =
         ...transformStyle,
         ...style,
       }}
-      onDoubleClick={handleDoubleClick}
+      onClick={handleClick}
       {...listeners}
       {...attributes}
     >
