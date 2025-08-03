@@ -30,10 +30,16 @@ const Pitch = React.memo(() => {
 
 const PitchMarkings = React.memo(() => (
   <>
-    {/* Center line */}
+    {/* Center line (vertical) */}
     <div 
       className="absolute top-0 w-px h-full bg-black/40"
       style={{ left: '50%', transform: 'translateX(-50%)' }}
+    />
+    
+    {/* Half line (horizontal) */}
+    <div 
+      className="absolute left-0 w-full h-px bg-black/40"
+      style={{ top: '50%', transform: 'translateY(-50%)' }}
     />
     
     {/* Center circle */}

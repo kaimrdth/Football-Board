@@ -10,6 +10,7 @@ interface RosterModalProps {
 const RosterModal = React.memo(({ isOpen, onClose }: RosterModalProps) => {
   const players = useGameStore(state => state.players);
   const updatePlayer = useGameStore(state => state.updatePlayer);
+  const clearAllPlayerNames = useGameStore(state => state.clearAllPlayerNames);
 
   const [editedPlayers, setEditedPlayers] = React.useState<Player[]>([]);
 
@@ -47,6 +48,15 @@ const RosterModal = React.memo(({ isOpen, onClose }: RosterModalProps) => {
       }
     });
     onClose();
+  };
+
+  const handleClearAllNames = () => {
+    setEditedPlayers(prev => 
+      prev.map(player => ({
+        ...player,
+        name: `Player ${player.number}`
+      }))
+    );
   };
 
   if (!isOpen) return null;
@@ -208,13 +218,14 @@ const RosterModal = React.memo(({ isOpen, onClose }: RosterModalProps) => {
           display: 'flex', 
           gap: '10px', 
           marginTop: '20px',
-          justifyContent: 'flex-end'
+          justifyContent: 'space-between',
+          alignItems: 'center'
         }}>
           <button
-            onClick={onClose}
+            onClick={handleClearAllNames}
             style={{
               padding: '10px 20px',
-              backgroundColor: '#666666',
+              backgroundColor: '#dc2626',
               border: 'none',
               color: '#ffffff',
               borderRadius: '4px',
@@ -223,23 +234,41 @@ const RosterModal = React.memo(({ isOpen, onClose }: RosterModalProps) => {
               fontSize: '14px'
             }}
           >
-            Cancel
+            Clear All Names
           </button>
-          <button
-            onClick={handleSave}
-            style={{
-              padding: '10px 20px',
-              backgroundColor: '#00bcd4',
-              border: 'none',
-              color: '#ffffff',
-              borderRadius: '4px',
-              cursor: 'pointer',
-              fontWeight: 'bold',
-              fontSize: '14px'
-            }}
-          >
-            Save Changes
-          </button>
+          
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <button
+              onClick={onClose}
+              style={{
+                padding: '10px 20px',
+                backgroundColor: '#666666',
+                border: 'none',
+                color: '#ffffff',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                fontWeight: 'bold',
+                fontSize: '14px'
+              }}
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleSave}
+              style={{
+                padding: '10px 20px',
+                backgroundColor: '#00bcd4',
+                border: 'none',
+                color: '#ffffff',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                fontWeight: 'bold',
+                fontSize: '14px'
+              }}
+            >
+              Save Changes
+            </button>
+          </div>
         </div>
       </div>
     </div>

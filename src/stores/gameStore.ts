@@ -20,6 +20,7 @@ interface GameStore {
   resetBall: () => void;
   clearAll: () => void;
   resetFormations: () => void;
+  clearAllPlayerNames: () => void;
 }
 
 const PITCH_WIDTH = 800;
@@ -113,6 +114,13 @@ export const useGameStore = create<GameStore>()(
             x: PITCH_WIDTH / 2 - 7.5, 
             y: PITCH_HEIGHT / 2 - 7.5 
           };
+        }),
+
+      clearAllPlayerNames: () =>
+        set((state) => {
+          state.players.forEach((player: Player) => {
+            player.name = `Player ${player.number}`;
+          });
         }),
     }))
   )
