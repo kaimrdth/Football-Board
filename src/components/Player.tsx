@@ -16,7 +16,7 @@ const Player = React.memo(({ player, isDragging = false, style }: PlayerProps) =
   
   const isSelected = selectedPlayer?.id === player.id;
   const [clickCount, setClickCount] = React.useState(0);
-  const clickTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+  const clickTimeoutRef = React.useRef<number | null>(null);
 
   const dragData: DragData = {
     type: 'player',
