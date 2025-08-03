@@ -33,13 +33,13 @@ export default function DragContext({ children }: DragContextProps) {
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
-        distance: 0, // Immediate response
+        distance: 8, // Small distance to allow double-click events
       },
     }),
     useSensor(TouchSensor, {
       activationConstraint: {
         delay: 0,
-        tolerance: 0,
+        tolerance: 5,
       },
     })
   );
