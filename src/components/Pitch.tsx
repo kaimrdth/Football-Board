@@ -9,18 +9,6 @@ const Pitch = React.memo(() => {
 
   return (
     <div className="neo-brutalist-panel p-8 overflow-hidden mb-8">
-      {/* Tactical status bar */}
-      <div className="flex justify-between items-center mb-6 text-xs font-mono" style={{ color: 'var(--text-secondary)' }}>
-        <div className="flex items-center gap-4">
-          <span>GRID: ACTIVE</span>
-          <span>RESOLUTION: 800x520</span>
-          <span>MODE: TACTICAL</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="w-1 h-1 bg-green-400 rounded-full animate-pulse" />
-          <span>LIVE</span>
-        </div>
-      </div>
       
       <div 
         className="relative mx-auto pitch-neo overflow-hidden"
@@ -50,24 +38,28 @@ const PitchMarkings = React.memo(() => (
   <>
     {/* Center line (vertical) */}
     <div 
-      className="absolute top-0 w-0.5 h-full animate-pulse"
+      className="absolute top-0 h-full animate-pulse"
       style={{ 
         left: '50%', 
         transform: 'translateX(-50%)',
-        background: 'linear-gradient(to bottom, var(--primary-neon), rgba(0, 255, 65, 0.3), var(--primary-neon))',
-        boxShadow: '0 0 10px var(--primary-neon)'
+        width: '2px',
+        background: 'linear-gradient(to bottom, var(--primary-neon), rgba(0, 255, 65, 0.8), var(--primary-neon))',
+        boxShadow: '0 0 15px var(--primary-neon), 0 0 5px rgba(0, 255, 65, 0.5)',
+        zIndex: 10
       }}
     />
     
     {/* Half line (horizontal) */}
     <div 
-      className="absolute left-0 w-full h-0.5 animate-pulse"
+      className="absolute left-0 w-full animate-pulse"
       style={{ 
         top: '50%', 
         transform: 'translateY(-50%)',
-        background: 'linear-gradient(to right, var(--primary-neon), rgba(0, 255, 65, 0.3), var(--primary-neon))',
-        boxShadow: '0 0 10px var(--primary-neon)',
-        animationDelay: '0.5s'
+        height: '2px',
+        background: 'linear-gradient(to right, var(--primary-neon), rgba(0, 255, 65, 0.8), var(--primary-neon))',
+        boxShadow: '0 0 15px var(--primary-neon), 0 0 5px rgba(0, 255, 65, 0.5)',
+        animationDelay: '0.5s',
+        zIndex: 10
       }}
     />
     
