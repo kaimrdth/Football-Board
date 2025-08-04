@@ -64,7 +64,7 @@ const Player = React.memo(({ player, isDragging = false, style }: PlayerProps) =
     willChange: 'transform', // Optimize for animations
   } : undefined;
 
-  const teamColor = player.team === 'red' ? '#dc2626' : '#2563eb';
+  const teamColor = player.color || (player.team === 'red' ? '#dc2626' : '#2563eb');
 
   return (
     <div
@@ -122,12 +122,11 @@ const Player = React.memo(({ player, isDragging = false, style }: PlayerProps) =
           left: '50%',
           transform: 'translateX(-50%)',
           marginTop: '4px',
-          fontSize: '8px',
+          fontSize: '10px',
           whiteSpace: 'nowrap',
           color: teamColor,
           fontWeight: '500',
           pointerEvents: 'none',
-          textShadow: `0 1px 2px rgba(0, 0, 0, 0.6)`,
           opacity: (isDndKitDragging || isDragging) ? 0 : 0.8,
           transition: 'opacity 0.2s ease',
           fontFamily: 'Inter, system-ui, sans-serif'

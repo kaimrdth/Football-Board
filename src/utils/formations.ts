@@ -82,7 +82,7 @@ export function createDefaultPlayers(): Player[] {
       id: `player_red_${i + 1}`,
       number: i + 1,
       name: `Player ${i + 1}`,
-      color: 'rgba(255, 68, 68, 0.8)',
+      color: '#dc2626',
       team: 'red',
       position: {
         x: (position.x / 100) * (PITCH_WIDTH - 25),
@@ -99,7 +99,7 @@ export function createDefaultPlayers(): Player[] {
       id: `player_blue_${i + 1}`,
       number: i + 1,
       name: `Player ${i + 1}`,
-      color: 'rgba(68, 68, 255, 0.8)',
+      color: '#2563eb',
       team: 'blue',
       position: {
         x: ((100 - position.x) / 100) * (PITCH_WIDTH - 25),
