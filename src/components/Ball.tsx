@@ -51,55 +51,15 @@ const Ball = React.memo(({ ball, isDragging = false, style }: BallProps) => {
       {...listeners}
       {...attributes}
     >
-      {/* Main ball with neo styling */}
+      {/* Main ball with simple styling */}
       <div 
-        className="ball-neo w-full h-full rounded-full animate-pulse"
+        className="ball-neo w-full h-full rounded-full"
         style={{
-          background: 'radial-gradient(circle at 25% 25%, #ffffff, #f0f0f0, #d0d0d0)',
-          border: '2px solid var(--primary-neon)',
-          boxShadow: `
-            0 0 15px rgba(0, 255, 65, 0.8),
-            0 4px 8px rgba(0, 0, 0, 0.3),
-            inset 0 1px 0 rgba(255, 255, 255, 0.6)
-          `,
+          background: 'radial-gradient(circle at 30% 30%, #ffffff, #e0e0e0, #b0b0b0)',
+          border: '1px solid var(--text-secondary)',
           position: 'relative'
         }}
-      >
-        {/* Inner glow effect */}
-        <div 
-          className="absolute inset-1 rounded-full"
-          style={{
-            background: 'radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), transparent 60%)',
-            pointerEvents: 'none'
-          }}
-        />
-        
-        {/* Animated energy ring */}
-        <div 
-          className="absolute inset-0 rounded-full animate-spin"
-          style={{
-            border: '1px solid transparent',
-            borderTop: '1px solid var(--primary-neon)',
-            borderRight: '1px solid var(--accent-cyan)',
-            animationDuration: '3s',
-            opacity: 0.6
-          }}
-        />
-      </div>
-      
-      {/* Ball trail effect when dragging */}
-      {(isDndKitDragging || isDragging) && (
-        <div 
-          className="absolute inset-0 rounded-full"
-          style={{
-            background: 'radial-gradient(circle, var(--primary-neon) 0%, transparent 70%)',
-            transform: 'scale(2)',
-            opacity: 0.3,
-            pointerEvents: 'none',
-            animation: 'pulse 0.5s ease-in-out infinite'
-          }}
-        />
-      )}
+      />
     </div>
   );
 });

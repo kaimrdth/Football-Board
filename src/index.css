@@ -170,6 +170,54 @@
 }
 
 @layer utilities {
+  /* Touch-friendly button sizing */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Responsive text sizing */
+  .text-responsive-sm {
+    font-size: 0.75rem;
+  }
+  
+  @screen sm {
+    .text-responsive-sm {
+      font-size: 0.875rem;
+    }
+  }
+
+  /* Better focus styles for accessibility */
+  .focus-ring:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+  }
+
+  /* Modal backdrop improvements */
+  .modal-backdrop {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  /* Button grid improvements */
+  .button-grid {
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: 1fr;
+  }
+
+  @screen sm {
+    .button-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+  }
+
+  @screen lg {
+    .button-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
 }
 
 

@@ -66,149 +66,75 @@ const RosterModal = React.memo(({ isOpen, onClose }: RosterModalProps) => {
 
   return (
     <div 
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.7)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        zIndex: 2000,
-        backdropFilter: 'blur(5px)'
-      }}
+      className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-[2000] p-4 backdrop-blur-sm"
       onClick={onClose}
     >
       <div
-        style={{
-          backgroundColor: 'rgba(255, 255, 255, 0.05)',
-          border: '1px solid rgba(255, 255, 255, 0.2)',
-          borderRadius: '12px',
-          padding: '32px',
-          maxWidth: '900px',
-          maxHeight: '85vh',
-          overflowY: 'auto',
-          color: '#ffffff',
-          position: 'relative',
-          boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
-        }}
+        className="bg-white bg-opacity-5 border border-white border-opacity-20 rounded-xl p-4 sm:p-6 lg:p-8 
+                   w-full max-w-sm sm:max-w-2xl lg:max-w-4xl max-h-[90vh] overflow-y-auto text-white 
+                   relative shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close button */}
         <button
           onClick={onClose}
-          style={{
-            position: 'absolute',
-            top: '15px',
-            right: '15px',
-            background: 'none',
-            border: 'none',
-            color: 'rgba(255, 255, 255, 0.8)',
-            fontSize: '24px',
-            cursor: 'pointer',
-            width: '30px',
-            height: '30px',
-            borderRadius: '50%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}
+          className="absolute top-4 right-4 bg-transparent border-none text-white text-opacity-80 
+                     text-2xl cursor-pointer w-8 h-8 rounded-full flex items-center justify-center
+                     hover:text-opacity-100 hover:bg-white hover:bg-opacity-10 transition-all duration-200"
         >
           ×
         </button>
 
-        <h2 style={{ 
-          marginBottom: '32px', 
-          textAlign: 'center', 
-          color: '#ffffff',
-          fontSize: '28px',
-          fontWeight: 'bold',
-          letterSpacing: '-0.025em'
-        }}>
+        <h2 className="mb-6 sm:mb-8 text-center text-white text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight">
           Edit Roster
         </h2>
 
-        <div style={{ overflowX: 'auto' }}>
-          <table style={{ 
-            width: '100%', 
-            borderCollapse: 'collapse',
-            fontSize: '15px',
-            backgroundColor: 'rgba(255, 255, 255, 0.02)',
-            borderRadius: '8px',
-            overflow: 'hidden'
-          }}>
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse text-sm bg-white bg-opacity-5 rounded-lg overflow-hidden">
             <thead>
-              <tr style={{ 
-                borderBottom: '2px solid rgba(255, 255, 255, 0.2)',
-                backgroundColor: 'rgba(255, 255, 255, 0.05)'
-              }}>
-                <th style={{ padding: '16px 12px', textAlign: 'left', color: '#ffffff', fontWeight: 'bold', fontSize: '14px', letterSpacing: '0.05em' }}>Team</th>
-                <th style={{ padding: '16px 12px', textAlign: 'left', color: '#ffffff', fontWeight: 'bold', fontSize: '14px', letterSpacing: '0.05em' }}>Name</th>
-                <th style={{ padding: '16px 12px', textAlign: 'left', color: '#ffffff', fontWeight: 'bold', fontSize: '14px', letterSpacing: '0.05em' }}>#</th>
-                <th style={{ padding: '16px 12px', textAlign: 'left', color: '#ffffff', fontWeight: 'bold', fontSize: '14px', letterSpacing: '0.05em' }}>Color</th>
+              <tr className="border-b-2 border-white border-opacity-20 bg-white bg-opacity-5">
+                <th className="px-3 py-4 text-left text-white font-bold text-xs tracking-wider">Team</th>
+                <th className="px-3 py-4 text-left text-white font-bold text-xs tracking-wider">Name</th>
+                <th className="px-3 py-4 text-left text-white font-bold text-xs tracking-wider">#</th>
+                <th className="px-3 py-4 text-left text-white font-bold text-xs tracking-wider">Color</th>
               </tr>
             </thead>
             <tbody>
               {editedPlayers.map((player, index) => (
                 <tr 
                   key={player.id} 
-                  style={{ 
-                    borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
-                    backgroundColor: index % 2 === 0 ? 'rgba(255, 255, 255, 0.03)' : 'rgba(255, 255, 255, 0.01)',
-                    transition: 'background-color 0.2s ease'
-                  }}
+                  className={`border-b border-white border-opacity-10 transition-colors duration-200 hover:bg-white hover:bg-opacity-5 ${
+                    index % 2 === 0 ? 'bg-white bg-opacity-3' : 'bg-white bg-opacity-1'
+                  }`}
                 >
-                  <td style={{ padding: '12px' }}>
-                    <span style={{ 
-                      color: player.team === 'red' ? '#ff6b6b' : '#4dabf7',
-                      fontWeight: 'bold',
-                      textTransform: 'capitalize'
-                    }}>
+                  <td className="px-3 py-3">
+                    <span className={`font-bold capitalize ${
+                      player.team === 'red' ? 'text-red-400' : 'text-blue-400'
+                    }`}>
                       {player.team}
                     </span>
                   </td>
-                  <td style={{ padding: '12px' }}>
+                  <td className="px-3 py-3">
                     <input
                       type="text"
                       value={player.name}
                       onChange={(e) => handlePlayerChange(player.id, 'name', e.target.value)}
-                      style={{
-                        width: '100%',
-                        padding: '8px 12px',
-                        backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                        color: '#1f2937',
-                        border: '1px solid rgba(209, 213, 219, 0.3)',
-                        borderRadius: '6px',
-                        fontSize: '14px',
-                        transition: 'all 0.2s ease',
-                        outline: 'none'
-                      }}
+                      className="w-full px-3 py-2 bg-white bg-opacity-95 text-gray-800 border border-gray-300 border-opacity-30 
+                                rounded-md text-sm transition-all duration-200 outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
                     />
                   </td>
-                  <td style={{ padding: '12px' }}>
+                  <td className="px-3 py-3">
                     <input
                       type="number"
                       min="1"
                       max="99"
                       value={player.number}
                       onChange={(e) => handlePlayerChange(player.id, 'number', e.target.value)}
-                      style={{
-                        width: '70px',
-                        padding: '8px 12px',
-                        backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                        color: '#1f2937',
-                        border: '1px solid rgba(209, 213, 219, 0.3)',
-                        borderRadius: '6px',
-                        fontSize: '14px',
-                        transition: 'all 0.2s ease',
-                        outline: 'none',
-                        textAlign: 'center'
-                      }}
+                      className="w-16 px-3 py-2 bg-white bg-opacity-95 text-gray-800 border border-gray-300 border-opacity-30 
+                                rounded-md text-sm transition-all duration-200 outline-none text-center focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
                     />
                   </td>
-                  <td style={{ padding: '12px' }}>
+                  <td className="px-3 py-3">
                     <input
                       type="color"
                       value={player.color.includes('rgba') ? 
@@ -216,14 +142,8 @@ const RosterModal = React.memo(({ isOpen, onClose }: RosterModalProps) => {
                         : player.color
                       }
                       onChange={(e) => handlePlayerChange(player.id, 'color', e.target.value)}
-                      style={{
-                        width: '60px',
-                        height: '36px',
-                        border: '2px solid rgba(255, 255, 255, 0.2)',
-                        borderRadius: '6px',
-                        cursor: 'pointer',
-                        transition: 'border-color 0.2s ease'
-                      }}
+                      className="w-12 h-9 border-2 border-white border-opacity-20 rounded-md cursor-pointer 
+                                transition-all duration-200 hover:border-opacity-40"
                     />
                   </td>
                 </tr>
@@ -232,76 +152,29 @@ const RosterModal = React.memo(({ isOpen, onClose }: RosterModalProps) => {
           </table>
         </div>
 
-        <div style={{ 
-          display: 'flex', 
-          flexDirection: 'column',
-          gap: '16px', 
-          marginTop: '30px'
-        }}>
-          <div style={{ 
-            display: 'flex',
-            justifyContent: 'center',
-            paddingBottom: '16px',
-            borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
-          }}>
+        <div className="flex flex-col gap-4 mt-6 sm:mt-8">
+          <div className="flex justify-center pb-4 border-b border-white border-opacity-10">
             <button
               onClick={handleClearAllNames}
-              style={{
-                padding: '12px 24px',
-                backgroundColor: '#dc2626',
-                border: 'none',
-                color: '#ffffff',
-                borderRadius: '6px',
-                cursor: 'pointer',
-                fontWeight: 'bold',
-                fontSize: '14px',
-                transition: 'background-color 0.2s ease'
-              }}
-              onMouseOver={(e) => (e.target as HTMLElement).style.backgroundColor = '#b91c1c'}
-              onMouseOut={(e) => (e.target as HTMLElement).style.backgroundColor = '#dc2626'}
+              className="px-6 py-3 bg-red-600 hover:bg-red-700 border-none text-white rounded-md cursor-pointer 
+                         font-bold text-sm transition-colors duration-200"
             >
               Clear All Names
             </button>
           </div>
           
-          <div style={{ 
-            display: 'flex', 
-            gap: '12px',
-            justifyContent: 'center'
-          }}>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <button
               onClick={onClose}
-              style={{
-                padding: '12px 24px',
-                backgroundColor: '#6b7280',
-                border: 'none',
-                color: '#ffffff',
-                borderRadius: '6px',
-                cursor: 'pointer',
-                fontWeight: 'bold',
-                fontSize: '14px',
-                transition: 'background-color 0.2s ease'
-              }}
-              onMouseOver={(e) => (e.target as HTMLElement).style.backgroundColor = '#4b5563'}
-              onMouseOut={(e) => (e.target as HTMLElement).style.backgroundColor = '#6b7280'}
+              className="px-6 py-3 bg-gray-500 hover:bg-gray-600 border-none text-white rounded-md cursor-pointer 
+                         font-bold text-sm transition-colors duration-200"
             >
               Cancel
             </button>
             <button
               onClick={handleSave}
-              style={{
-                padding: '12px 24px',
-                backgroundColor: '#0891b2',
-                border: 'none',
-                color: '#ffffff',
-                borderRadius: '6px',
-                cursor: 'pointer',
-                fontWeight: 'bold',
-                fontSize: '14px',
-                transition: 'background-color 0.2s ease'
-              }}
-              onMouseOver={(e) => (e.target as HTMLElement).style.backgroundColor = '#0e7490'}
-              onMouseOut={(e) => (e.target as HTMLElement).style.backgroundColor = '#0891b2'}
+              className="px-6 py-3 bg-cyan-600 hover:bg-cyan-700 border-none text-white rounded-md cursor-pointer 
+                         font-bold text-sm transition-colors duration-200"
             >
               Save Changes
             </button>

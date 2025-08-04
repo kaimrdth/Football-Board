@@ -179,14 +179,12 @@ const PitchMarkings = React.memo(() => (
     {[{x: 0, y: 0}, {x: '100%', y: 0}, {x: 0, y: '100%'}, {x: '100%', y: '100%'}].map((pos, i) => (
       <div 
         key={i}
-        className="absolute w-1 h-1 animate-pulse"
+        className="absolute w-1 h-1"
         style={{
           left: pos.x,
           top: pos.y,
           transform: 'translate(-50%, -50%)',
-          background: 'var(--warning-orange)',
-          boxShadow: '0 0 6px var(--warning-orange)',
-          animationDelay: `${3 + i * 0.2}s`
+          background: 'var(--warning-orange)'
         }}
       />
     ))}

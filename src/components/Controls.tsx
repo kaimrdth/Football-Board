@@ -76,7 +76,7 @@ const Controls = React.memo(() => {
             Tactics
           </h3>
           
-          <div className="flex flex-wrap gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
             <ControlButton onClick={resetBall}>Reset Ball</ControlButton>
             <ControlButton onClick={clearAll}>Clear All</ControlButton>
             <ControlButton onClick={switchSides}>Switch Sides</ControlButton>
@@ -193,7 +193,7 @@ const ControlButton = React.memo(({ children, onClick }: ControlButtonProps) => 
 
   return (
     <button
-      className="retro-button px-8 py-3 text-xs font-semibold transition-all duration-200 whitespace-nowrap"
+      className="retro-button w-full py-3 px-4 text-xs font-semibold transition-all duration-200 text-center"
       onClick={onClick}
       style={{
         background: isHovered 
@@ -206,7 +206,7 @@ const ControlButton = React.memo(({ children, onClick }: ControlButtonProps) => 
           : `0 2px 4px rgba(0, 0, 0, 0.2)`,
         transform: isHovered ? 'translateY(-1px)' : 'translateY(0)',
         borderRadius: '8px',
-        minWidth: 'fit-content'
+        minHeight: '44px'
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
