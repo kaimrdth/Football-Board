@@ -55,11 +55,11 @@ const PitchMarkings = React.memo(() => (
       style={{ 
         top: '50%', 
         transform: 'translateY(-50%)',
-        height: '2px',
-        background: 'linear-gradient(to right, var(--primary-neon), rgba(0, 255, 65, 0.8), var(--primary-neon))',
-        boxShadow: '0 0 15px var(--primary-neon), 0 0 5px rgba(0, 255, 65, 0.5)',
+        height: '3px',
+        background: 'linear-gradient(to right, var(--primary-neon), rgba(0, 255, 65, 1), var(--primary-neon))',
+        boxShadow: '0 0 20px var(--primary-neon), 0 0 8px rgba(0, 255, 65, 0.8)',
         animationDelay: '0.5s',
-        zIndex: 10
+        zIndex: 15
       }}
     />
     

@@ -24,7 +24,7 @@ const SaveLoadModal = React.memo(({ isOpen, onClose, mode }: SaveLoadModalProps)
   const handleSaveToFile = async () => {
     try {
       setLoading(true);
-      saveToFile(description || 'Soccer Tactics Board Save');
+      saveToFile(description || 'Football Tactics Board Save');
       setMessage('Tactics saved successfully!');
       setTimeout(() => onClose(), 1500);
     } catch (error) {
@@ -50,7 +50,7 @@ const SaveLoadModal = React.memo(({ isOpen, onClose, mode }: SaveLoadModalProps)
   const handleCopyToClipboard = async () => {
     try {
       setLoading(true);
-      const success = await exportToClipboard(description || 'Soccer Tactics Board Save');
+      const success = await exportToClipboard(description || 'Football Tactics Board Save');
       if (success) {
         setMessage('Tactics copied to clipboard!');
       } else {

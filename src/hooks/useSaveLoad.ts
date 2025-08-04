@@ -29,7 +29,7 @@ export const useSaveLoad = () => {
       players: players,
       ball: ball,
       metadata: {
-        description: description || 'Soccer Tactics Board Save',
+        description: description || 'Football Tactics Board Save',
       }
     };
 
@@ -106,7 +106,7 @@ export const useSaveLoad = () => {
       players: players,
       ball: ball,
       metadata: {
-        description: description || 'Soccer Tactics Board Save',
+        description: description || 'Football Tactics Board Save',
       }
     };
 

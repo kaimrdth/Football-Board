@@ -73,10 +73,10 @@ const Controls = React.memo(() => {
         {/* Action Controls */}
         <div className="space-y-4">
           <h3 className="text-sm font-medium text-purple-400 mb-4">
-            Actions
+            Tactics
           </h3>
           
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-4">
             <ControlButton onClick={resetBall}>Reset Ball</ControlButton>
             <ControlButton onClick={clearAll}>Clear All</ControlButton>
             <ControlButton onClick={switchSides}>Switch Sides</ControlButton>
@@ -194,16 +194,16 @@ const ControlButton = React.memo(({ children, onClick }: ControlButtonProps) => 
 
   return (
     <button
-      className="retro-button px-6 py-2.5 text-xs font-semibold transition-all duration-200 whitespace-nowrap"
+      className="retro-button px-8 py-3 text-xs font-semibold transition-all duration-200 whitespace-nowrap"
       onClick={onClick}
       style={{
         background: isHovered 
-          ? `linear-gradient(45deg, ${buttonHoverColor}, ${buttonColor})` 
+          ? buttonColor 
           : `linear-gradient(45deg, var(--surface-2), var(--surface-1))`,
-        border: `1px solid ${isHovered ? buttonHoverColor : buttonColor}`,
+        border: `1px solid ${buttonColor}`,
         color: isHovered ? 'var(--bg-dark)' : buttonColor,
         boxShadow: isHovered 
-          ? `0 2px 8px ${buttonColor}40, inset 0 0 10px rgba(255, 255, 255, 0.1)`
+          ? `0 2px 8px ${buttonColor}30`
           : `0 2px 4px rgba(0, 0, 0, 0.2)`,
         transform: isHovered ? 'translateY(-1px)' : 'translateY(0)',
         borderRadius: '8px',

@@ -16,7 +16,7 @@ function App() {
         <div className="text-center mb-8 relative">
           <div className="inline-block relative">
             <h1 className="text-3xl font-bold text-green-600 mb-3">
-              Soccer Tactics Board
+              Football Tactics Board
             </h1>
             
           </div>
