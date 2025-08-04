@@ -105,11 +105,12 @@ const Player = React.memo(({ player, isDragging = false, style }: PlayerProps) =
           className="font-semibold"
           style={{ 
             fontSize: '11px', 
-            color: '#ffffff',
-            textShadow: `0 1px 2px rgba(0, 0, 0, 0.8)`,
+            color: player.team === 'blue' ? '#ffffff' : '#ffffff',
+            textShadow: player.team === 'blue' ? `0 1px 3px rgba(0, 0, 0, 1), 0 0 4px rgba(0, 0, 0, 0.8)` : `0 1px 2px rgba(0, 0, 0, 0.8)`,
             position: 'relative',
             zIndex: 2,
-            fontFamily: 'Inter, system-ui, sans-serif'
+            fontFamily: 'Inter, system-ui, sans-serif',
+            fontWeight: player.team === 'blue' ? '700' : '600'
           }}
         >
           {player.number}

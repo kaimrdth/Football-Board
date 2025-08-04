@@ -65,16 +65,14 @@ const PitchMarkings = React.memo(() => (
     
     {/* Center circle */}
     <div 
-      className="absolute rounded-full animate-pulse"
+      className="absolute rounded-full"
       style={{
         top: '50%',
         left: '50%',
         width: 140,
         height: 140,
         transform: 'translate(-50%, -50%)',
-        border: '2px solid var(--primary-neon)',
-        boxShadow: '0 0 15px rgba(0, 255, 65, 0.4), inset 0 0 15px rgba(0, 255, 65, 0.1)',
-        animationDelay: '1s'
+        border: '2px solid var(--primary-neon)'
       }}
     />
     
