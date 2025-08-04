@@ -190,7 +190,6 @@ const ControlButton = React.memo(({ children, onClick }: ControlButtonProps) => 
   );
 
   const buttonColor = isDestructive ? 'var(--error-red)' : 'var(--accent-blue)';
-  const buttonHoverColor = isDestructive ? 'var(--warning-orange)' : 'var(--primary-accent)';
 
   return (
     <button
