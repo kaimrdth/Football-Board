@@ -18,6 +18,11 @@
   --text-secondary: #9ca3af;
   --grid-color: rgba(16, 185, 129, 0.06);
   --border-subtle: rgba(55, 65, 81, 0.8);
+  
+  /* Pitch marking colors */
+  --primary-neon: #00ff41;
+  --secondary-neon: #ff0080;
+  --accent-cyan: #00d4ff;
 }
 
 @layer base {
