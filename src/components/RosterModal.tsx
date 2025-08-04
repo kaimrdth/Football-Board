@@ -51,13 +51,15 @@ const RosterModal = React.memo(({ isOpen, onClose }: RosterModalProps) => {
   };
 
   const handleClearAllNames = () => {
-    clearAllPlayerNames();
+    // Update local state immediately for UI feedback
     setEditedPlayers(prev => 
       prev.map(player => ({
         ...player,
         name: `Player ${player.number}`
       }))
     );
+    // Also update the store immediately so changes persist
+    clearAllPlayerNames();
   };
 
   if (!isOpen) return null;
