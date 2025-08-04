@@ -71,8 +71,8 @@ const RosterModal = React.memo(({ isOpen, onClose }: RosterModalProps) => {
     >
       <div
         className="bg-white bg-opacity-5 border border-white border-opacity-20 rounded-xl p-4 sm:p-6 lg:p-8 
-                   w-full max-w-sm sm:max-w-2xl lg:max-w-4xl max-h-[90vh] overflow-y-auto text-white 
-                   relative shadow-2xl"
+                   w-full max-w-md sm:max-w-3xl lg:max-w-5xl max-h-[90vh] overflow-y-auto text-white 
+                   relative shadow-2xl mx-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close button */}
@@ -89,14 +89,14 @@ const RosterModal = React.memo(({ isOpen, onClose }: RosterModalProps) => {
           Edit Roster
         </h2>
 
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse text-sm bg-white bg-opacity-5 rounded-lg overflow-hidden">
+        <div className="overflow-x-auto -mx-2 sm:mx-0">
+          <table className="w-full border-collapse text-sm bg-white bg-opacity-5 rounded-lg overflow-hidden min-w-[500px]">
             <thead>
               <tr className="border-b-2 border-white border-opacity-20 bg-white bg-opacity-5">
-                <th className="px-3 py-4 text-left text-white font-bold text-xs tracking-wider">Team</th>
-                <th className="px-3 py-4 text-left text-white font-bold text-xs tracking-wider">Name</th>
-                <th className="px-3 py-4 text-left text-white font-bold text-xs tracking-wider">#</th>
-                <th className="px-3 py-4 text-left text-white font-bold text-xs tracking-wider">Color</th>
+                <th className="px-2 sm:px-3 py-4 text-left text-white font-bold text-xs tracking-wider w-16">Team</th>
+                <th className="px-2 sm:px-3 py-4 text-left text-white font-bold text-xs tracking-wider">Name</th>
+                <th className="px-2 sm:px-3 py-4 text-left text-white font-bold text-xs tracking-wider w-12">#</th>
+                <th className="px-2 sm:px-3 py-4 text-left text-white font-bold text-xs tracking-wider w-16">Color</th>
               </tr>
             </thead>
             <tbody>
@@ -107,34 +107,34 @@ const RosterModal = React.memo(({ isOpen, onClose }: RosterModalProps) => {
                     index % 2 === 0 ? 'bg-white bg-opacity-3' : 'bg-white bg-opacity-1'
                   }`}
                 >
-                  <td className="px-3 py-3">
-                    <span className={`font-bold capitalize ${
+                  <td className="px-2 sm:px-3 py-3">
+                    <span className={`font-bold capitalize text-xs sm:text-sm ${
                       player.team === 'red' ? 'text-red-400' : 'text-blue-400'
                     }`}>
                       {player.team}
                     </span>
                   </td>
-                  <td className="px-3 py-3">
+                  <td className="px-2 sm:px-3 py-3">
                     <input
                       type="text"
                       value={player.name}
                       onChange={(e) => handlePlayerChange(player.id, 'name', e.target.value)}
-                      className="w-full px-3 py-2 bg-white bg-opacity-95 text-gray-800 border border-gray-300 border-opacity-30 
-                                rounded-md text-sm transition-all duration-200 outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                      className="w-full px-2 sm:px-3 py-2 bg-white bg-opacity-95 text-gray-800 border border-gray-300 border-opacity-30 
+                                rounded-md text-xs sm:text-sm transition-all duration-200 outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
                     />
                   </td>
-                  <td className="px-3 py-3">
+                  <td className="px-2 sm:px-3 py-3">
                     <input
                       type="number"
                       min="1"
                       max="99"
                       value={player.number}
                       onChange={(e) => handlePlayerChange(player.id, 'number', e.target.value)}
-                      className="w-16 px-3 py-2 bg-white bg-opacity-95 text-gray-800 border border-gray-300 border-opacity-30 
-                                rounded-md text-sm transition-all duration-200 outline-none text-center focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                      className="w-12 sm:w-16 px-2 sm:px-3 py-2 bg-white bg-opacity-95 text-gray-800 border border-gray-300 border-opacity-30 
+                                rounded-md text-xs sm:text-sm transition-all duration-200 outline-none text-center focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
                     />
                   </td>
-                  <td className="px-3 py-3">
+                  <td className="px-2 sm:px-3 py-3">
                     <input
                       type="color"
                       value={player.color.includes('rgba') ? 
@@ -142,7 +142,7 @@ const RosterModal = React.memo(({ isOpen, onClose }: RosterModalProps) => {
                         : player.color
                       }
                       onChange={(e) => handlePlayerChange(player.id, 'color', e.target.value)}
-                      className="w-12 h-9 border-2 border-white border-opacity-20 rounded-md cursor-pointer 
+                      className="w-10 sm:w-12 h-8 sm:h-9 border-2 border-white border-opacity-20 rounded-md cursor-pointer 
                                 transition-all duration-200 hover:border-opacity-40"
                     />
                   </td>

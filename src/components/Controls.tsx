@@ -50,6 +50,15 @@ const Controls = React.memo(() => {
   }, []);
 
   const [isExpanded, setIsExpanded] = React.useState(false);
+  const hoverTimeoutRef = React.useRef<number | null>(null);
+
+  React.useEffect(() => {
+    return () => {
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current);
+      }
+    };
+  }, []);
 
   return (
     <div className="fixed top-4 left-4 z-50">
@@ -57,11 +66,20 @@ const Controls = React.memo(() => {
       <div 
         className="bg-white shadow-lg rounded-lg border border-gray-200 transition-all duration-300 ease-in-out"
         style={{
-          width: isExpanded ? '320px' : '60px',
+          width: isExpanded ? 'min(320px, calc(100vw - 2rem))' : '60px',
           height: isExpanded ? 'auto' : '60px'
         }}
-        onMouseEnter={() => setIsExpanded(true)}
-        onMouseLeave={() => setIsExpanded(false)}
+        onMouseEnter={() => {
+          if (hoverTimeoutRef.current) {
+            clearTimeout(hoverTimeoutRef.current);
+          }
+          setIsExpanded(true);
+        }}
+        onMouseLeave={() => {
+          hoverTimeoutRef.current = setTimeout(() => {
+            setIsExpanded(false);
+          }, 150);
+        }}
       >
         {/* Toggle Button */}
         <div className="flex items-center justify-center p-4">
