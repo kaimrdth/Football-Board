@@ -18,55 +18,37 @@ function App() {
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        {/* Glitch title header */}
-        <div className="text-center mb-12 relative">
+        {/* Title header */}
+        <div className="text-center mb-8 relative">
           <div className="inline-block relative">
             <h1 
-              className="glitch-text neon-glow" 
-              data-text="TACTICAL NEXUS"
               style={{ 
-                color: 'var(--primary-neon)',
-                fontSize: '42px',
-                fontWeight: '900',
-                letterSpacing: '0.2em',
+                color: 'var(--primary-accent)',
+                fontSize: '32px',
+                fontWeight: '700',
+                letterSpacing: '0.1em',
                 fontFamily: 'Orbitron, monospace',
                 textTransform: 'uppercase',
-                marginBottom: '16px',
-                textShadow: '0 0 20px var(--primary-neon)'
+                marginBottom: '12px'
               }}
             >
               TACTICAL NEXUS
             </h1>
             
-            {/* Animated underline */}
-            <div className="flex justify-center gap-1 mt-4">
-              {Array.from({ length: 8 }, (_, i) => (
-                <div 
-                  key={i}
-                  className="h-1 bg-gradient-to-r from-cyan-400 to-pink-400 animate-pulse"
-                  style={{ 
-                    width: '12px',
-                    animationDelay: `${i * 0.2}s`,
-                    clipPath: 'polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%)'
-                  }}
-                />
-              ))}
+            {/* Simple underline */}
+            <div className="flex justify-center mt-3">
+              <div 
+                className="h-0.5 bg-gradient-to-r from-blue-400 to-green-400"
+                style={{ width: '80px' }}
+              />
             </div>
           </div>
           
-          {/* System status indicators */}
-          <div className="flex justify-center gap-6 mt-8 text-xs font-mono">
+          {/* Simple status indicator */}
+          <div className="flex justify-center mt-4 text-xs font-mono">
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-              <span style={{ color: 'var(--text-secondary)' }}>SYSTEM ONLINE</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }} />
-              <span style={{ color: 'var(--text-secondary)' }}>TACTICAL MODE</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-pink-400 rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
-              <span style={{ color: 'var(--text-secondary)' }}>NEXUS ACTIVE</span>
+              <div className="w-1.5 h-1.5 bg-green-400 rounded-full" />
+              <span style={{ color: 'var(--text-secondary)' }}>TACTICAL MODE ACTIVE</span>
             </div>
           </div>
         </div>

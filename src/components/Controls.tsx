@@ -50,19 +50,19 @@ const Controls = React.memo(() => {
   }, []);
 
   return (
-    <div className="neo-brutalist-panel p-8 mb-8">
+    <div className="neo-brutalist-panel p-6 mb-6">
       {/* Header with animated elements */}
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-4">
           <div className="w-8 h-8 relative">
             <div className="absolute inset-0 border-2 border-cyan-400 animate-spin" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 50%, 0 50%)' }} />
             <div className="absolute inset-0 border-2 border-pink-400 animate-spin" style={{ clipPath: 'polygon(0 50%, 100% 50%, 100% 100%, 0 100%)', animationDirection: 'reverse', animationDelay: '0.5s' }} />
           </div>
-          <h2 className="glitch-text" data-text="COMMAND CENTER" style={{
-            color: 'var(--primary-neon)',
-            fontSize: '20px',
-            fontWeight: '900',
-            letterSpacing: '0.15em',
+          <h2 className="" style={{
+            color: 'var(--primary-accent)',
+            fontSize: '18px',
+            fontWeight: '700',
+            letterSpacing: '0.1em',
             fontFamily: 'Orbitron, monospace',
             textTransform: 'uppercase'
           }}>
@@ -79,17 +79,17 @@ const Controls = React.memo(() => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Formation Controls */}
-        <div className="space-y-6">
+        <div className="space-y-4">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-0.5 h-6 bg-gradient-to-b from-cyan-400 to-pink-400" />
-            <h3 className="neon-glow" style={{ 
-              color: 'var(--accent-cyan)', 
-              fontWeight: '700', 
-              fontSize: '16px',
+            <h3 style={{ 
+              color: 'var(--accent-blue)', 
+              fontWeight: '600', 
+              fontSize: '14px',
               textTransform: 'uppercase',
-              letterSpacing: '0.1em',
+              letterSpacing: '0.08em',
               fontFamily: 'Orbitron, monospace'
             }}>
               FORMATION MATRIX
@@ -103,22 +103,22 @@ const Controls = React.memo(() => {
         </div>
 
         {/* Action Controls */}
-        <div className="space-y-6">
+        <div className="space-y-4">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-0.5 h-6 bg-gradient-to-b from-pink-400 to-green-400" />
-            <h3 className="neon-glow" style={{ 
-              color: 'var(--secondary-neon)', 
-              fontWeight: '700', 
-              fontSize: '16px',
+            <h3 style={{ 
+              color: 'var(--secondary-accent)', 
+              fontWeight: '600', 
+              fontSize: '14px',
               textTransform: 'uppercase',
-              letterSpacing: '0.1em',
+              letterSpacing: '0.08em',
               fontFamily: 'Orbitron, monospace'
             }}>
               TACTICAL OPERATIONS
             </h3>
           </div>
           
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-4">
             <ControlButton onClick={resetBall}>RESET BALL</ControlButton>
             <ControlButton onClick={clearAll}>CLEAR ALL</ControlButton>
             <ControlButton onClick={switchSides}>SWITCH SIDES</ControlButton>
@@ -162,11 +162,10 @@ const FormationSelector = React.memo(({ team, onFormationChange }: FormationSele
   const teamName = team === 'red' ? 'ALPHA' : 'BETA';
 
   return (
-    <div className="relative p-4 border-2" style={{
+    <div className="relative p-4 border rounded-lg" style={{
       borderColor: teamColor,
-      background: `linear-gradient(135deg, rgba(26, 26, 26, 0.8), rgba(42, 42, 42, 0.6))`,
-      clipPath: 'polygon(15px 0, 100% 0, calc(100% - 15px) 100%, 0 100%)',
-      boxShadow: `0 0 15px ${teamColor}30`
+      background: `linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(51, 65, 85, 0.6))`,
+      boxShadow: `0 0 8px ${teamColor}20`
     }}>
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
@@ -178,12 +177,12 @@ const FormationSelector = React.memo(({ team, onFormationChange }: FormationSele
               boxShadow: `0 0 8px ${teamColor}`
             }}
           />
-          <span className="neon-glow" style={{ 
+          <span style={{ 
             color: teamColor, 
-            fontWeight: '700', 
+            fontWeight: '600', 
             textTransform: 'uppercase',
-            fontSize: '14px',
-            letterSpacing: '0.1em',
+            fontSize: '13px',
+            letterSpacing: '0.08em',
             fontFamily: 'Orbitron, monospace'
           }}>
             TEAM {teamName}
@@ -198,14 +197,14 @@ const FormationSelector = React.memo(({ team, onFormationChange }: FormationSele
       <select
         className="formation-selector w-full p-3 text-sm font-bold cursor-pointer"
         style={{ 
-          background: `linear-gradient(135deg, var(--surface-1), rgba(${team === 'red' ? '255, 0, 128' : '0, 212, 255'}, 0.1))`,
-          border: `2px solid ${teamColor}`,
+          background: `linear-gradient(135deg, var(--surface-1), rgba(${team === 'red' ? '139, 92, 246' : '59, 130, 246'}, 0.05))`,
+          border: `1px solid ${teamColor}`,
           color: 'var(--text-primary)',
           fontSize: '13px',
-          fontWeight: '700',
+          fontWeight: '600',
           fontFamily: 'Orbitron, monospace',
           outline: 'none',
-          backdropFilter: 'blur(8px)'
+          borderRadius: '4px'
         }}
         onChange={(e) => onFormationChange(team, e.target.value as FormationType)}
         defaultValue={team === 'red' ? '4-4-2' : '4-3-3'}
@@ -241,26 +240,26 @@ const ControlButton = React.memo(({ children, onClick }: ControlButtonProps) => 
     typeof children === 'string' && children.includes(action)
   );
 
-  const buttonColor = isDestructive ? 'var(--error-red)' : 'var(--accent-cyan)';
-  const buttonHoverColor = isDestructive ? 'var(--warning-orange)' : 'var(--primary-neon)';
+  const buttonColor = isDestructive ? 'var(--error-red)' : 'var(--accent-blue)';
+  const buttonHoverColor = isDestructive ? 'var(--warning-orange)' : 'var(--primary-accent)';
 
   return (
     <button
-      className="retro-button p-3 text-xs font-bold transition-all duration-300"
+      className="retro-button px-4 py-3 text-xs font-semibold transition-all duration-200"
       onClick={onClick}
       style={{
         background: isHovered 
           ? `linear-gradient(45deg, ${buttonHoverColor}, ${buttonColor})` 
           : `linear-gradient(45deg, var(--surface-2), var(--surface-1))`,
-        border: `2px solid ${isHovered ? buttonHoverColor : buttonColor}`,
+        border: `1px solid ${isHovered ? buttonHoverColor : buttonColor}`,
         color: isHovered ? 'var(--bg-dark)' : buttonColor,
         fontFamily: 'Orbitron, monospace',
-        letterSpacing: '0.1em',
+        letterSpacing: '0.08em',
         boxShadow: isHovered 
-          ? `0 0 20px ${buttonColor}, inset 0 0 20px rgba(255, 255, 255, 0.2)`
-          : `0 4px 8px rgba(0, 0, 0, 0.3)`,
-        transform: isHovered ? 'translateY(-2px)' : 'translateY(0)',
-        textShadow: isHovered ? `0 0 10px ${buttonColor}` : 'none'
+          ? `0 2px 8px ${buttonColor}40, inset 0 0 10px rgba(255, 255, 255, 0.1)`
+          : `0 2px 4px rgba(0, 0, 0, 0.2)`,
+        transform: isHovered ? 'translateY(-1px)' : 'translateY(0)',
+        borderRadius: '6px'
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
