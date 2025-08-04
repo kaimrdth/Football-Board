@@ -64,8 +64,9 @@ const Player = React.memo(({ player, isDragging = false, style }: PlayerProps) =
     willChange: 'transform', // Optimize for animations
   } : undefined;
 
-  const teamColor = player.team === 'red' ? 'var(--secondary-neon)' : 'var(--accent-cyan)';
-  const teamAccent = player.team === 'red' ? 'var(--error-red)' : 'var(--primary-neon)';
+  const teamColor = player.team === 'red' ? '#dc2626' : '#2563eb';
+  const teamAccent = player.team === 'red' ? '#991b1b' : '#1d4ed8';
+  const teamGlow = player.team === 'red' ? 'rgba(220, 38, 38, 0.4)' : 'rgba(37, 99, 235, 0.4)';
 
   return (
     <div
@@ -90,25 +91,25 @@ const Player = React.memo(({ player, isDragging = false, style }: PlayerProps) =
     >
       {/* Main player shape */}
       <div 
-        className="player-neo w-full h-full flex items-center justify-center animate-pulse"
+        className="w-full h-full flex items-center justify-center rounded-full transition-all duration-200"
         style={{
-          background: `conic-gradient(from 0deg, ${teamColor}, ${teamAccent}, ${teamColor})`,
-          border: isSelected ? `3px solid var(--warning-orange)` : `2px solid var(--text-primary)`,
+          background: `radial-gradient(circle at 30% 30%, ${teamColor}, ${teamAccent})`,
+          border: isSelected ? `2px solid #f59e0b` : `2px solid #ffffff`,
           boxShadow: isSelected 
-            ? `0 0 20px var(--warning-orange), inset 0 0 10px rgba(255, 255, 255, 0.2)`
-            : `0 0 15px ${teamColor}, inset 0 0 10px rgba(255, 255, 255, 0.2)`,
-          animationDelay: `${player.number * 0.1}s`
+            ? `0 0 16px #f59e0b, 0 0 8px ${teamGlow}, inset 0 0 8px rgba(255, 255, 255, 0.2)`
+            : `0 0 12px ${teamGlow}, inset 0 0 8px rgba(255, 255, 255, 0.15)`
         }}
       >
         {/* Player number */}
         <span 
-          className="font-mono font-bold neon-glow"
+          className="font-semibold"
           style={{ 
             fontSize: '11px', 
-            color: 'var(--text-primary)',
-            textShadow: `0 0 8px var(--text-primary)`,
+            color: '#ffffff',
+            textShadow: `0 1px 2px rgba(0, 0, 0, 0.8)`,
             position: 'relative',
-            zIndex: 2
+            zIndex: 2,
+            fontFamily: 'Inter, system-ui, sans-serif'
           }}
         >
           {player.number}
@@ -117,32 +118,30 @@ const Player = React.memo(({ player, isDragging = false, style }: PlayerProps) =
       
       {/* Player status indicators */}
       <div 
-        className="absolute -top-1 -right-1 w-2 h-2 rounded-full animate-pulse"
+        className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 rounded-full"
         style={{
-          background: teamAccent,
-          boxShadow: `0 0 6px ${teamAccent}`,
-          animationDelay: `${player.number * 0.15}s`
+          background: teamColor,
+          boxShadow: `0 0 4px ${teamColor}`
         }}
       />
       
-      {/* Player name label with futuristic styling */}
+      {/* Player name label */}
       <div 
-        className="absolute font-mono"
+        className="absolute"
         style={{
           top: '100%',
           left: '50%',
           transform: 'translateX(-50%)',
-          marginTop: '6px',
-          fontSize: '9px',
+          marginTop: '4px',
+          fontSize: '8px',
           whiteSpace: 'nowrap',
           color: teamColor,
-          fontWeight: '700',
+          fontWeight: '500',
           pointerEvents: 'none',
-          textShadow: `0 0 6px ${teamColor}`,
-          opacity: (isDndKitDragging || isDragging) ? 0 : 0.9,
-          transition: 'none',
-          letterSpacing: '0.05em',
-          textTransform: 'uppercase'
+          textShadow: `0 1px 2px rgba(0, 0, 0, 0.6)`,
+          opacity: (isDndKitDragging || isDragging) ? 0 : 0.8,
+          transition: 'opacity 0.2s ease',
+          fontFamily: 'Inter, system-ui, sans-serif'
         }}
       >
         {player.name}
@@ -154,9 +153,9 @@ const Player = React.memo(({ player, isDragging = false, style }: PlayerProps) =
           className="absolute inset-0 rounded-full animate-pulse"
           style={{
             background: 'transparent',
-            border: '2px solid var(--warning-orange)',
-            boxShadow: '0 0 25px var(--warning-orange)',
-            transform: 'scale(1.4)',
+            border: '2px solid #f59e0b',
+            boxShadow: '0 0 20px #f59e0b',
+            transform: 'scale(1.3)',
             pointerEvents: 'none'
           }}
         />

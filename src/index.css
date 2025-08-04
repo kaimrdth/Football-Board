@@ -1,22 +1,23 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --primary-accent: #22c55e;
-  --secondary-accent: #8b5cf6;
+  --primary-accent: #10b981;
+  --secondary-accent: #6366f1;
   --accent-blue: #3b82f6;
   --warning-orange: #f59e0b;
   --error-red: #ef4444;
   --bg-dark: #0f172a;
-  --bg-darker: #020617;
-  --surface-1: #1e293b;
-  --surface-2: #334155;
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --grid-color: rgba(34, 197, 94, 0.08);
+  --bg-darker: #030712;
+  --surface-1: #1f2937;
+  --surface-2: #374151;
+  --text-primary: #f9fafb;
+  --text-secondary: #9ca3af;
+  --grid-color: rgba(16, 185, 129, 0.06);
+  --border-subtle: rgba(55, 65, 81, 0.8);
 }
 
 @layer base {
@@ -27,15 +28,17 @@
   }
 
   body {
-    font-family: 'Share Tech Mono', monospace;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     background: 
-      radial-gradient(circle at 20% 80%, rgba(34, 197, 94, 0.02) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.02) 0%, transparent 50%),
+      radial-gradient(circle at 20% 80%, rgba(16, 185, 129, 0.015) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.015) 0%, transparent 50%),
       linear-gradient(135deg, var(--bg-darker) 0%, var(--bg-dark) 100%);
     color: var(--text-primary);
     min-height: 100vh;
     overflow-x: hidden;
     position: relative;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   body::before {
@@ -57,13 +60,15 @@
 @layer components {
   .neo-brutalist-panel {
     background: linear-gradient(135deg, var(--surface-1) 0%, var(--surface-2) 100%);
-    border: 2px solid var(--primary-accent);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
     box-shadow: 
-      4px 4px 0 rgba(34, 197, 94, 0.3),
-      0 0 8px rgba(34, 197, 94, 0.1),
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06),
       inset 0 1px 0 rgba(255, 255, 255, 0.05);
     position: relative;
     overflow: hidden;
+    backdrop-filter: blur(8px);
   }
 
   .neo-brutalist-panel::before {
@@ -73,30 +78,33 @@
     left: 0;
     right: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent, var(--accent-blue), transparent);
-    opacity: 0.4;
+    background: linear-gradient(90deg, transparent, var(--primary-accent), transparent);
+    opacity: 0.3;
   }
 
   .retro-button {
-    font-family: 'Orbitron', monospace;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    background: linear-gradient(45deg, var(--surface-2), var(--surface-1));
-    border: 1px solid var(--accent-blue);
-    color: var(--accent-blue);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.025em;
+    background: linear-gradient(135deg, var(--surface-1), var(--surface-2));
+    border: 1px solid var(--border-subtle);
+    color: var(--text-primary);
     position: relative;
     overflow: hidden;
-    transition: all 0.2s ease;
-    border-radius: 6px;
+    transition: all 0.15s ease;
+    border-radius: 8px;
+    backdrop-filter: blur(4px);
   }
 
   .retro-button:hover {
-    background: linear-gradient(45deg, var(--accent-blue), var(--primary-accent));
+    background: linear-gradient(135deg, var(--primary-accent), var(--secondary-accent));
     color: var(--bg-dark);
+    border-color: var(--primary-accent);
     box-shadow: 
-      0 2px 8px rgba(59, 130, 246, 0.3),
-      inset 0 0 10px rgba(255, 255, 255, 0.1);
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06),
+      0 0 0 1px var(--primary-accent),
+      inset 0 0 8px rgba(255, 255, 255, 0.1);
     transform: translateY(-1px);
   }
 
@@ -117,32 +125,34 @@
 
   .pitch-neo {
     background: 
-      linear-gradient(45deg, #1a4d1a 0%, #2d5a2d 50%, #1a4d1a 100%),
+      linear-gradient(135deg, #1a5a1a 0%, #2d5a2d 50%, #1a5a1a 100%),
       repeating-linear-gradient(
         45deg,
         transparent,
         transparent 2px,
-        rgba(34, 197, 94, 0.02) 2px,
-        rgba(34, 197, 94, 0.02) 4px
+        rgba(16, 185, 129, 0.02) 2px,
+        rgba(16, 185, 129, 0.02) 4px
       );
-    border: 2px solid var(--primary-accent);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
     box-shadow: 
-      0 0 12px rgba(34, 197, 94, 0.2),
-      inset 0 0 20px rgba(34, 197, 94, 0.05);
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06),
+      inset 0 0 20px rgba(16, 185, 129, 0.03);
     position: relative;
   }
 
   .pitch-neo::after {
-    content: 'TACTICAL GRID';
+    content: 'Football Tactics';
     position: absolute;
     top: -28px;
     left: 0;
-    font-family: 'Orbitron', monospace;
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--primary-accent);
-    letter-spacing: 0.1em;
-    opacity: 0.8;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    letter-spacing: 0.05em;
+    opacity: 0.7;
   }
 
   .player-neo {
@@ -190,19 +200,21 @@
   }
 
   .formation-selector {
-    background: linear-gradient(135deg, var(--surface-1), rgba(34, 197, 94, 0.05));
-    border: 1px solid var(--primary-accent);
+    background: linear-gradient(135deg, var(--surface-1), rgba(16, 185, 129, 0.03));
+    border: 1px solid var(--border-subtle);
     color: var(--text-primary);
-    font-family: 'Orbitron', monospace;
-    font-weight: 600;
-    border-radius: 4px;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 500;
+    border-radius: 6px;
+    backdrop-filter: blur(4px);
   }
 
   .formation-selector:focus {
     outline: none;
+    border-color: var(--primary-accent);
     box-shadow: 
-      0 0 0 2px rgba(34, 197, 94, 0.3),
-      0 0 8px rgba(34, 197, 94, 0.2);
+      0 0 0 2px rgba(16, 185, 129, 0.2),
+      0 4px 6px -1px rgba(0, 0, 0, 0.1);
   }
 
   .scan-line {
