@@ -10,7 +10,6 @@ interface RosterModalProps {
 const RosterModal = React.memo(({ isOpen, onClose }: RosterModalProps) => {
   const players = useGameStore(state => state.players);
   const updatePlayer = useGameStore(state => state.updatePlayer);
-  const clearAllPlayerNames = useGameStore(state => state.clearAllPlayerNames);
 
   const [editedPlayers, setEditedPlayers] = React.useState<Player[]>([]);
 
@@ -51,7 +50,6 @@ const RosterModal = React.memo(({ isOpen, onClose }: RosterModalProps) => {
   };
 
   const handleClearAllNames = () => {
-    clearAllPlayerNames();
     setEditedPlayers(prev => 
       prev.map(player => ({
         ...player,
@@ -83,13 +81,14 @@ const RosterModal = React.memo(({ isOpen, onClose }: RosterModalProps) => {
         style={{
           backgroundColor: 'rgba(255, 255, 255, 0.05)',
           border: '1px solid rgba(255, 255, 255, 0.2)',
-          borderRadius: '8px',
-          padding: '30px',
-          maxWidth: '800px',
-          maxHeight: '80vh',
+          borderRadius: '12px',
+          padding: '32px',
+          maxWidth: '900px',
+          maxHeight: '85vh',
           overflowY: 'auto',
           color: '#ffffff',
-          position: 'relative'
+          position: 'relative',
+          boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
         }}
         onClick={(e) => e.stopPropagation()}
       >
@@ -117,11 +116,12 @@ const RosterModal = React.memo(({ isOpen, onClose }: RosterModalProps) => {
         </button>
 
         <h2 style={{ 
-          marginBottom: '20px', 
+          marginBottom: '32px', 
           textAlign: 'center', 
           color: '#ffffff',
-          fontSize: '24px',
-          fontWeight: 'bold'
+          fontSize: '28px',
+          fontWeight: 'bold',
+          letterSpacing: '-0.025em'
         }}>
           Edit Roster
         </h2>
@@ -130,14 +130,20 @@ const RosterModal = React.memo(({ isOpen, onClose }: RosterModalProps) => {
           <table style={{ 
             width: '100%', 
             borderCollapse: 'collapse',
-            fontSize: '14px'
+            fontSize: '15px',
+            backgroundColor: 'rgba(255, 255, 255, 0.02)',
+            borderRadius: '8px',
+            overflow: 'hidden'
           }}>
             <thead>
-              <tr style={{ borderBottom: '2px solid rgba(255, 255, 255, 0.2)' }}>
-                <th style={{ padding: '12px 8px', textAlign: 'left', color: '#ffffff', fontWeight: 'bold' }}>Team</th>
-                <th style={{ padding: '12px 8px', textAlign: 'left', color: '#ffffff', fontWeight: 'bold' }}>Name</th>
-                <th style={{ padding: '12px 8px', textAlign: 'left', color: '#ffffff', fontWeight: 'bold' }}>#</th>
-                <th style={{ padding: '12px 8px', textAlign: 'left', color: '#ffffff', fontWeight: 'bold' }}>Color</th>
+              <tr style={{ 
+                borderBottom: '2px solid rgba(255, 255, 255, 0.2)',
+                backgroundColor: 'rgba(255, 255, 255, 0.05)'
+              }}>
+                <th style={{ padding: '16px 12px', textAlign: 'left', color: '#ffffff', fontWeight: 'bold', fontSize: '14px', letterSpacing: '0.05em' }}>Team</th>
+                <th style={{ padding: '16px 12px', textAlign: 'left', color: '#ffffff', fontWeight: 'bold', fontSize: '14px', letterSpacing: '0.05em' }}>Name</th>
+                <th style={{ padding: '16px 12px', textAlign: 'left', color: '#ffffff', fontWeight: 'bold', fontSize: '14px', letterSpacing: '0.05em' }}>#</th>
+                <th style={{ padding: '16px 12px', textAlign: 'left', color: '#ffffff', fontWeight: 'bold', fontSize: '14px', letterSpacing: '0.05em' }}>Color</th>
               </tr>
             </thead>
             <tbody>
@@ -145,11 +151,12 @@ const RosterModal = React.memo(({ isOpen, onClose }: RosterModalProps) => {
                 <tr 
                   key={player.id} 
                   style={{ 
-                    borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-                    backgroundColor: index % 2 === 0 ? 'rgba(255, 255, 255, 0.02)' : 'transparent'
+                    borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+                    backgroundColor: index % 2 === 0 ? 'rgba(255, 255, 255, 0.03)' : 'rgba(255, 255, 255, 0.01)',
+                    transition: 'background-color 0.2s ease'
                   }}
                 >
-                  <td style={{ padding: '8px' }}>
+                  <td style={{ padding: '12px' }}>
                     <span style={{ 
                       color: player.team === 'red' ? '#ff6b6b' : '#4dabf7',
                       fontWeight: 'bold',
@@ -158,23 +165,25 @@ const RosterModal = React.memo(({ isOpen, onClose }: RosterModalProps) => {
                       {player.team}
                     </span>
                   </td>
-                  <td style={{ padding: '8px' }}>
+                  <td style={{ padding: '12px' }}>
                     <input
                       type="text"
                       value={player.name}
                       onChange={(e) => handlePlayerChange(player.id, 'name', e.target.value)}
                       style={{
                         width: '100%',
-                        padding: '6px 8px',
-                        backgroundColor: '#ffffff',
-                        color: '#333333',
-                        border: 'none',
-                        borderRadius: '4px',
-                        fontSize: '14px'
+                        padding: '8px 12px',
+                        backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                        color: '#1f2937',
+                        border: '1px solid rgba(209, 213, 219, 0.3)',
+                        borderRadius: '6px',
+                        fontSize: '14px',
+                        transition: 'all 0.2s ease',
+                        outline: 'none'
                       }}
                     />
                   </td>
-                  <td style={{ padding: '8px' }}>
+                  <td style={{ padding: '12px' }}>
                     <input
                       type="number"
                       min="1"
@@ -182,17 +191,20 @@ const RosterModal = React.memo(({ isOpen, onClose }: RosterModalProps) => {
                       value={player.number}
                       onChange={(e) => handlePlayerChange(player.id, 'number', e.target.value)}
                       style={{
-                        width: '60px',
-                        padding: '6px 8px',
-                        backgroundColor: '#ffffff',
-                        color: '#333333',
-                        border: 'none',
-                        borderRadius: '4px',
-                        fontSize: '14px'
+                        width: '70px',
+                        padding: '8px 12px',
+                        backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                        color: '#1f2937',
+                        border: '1px solid rgba(209, 213, 219, 0.3)',
+                        borderRadius: '6px',
+                        fontSize: '14px',
+                        transition: 'all 0.2s ease',
+                        outline: 'none',
+                        textAlign: 'center'
                       }}
                     />
                   </td>
-                  <td style={{ padding: '8px' }}>
+                  <td style={{ padding: '12px' }}>
                     <input
                       type="color"
                       value={player.color.includes('rgba') ? 
@@ -201,11 +213,12 @@ const RosterModal = React.memo(({ isOpen, onClose }: RosterModalProps) => {
                       }
                       onChange={(e) => handlePlayerChange(player.id, 'color', e.target.value)}
                       style={{
-                        width: '50px',
-                        height: '30px',
-                        border: 'none',
-                        borderRadius: '4px',
-                        cursor: 'pointer'
+                        width: '60px',
+                        height: '36px',
+                        border: '2px solid rgba(255, 255, 255, 0.2)',
+                        borderRadius: '6px',
+                        cursor: 'pointer',
+                        transition: 'border-color 0.2s ease'
                       }}
                     />
                   </td>
@@ -217,55 +230,74 @@ const RosterModal = React.memo(({ isOpen, onClose }: RosterModalProps) => {
 
         <div style={{ 
           display: 'flex', 
-          gap: '10px', 
-          marginTop: '20px',
-          justifyContent: 'space-between',
-          alignItems: 'center'
+          flexDirection: 'column',
+          gap: '16px', 
+          marginTop: '30px'
         }}>
-          <button
-            onClick={handleClearAllNames}
-            style={{
-              padding: '10px 20px',
-              backgroundColor: '#dc2626',
-              border: 'none',
-              color: '#ffffff',
-              borderRadius: '4px',
-              cursor: 'pointer',
-              fontWeight: 'bold',
-              fontSize: '14px'
-            }}
-          >
-            Clear All Names
-          </button>
+          <div style={{ 
+            display: 'flex',
+            justifyContent: 'center',
+            paddingBottom: '16px',
+            borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
+          }}>
+            <button
+              onClick={handleClearAllNames}
+              style={{
+                padding: '12px 24px',
+                backgroundColor: '#dc2626',
+                border: 'none',
+                color: '#ffffff',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                fontWeight: 'bold',
+                fontSize: '14px',
+                transition: 'background-color 0.2s ease'
+              }}
+              onMouseOver={(e) => e.target.style.backgroundColor = '#b91c1c'}
+              onMouseOut={(e) => e.target.style.backgroundColor = '#dc2626'}
+            >
+              Clear All Names
+            </button>
+          </div>
           
-          <div style={{ display: 'flex', gap: '10px' }}>
+          <div style={{ 
+            display: 'flex', 
+            gap: '12px',
+            justifyContent: 'center'
+          }}>
             <button
               onClick={onClose}
               style={{
-                padding: '10px 20px',
-                backgroundColor: '#666666',
+                padding: '12px 24px',
+                backgroundColor: '#6b7280',
                 border: 'none',
                 color: '#ffffff',
-                borderRadius: '4px',
+                borderRadius: '6px',
                 cursor: 'pointer',
                 fontWeight: 'bold',
-                fontSize: '14px'
+                fontSize: '14px',
+                transition: 'background-color 0.2s ease'
               }}
+              onMouseOver={(e) => e.target.style.backgroundColor = '#4b5563'}
+              onMouseOut={(e) => e.target.style.backgroundColor = '#6b7280'}
             >
               Cancel
             </button>
             <button
               onClick={handleSave}
               style={{
-                padding: '10px 20px',
-                backgroundColor: '#00bcd4',
+                padding: '12px 24px',
+                backgroundColor: '#0891b2',
                 border: 'none',
                 color: '#ffffff',
-                borderRadius: '4px',
+                borderRadius: '6px',
                 cursor: 'pointer',
                 fontWeight: 'bold',
-                fontSize: '14px'
+                fontSize: '14px',
+                transition: 'background-color 0.2s ease'
               }}
+              onMouseOver={(e) => e.target.style.backgroundColor = '#0e7490'}
+              onMouseOut={(e) => e.target.style.backgroundColor = '#0891b2'}
             >
               Save Changes
             </button>
