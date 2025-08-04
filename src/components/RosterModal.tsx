@@ -253,8 +253,8 @@ const RosterModal = React.memo(({ isOpen, onClose }: RosterModalProps) => {
                 fontSize: '14px',
                 transition: 'background-color 0.2s ease'
               }}
-              onMouseOver={(e) => e.target.style.backgroundColor = '#b91c1c'}
-              onMouseOut={(e) => e.target.style.backgroundColor = '#dc2626'}
+              onMouseOver={(e) => (e.target as HTMLElement).style.backgroundColor = '#b91c1c'}
+              onMouseOut={(e) => (e.target as HTMLElement).style.backgroundColor = '#dc2626'}
             >
               Clear All Names
             </button>
@@ -278,8 +278,8 @@ const RosterModal = React.memo(({ isOpen, onClose }: RosterModalProps) => {
                 fontSize: '14px',
                 transition: 'background-color 0.2s ease'
               }}
-              onMouseOver={(e) => e.target.style.backgroundColor = '#4b5563'}
-              onMouseOut={(e) => e.target.style.backgroundColor = '#6b7280'}
+              onMouseOver={(e) => (e.target as HTMLElement).style.backgroundColor = '#4b5563'}
+              onMouseOut={(e) => (e.target as HTMLElement).style.backgroundColor = '#6b7280'}
             >
               Cancel
             </button>
@@ -296,8 +296,8 @@ const RosterModal = React.memo(({ isOpen, onClose }: RosterModalProps) => {
                 fontSize: '14px',
                 transition: 'background-color 0.2s ease'
               }}
-              onMouseOver={(e) => e.target.style.backgroundColor = '#0e7490'}
-              onMouseOut={(e) => e.target.style.backgroundColor = '#0891b2'}
+              onMouseOver={(e) => (e.target as HTMLElement).style.backgroundColor = '#0e7490'}
+              onMouseOut={(e) => (e.target as HTMLElement).style.backgroundColor = '#0891b2'}
             >
               Save Changes
             </button>
