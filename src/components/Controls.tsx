@@ -49,43 +49,63 @@ const Controls = React.memo(() => {
     setIsLoadModalOpen(false);
   }, []);
 
+  const [isExpanded, setIsExpanded] = React.useState(false);
+
   return (
-    <div className="neo-brutalist-panel p-6 mb-6">
-      <div className="mb-6">
-        <h2 className="text-lg font-semibold text-green-600 mb-4">
-          Controls
-        </h2>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Formation Controls */}
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium text-blue-400 mb-4">
-            Formations
-          </h3>
-          
-          <div className="space-y-4">
-            <FormationSelector team="red" onFormationChange={handleFormationChange} />
-            <FormationSelector team="blue" onFormationChange={handleFormationChange} />
+    <div className="fixed top-4 left-4 z-50">
+      {/* Compact Controls Toggle */}
+      <div 
+        className="bg-white shadow-lg rounded-lg border border-gray-200 transition-all duration-300 ease-in-out"
+        style={{
+          width: isExpanded ? '320px' : '60px',
+          height: isExpanded ? 'auto' : '60px'
+        }}
+        onMouseEnter={() => setIsExpanded(true)}
+        onMouseLeave={() => setIsExpanded(false)}
+      >
+        {/* Toggle Button */}
+        <div className="flex items-center justify-center p-4">
+          <div className="w-6 h-6 flex items-center justify-center">
+            <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
+            </svg>
           </div>
+          {isExpanded && (
+            <span className="ml-2 text-sm font-medium text-gray-700">Controls</span>
+          )}
         </div>
 
-        {/* Action Controls */}
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium text-purple-400 mb-4">
-            Tactics
-          </h3>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
-            <ControlButton onClick={resetBall}>Reset Ball</ControlButton>
-            <ControlButton onClick={clearAll}>Clear All</ControlButton>
-            <ControlButton onClick={switchSides}>Switch Sides</ControlButton>
-            <ControlButton onClick={resetFormations}>Reset Formations</ControlButton>
-            <ControlButton onClick={handleOpenRoster}>Edit Roster</ControlButton>
-            <ControlButton onClick={handleOpenSave}>Save Tactics</ControlButton>
-            <ControlButton onClick={handleOpenLoad}>Load Tactics</ControlButton>
+        {/* Expanded Content */}
+        {isExpanded && (
+          <div className="px-4 pb-4 space-y-4">
+            {/* Formation Controls */}
+            <div className="space-y-3">
+              <h3 className="text-xs font-medium text-gray-500 uppercase tracking-wide">
+                Formations
+              </h3>
+              <div className="space-y-2">
+                <FormationSelector team="red" onFormationChange={handleFormationChange} />
+                <FormationSelector team="blue" onFormationChange={handleFormationChange} />
+              </div>
+            </div>
+
+            {/* Action Controls */}
+            <div className="space-y-3">
+              <h3 className="text-xs font-medium text-gray-500 uppercase tracking-wide">
+                Actions
+              </h3>
+              <div className="grid grid-cols-2 gap-2">
+                <ControlButton onClick={resetBall}>Reset Ball</ControlButton>
+                <ControlButton onClick={clearAll}>Clear All</ControlButton>
+                <ControlButton onClick={switchSides}>Switch Sides</ControlButton>
+                <ControlButton onClick={resetFormations}>Reset</ControlButton>
+                <ControlButton onClick={handleOpenRoster}>Roster</ControlButton>
+                <ControlButton onClick={handleOpenSave}>Save</ControlButton>
+                <ControlButton onClick={handleOpenLoad}>Load</ControlButton>
+              </div>
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       <RosterModal 
@@ -116,58 +136,28 @@ interface FormationSelectorProps {
 const FormationSelector = React.memo(({ team, onFormationChange }: FormationSelectorProps) => {
   const formations: FormationType[] = ['4-4-2', '4-3-3', '3-5-2', '5-3-2', '4-2-3-1'];
 
-  const teamColor = team === 'red' ? 'var(--secondary-neon)' : 'var(--accent-cyan)';
+  const teamColor = team === 'red' ? 'var(--team-red)' : 'var(--team-blue)';
   const teamName = team === 'red' ? 'Red' : 'Blue';
 
   return (
-    <div className="relative p-4 border rounded-lg" style={{
-      borderColor: teamColor,
-      background: `linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(51, 65, 85, 0.6))`,
-      boxShadow: `0 0 8px ${teamColor}20`
-    }}>
-      <div className="flex items-center justify-between mb-3">
-        <div className="flex items-center gap-2">
-          <div 
-            className="w-3 h-3 animate-pulse"
-            style={{
-              background: teamColor,
-              clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
-              boxShadow: `0 0 8px ${teamColor}`
-            }}
-          />
-          <span className="font-medium text-sm" style={{ color: teamColor }}>
-            Team {teamName}
-          </span>
-        </div>
-        
-        <div className="text-xs opacity-60" style={{ color: 'var(--text-secondary)' }}>
-          Formation
-        </div>
+    <div className="relative">
+      <div className="flex items-center gap-2 mb-1">
+        <div 
+          className="w-2 h-2 rounded-full"
+          style={{ background: teamColor }}
+        />
+        <span className="text-xs font-medium text-gray-700">
+          {teamName}
+        </span>
       </div>
       
       <select
-        className="formation-selector w-full p-3 text-sm font-bold cursor-pointer"
-        style={{ 
-          background: `linear-gradient(135deg, var(--surface-1), rgba(${team === 'red' ? '139, 92, 246' : '59, 130, 246'}, 0.05))`,
-          border: `1px solid ${teamColor}`,
-          color: 'var(--text-primary)',
-          fontSize: '13px',
-          fontWeight: '500',
-          outline: 'none',
-          borderRadius: '4px'
-        }}
+        className="w-full p-2 text-xs border border-gray-200 rounded bg-white text-gray-700 focus:border-gray-400 focus:outline-none"
         onChange={(e) => onFormationChange(team, e.target.value as FormationType)}
         defaultValue={team === 'red' ? '4-4-2' : '4-3-3'}
       >
         {formations.map(formation => (
-          <option 
-            key={formation} 
-            value={formation}
-            style={{
-              backgroundColor: 'var(--surface-1)',
-              color: 'var(--text-primary)'
-            }}
-          >
+          <option key={formation} value={formation}>
             {getFormationName(formation)}
           </option>
         ))}
@@ -182,47 +172,21 @@ interface ControlButtonProps {
 }
 
 const ControlButton = React.memo(({ children, onClick }: ControlButtonProps) => {
-  const [isHovered, setIsHovered] = React.useState(false);
-  
-  const destructiveActions = ['CLEAR ALL', 'RESET FORMATIONS'];
+  const destructiveActions = ['Clear All', 'Reset'];
   const isDestructive = destructiveActions.some(action => 
-    typeof children === 'string' && children.includes(action)
+    typeof children === 'string' && children.toString().includes(action)
   );
 
-  const buttonColor = isDestructive ? 'var(--error-red)' : 'var(--accent-blue)';
+  const buttonClass = isDestructive 
+    ? 'bg-red-50 text-red-600 border-red-200 hover:bg-red-100'
+    : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100';
 
   return (
     <button
-      className="retro-button w-full py-3 px-4 text-xs font-semibold transition-all duration-200 text-center"
+      className={`w-full py-2 px-3 text-xs font-medium border rounded transition-colors duration-150 ${buttonClass}`}
       onClick={onClick}
-      style={{
-        background: isHovered 
-          ? buttonColor 
-          : `linear-gradient(45deg, var(--surface-2), var(--surface-1))`,
-        border: `1px solid ${buttonColor}`,
-        color: isHovered ? 'var(--bg-dark)' : buttonColor,
-        boxShadow: isHovered 
-          ? `0 2px 8px ${buttonColor}30`
-          : `0 2px 4px rgba(0, 0, 0, 0.2)`,
-        transform: isHovered ? 'translateY(-1px)' : 'translateY(0)',
-        borderRadius: '8px',
-        minHeight: '44px'
-      }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="relative z-10">
-        {children}
-      </div>
-      
-      {/* Animated background effect */}
-      <div 
-        className="absolute inset-0 opacity-0 transition-opacity duration-300"
-        style={{
-          background: `linear-gradient(45deg, transparent, ${buttonColor}20, transparent)`,
-          opacity: isHovered ? 1 : 0
-        }}
-      />
+      {children}
     </button>
   );
 });

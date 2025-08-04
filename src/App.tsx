@@ -13,19 +13,15 @@ function App() {
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Title header */}
-        <div className="text-center mb-8 relative">
-          <div className="inline-block relative">
-            <h1 className="text-3xl font-bold text-green-600 mb-3">
-              Football Tactics Board
-            </h1>
-            
-          </div>
-          
+        <div className="text-center mb-6">
+          <h1 className="text-2xl font-semibold text-gray-800">
+            Football Tactics Board
+          </h1>
         </div>
         
         <DragContext>
-          <Controls />
           <Pitch />
+          <Controls />
         </DragContext>
         
         <PlayerEditModal 

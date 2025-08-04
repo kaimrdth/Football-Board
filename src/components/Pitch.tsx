@@ -27,8 +27,8 @@ const Pitch = React.memo(() => {
       </div>
       
       {/* Bottom info bar */}
-      <div className="flex justify-center mt-6 text-xs font-mono opacity-60">
-        <span style={{ color: 'var(--primary-neon)' }}>DRAG & DROP TO REPOSITION • DOUBLE-CLICK TO EDIT</span>
+      <div className="flex justify-center mt-6 text-xs text-gray-500">
+        <span>Drag & drop to reposition • Double-click to edit</span>
       </div>
     </div>
   );
@@ -38,30 +38,16 @@ const PitchMarkings = React.memo(() => (
   <>
     {/* Center line (vertical) */}
     <div 
-      className="absolute top-0 h-full animate-pulse"
+      className="absolute top-0 h-full"
       style={{ 
         left: '50%', 
         transform: 'translateX(-50%)',
         width: '2px',
-        background: 'linear-gradient(to bottom, var(--primary-neon), rgba(0, 255, 65, 0.8), var(--primary-neon))',
-        boxShadow: '0 0 15px var(--primary-neon), 0 0 5px rgba(0, 255, 65, 0.5)',
+        background: 'var(--pitch-line)',
         zIndex: 10
       }}
     />
     
-    {/* Half line (horizontal) */}
-    <div 
-      className="absolute left-0 w-full animate-pulse"
-      style={{ 
-        top: '50%', 
-        transform: 'translateY(-50%)',
-        height: '3px',
-        background: 'linear-gradient(to right, var(--primary-neon), rgba(0, 255, 65, 1), var(--primary-neon))',
-        boxShadow: '0 0 20px var(--primary-neon), 0 0 8px rgba(0, 255, 65, 0.8)',
-        animationDelay: '0.5s',
-        zIndex: 15
-      }}
-    />
     
     {/* Center circle */}
     <div 
@@ -72,106 +58,92 @@ const PitchMarkings = React.memo(() => (
         width: 140,
         height: 140,
         transform: 'translate(-50%, -50%)',
-        border: '2px solid var(--primary-neon)'
+        border: '2px solid var(--pitch-line)'
       }}
     />
     
-    {/* Center spot with glow */}
+    {/* Center spot */}
     <div 
-      className="absolute w-2 h-2 rounded-full animate-pulse"
+      className="absolute w-2 h-2 rounded-full"
       style={{
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        background: 'var(--accent-cyan)',
-        boxShadow: '0 0 10px var(--accent-cyan)',
-        animationDelay: '1.5s'
+        background: 'var(--pitch-line)'
       }}
     />
     
     {/* Left penalty area */}
     <div 
-      className="absolute border-2 border-l-0 animate-pulse"
+      className="absolute border-2 border-l-0"
       style={{
         left: 0,
         top: '50%',
         width: 125,
         height: 309,
         transform: 'translateY(-50%)',
-        borderColor: 'var(--secondary-neon)',
-        boxShadow: '0 0 10px rgba(255, 0, 128, 0.3)',
-        animationDelay: '0.2s'
+        borderColor: 'var(--pitch-line)'
       }}
     />
     
     {/* Right penalty area */}
     <div 
-      className="absolute border-2 border-r-0 animate-pulse"
+      className="absolute border-2 border-r-0"
       style={{
         right: 0,
         top: '50%',
         width: 125,
         height: 309,
         transform: 'translateY(-50%)',
-        borderColor: 'var(--accent-cyan)',
-        boxShadow: '0 0 10px rgba(0, 212, 255, 0.3)',
-        animationDelay: '0.7s'
+        borderColor: 'var(--pitch-line)'
       }}
     />
     
     {/* Left goal area */}
     <div 
-      className="absolute border-2 border-l-0 animate-pulse"
+      className="absolute border-2 border-l-0"
       style={{
         left: 0,
         top: '50%',
         width: 42,
         height: 141,
         transform: 'translateY(-50%)',
-        borderColor: 'var(--secondary-neon)',
-        boxShadow: '0 0 8px rgba(255, 0, 128, 0.4)',
-        animationDelay: '0.3s'
+        borderColor: 'var(--pitch-line)'
       }}
     />
     
     {/* Right goal area */}
     <div 
-      className="absolute border-2 border-r-0 animate-pulse"
+      className="absolute border-2 border-r-0"
       style={{
         right: 0,
         top: '50%',
         width: 42,
         height: 141,
         transform: 'translateY(-50%)',
-        borderColor: 'var(--accent-cyan)',
-        boxShadow: '0 0 8px rgba(0, 212, 255, 0.4)',
-        animationDelay: '0.8s'
+        borderColor: 'var(--pitch-line)'
       }}
     />
     
     {/* Left penalty spot */}
     <div 
-      className="absolute w-1.5 h-1.5 rounded-full animate-pulse"
+      className="absolute w-1.5 h-1.5 rounded-full"
       style={{
         left: 84,
         top: '50%',
         transform: 'translateY(-50%)',
-        background: 'var(--secondary-neon)',
-        boxShadow: '0 0 8px var(--secondary-neon)',
-        animationDelay: '2s'
+        background: 'var(--pitch-line)'
       }}
     />
     
     {/* Right penalty spot */}
     <div 
-      className="absolute w-1.5 h-1.5 rounded-full animate-pulse"
+      className="absolute w-1.5 h-1.5 rounded-full"
       style={{
         right: 84,
         top: '50%',
         transform: 'translateY(-50%)',
-        background: 'var(--accent-cyan)',
-        boxShadow: '0 0 8px var(--accent-cyan)',
-        animationDelay: '2.5s'
+        background: 'var(--pitch-line)'
       }}
     />
     
@@ -184,7 +156,7 @@ const PitchMarkings = React.memo(() => (
           left: pos.x,
           top: pos.y,
           transform: 'translate(-50%, -50%)',
-          background: 'var(--warning-orange)'
+          background: 'var(--pitch-line)'
         }}
       />
     ))}

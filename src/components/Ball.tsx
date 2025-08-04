@@ -54,11 +54,6 @@ const Ball = React.memo(({ ball, isDragging = false, style }: BallProps) => {
       {/* Main ball with simple styling */}
       <div 
         className="ball-neo w-full h-full rounded-full"
-        style={{
-          background: 'radial-gradient(circle at 30% 30%, #ffffff, #e0e0e0, #b0b0b0)',
-          border: '1px solid var(--text-secondary)',
-          position: 'relative'
-        }}
       />
     </div>
   );

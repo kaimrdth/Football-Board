@@ -65,8 +65,6 @@ const Player = React.memo(({ player, isDragging = false, style }: PlayerProps) =
   } : undefined;
 
   const teamColor = player.team === 'red' ? '#dc2626' : '#2563eb';
-  const teamAccent = player.team === 'red' ? '#991b1b' : '#1d4ed8';
-  const teamGlow = player.team === 'red' ? 'rgba(220, 38, 38, 0.4)' : 'rgba(37, 99, 235, 0.4)';
 
   return (
     <div
@@ -93,38 +91,28 @@ const Player = React.memo(({ player, isDragging = false, style }: PlayerProps) =
       <div 
         className="w-full h-full flex items-center justify-center rounded-full transition-all duration-200"
         style={{
-          background: `radial-gradient(circle at 30% 30%, ${teamColor}, ${teamAccent})`,
-          border: isSelected ? `2px solid #f59e0b` : `2px solid #ffffff`,
+          background: teamColor,
+          border: isSelected ? `3px solid #f59e0b` : `2px solid #ffffff`,
           boxShadow: isSelected 
-            ? `0 0 16px #f59e0b, 0 0 8px ${teamGlow}, inset 0 0 8px rgba(255, 255, 255, 0.2)`
-            : `0 0 12px ${teamGlow}, inset 0 0 8px rgba(255, 255, 255, 0.15)`
+            ? `0 0 0 2px #f59e0b`
+            : `0 2px 4px rgba(0, 0, 0, 0.1)`
         }}
       >
         {/* Player number */}
         <span 
-          className="font-semibold"
+          className="font-semibold text-white"
           style={{ 
             fontSize: '11px', 
-            color: player.team === 'blue' ? '#ffffff' : '#ffffff',
-            textShadow: player.team === 'blue' ? `0 1px 3px rgba(0, 0, 0, 1), 0 0 4px rgba(0, 0, 0, 0.8)` : `0 1px 2px rgba(0, 0, 0, 0.8)`,
             position: 'relative',
             zIndex: 2,
             fontFamily: 'Inter, system-ui, sans-serif',
-            fontWeight: player.team === 'blue' ? '700' : '600'
+            fontWeight: '600'
           }}
         >
           {player.number}
         </span>
       </div>
       
-      {/* Player status indicators */}
-      <div 
-        className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 rounded-full"
-        style={{
-          background: teamColor,
-          boxShadow: `0 0 4px ${teamColor}`
-        }}
-      />
       
       {/* Player name label */}
       <div 
@@ -148,19 +136,6 @@ const Player = React.memo(({ player, isDragging = false, style }: PlayerProps) =
         {player.name}
       </div>
       
-      {/* Selection glow effect */}
-      {isSelected && (
-        <div 
-          className="absolute inset-0 rounded-full animate-pulse"
-          style={{
-            background: 'transparent',
-            border: '2px solid #f59e0b',
-            boxShadow: '0 0 20px #f59e0b',
-            transform: 'scale(1.3)',
-            pointerEvents: 'none'
-          }}
-        />
-      )}
     </div>
   );
 });
