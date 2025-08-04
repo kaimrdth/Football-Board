@@ -51,50 +51,18 @@ const Controls = React.memo(() => {
 
   return (
     <div className="neo-brutalist-panel p-6 mb-6">
-      {/* Header with animated elements */}
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-4">
-          <div className="w-8 h-8 relative">
-            <div className="absolute inset-0 border-2 border-cyan-400 animate-spin" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 50%, 0 50%)' }} />
-            <div className="absolute inset-0 border-2 border-pink-400 animate-spin" style={{ clipPath: 'polygon(0 50%, 100% 50%, 100% 100%, 0 100%)', animationDirection: 'reverse', animationDelay: '0.5s' }} />
-          </div>
-          <h2 className="" style={{
-            color: 'var(--primary-accent)',
-            fontSize: '18px',
-            fontWeight: '700',
-            letterSpacing: '0.1em',
-            fontFamily: 'Orbitron, monospace',
-            textTransform: 'uppercase'
-          }}>
-            COMMAND CENTER
-          </h2>
-        </div>
-        
-        {/* Status indicators */}
-        <div className="flex items-center gap-3 text-xs font-mono">
-          <div className="flex items-center gap-1">
-            <div className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
-            <span style={{ color: 'var(--text-secondary)' }}>READY</span>
-          </div>
-        </div>
+      <div className="mb-6">
+        <h2 className="text-lg font-semibold text-green-600 mb-4">
+          Controls
+        </h2>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Formation Controls */}
         <div className="space-y-4">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-0.5 h-6 bg-gradient-to-b from-cyan-400 to-pink-400" />
-            <h3 style={{ 
-              color: 'var(--accent-blue)', 
-              fontWeight: '600', 
-              fontSize: '14px',
-              textTransform: 'uppercase',
-              letterSpacing: '0.08em',
-              fontFamily: 'Orbitron, monospace'
-            }}>
-              FORMATION MATRIX
-            </h3>
-          </div>
+          <h3 className="text-sm font-medium text-blue-400 mb-4">
+            Formations
+          </h3>
           
           <div className="space-y-4">
             <FormationSelector team="red" onFormationChange={handleFormationChange} />
@@ -104,28 +72,18 @@ const Controls = React.memo(() => {
 
         {/* Action Controls */}
         <div className="space-y-4">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-0.5 h-6 bg-gradient-to-b from-pink-400 to-green-400" />
-            <h3 style={{ 
-              color: 'var(--secondary-accent)', 
-              fontWeight: '600', 
-              fontSize: '14px',
-              textTransform: 'uppercase',
-              letterSpacing: '0.08em',
-              fontFamily: 'Orbitron, monospace'
-            }}>
-              TACTICAL OPERATIONS
-            </h3>
-          </div>
+          <h3 className="text-sm font-medium text-purple-400 mb-4">
+            Actions
+          </h3>
           
           <div className="grid grid-cols-2 gap-4">
-            <ControlButton onClick={resetBall}>RESET BALL</ControlButton>
-            <ControlButton onClick={clearAll}>CLEAR ALL</ControlButton>
-            <ControlButton onClick={switchSides}>SWITCH SIDES</ControlButton>
-            <ControlButton onClick={resetFormations}>RESET FORMATIONS</ControlButton>
-            <ControlButton onClick={handleOpenRoster}>EDIT ROSTER</ControlButton>
-            <ControlButton onClick={handleOpenSave}>SAVE TACTICS</ControlButton>
-            <ControlButton onClick={handleOpenLoad}>LOAD TACTICS</ControlButton>
+            <ControlButton onClick={resetBall}>Reset Ball</ControlButton>
+            <ControlButton onClick={clearAll}>Clear All</ControlButton>
+            <ControlButton onClick={switchSides}>Switch Sides</ControlButton>
+            <ControlButton onClick={resetFormations}>Reset Formations</ControlButton>
+            <ControlButton onClick={handleOpenRoster}>Edit Roster</ControlButton>
+            <ControlButton onClick={handleOpenSave}>Save Tactics</ControlButton>
+            <ControlButton onClick={handleOpenLoad}>Load Tactics</ControlButton>
           </div>
         </div>
       </div>
@@ -159,7 +117,7 @@ const FormationSelector = React.memo(({ team, onFormationChange }: FormationSele
   const formations: FormationType[] = ['4-4-2', '4-3-3', '3-5-2', '5-3-2', '4-2-3-1'];
 
   const teamColor = team === 'red' ? 'var(--secondary-neon)' : 'var(--accent-cyan)';
-  const teamName = team === 'red' ? 'ALPHA' : 'BETA';
+  const teamName = team === 'red' ? 'Red' : 'Blue';
 
   return (
     <div className="relative p-4 border rounded-lg" style={{
@@ -177,20 +135,13 @@ const FormationSelector = React.memo(({ team, onFormationChange }: FormationSele
               boxShadow: `0 0 8px ${teamColor}`
             }}
           />
-          <span style={{ 
-            color: teamColor, 
-            fontWeight: '600', 
-            textTransform: 'uppercase',
-            fontSize: '13px',
-            letterSpacing: '0.08em',
-            fontFamily: 'Orbitron, monospace'
-          }}>
-            TEAM {teamName}
+          <span className="font-medium text-sm" style={{ color: teamColor }}>
+            Team {teamName}
           </span>
         </div>
         
-        <div className="text-xs font-mono opacity-60" style={{ color: 'var(--text-secondary)' }}>
-          FORMATION
+        <div className="text-xs opacity-60" style={{ color: 'var(--text-secondary)' }}>
+          Formation
         </div>
       </div>
       
@@ -201,8 +152,7 @@ const FormationSelector = React.memo(({ team, onFormationChange }: FormationSele
           border: `1px solid ${teamColor}`,
           color: 'var(--text-primary)',
           fontSize: '13px',
-          fontWeight: '600',
-          fontFamily: 'Orbitron, monospace',
+          fontWeight: '500',
           outline: 'none',
           borderRadius: '4px'
         }}
@@ -215,8 +165,7 @@ const FormationSelector = React.memo(({ team, onFormationChange }: FormationSele
             value={formation}
             style={{
               backgroundColor: 'var(--surface-1)',
-              color: 'var(--text-primary)',
-              fontFamily: 'Orbitron, monospace'
+              color: 'var(--text-primary)'
             }}
           >
             {getFormationName(formation)}
@@ -253,8 +202,6 @@ const ControlButton = React.memo(({ children, onClick }: ControlButtonProps) => 
           : `linear-gradient(45deg, var(--surface-2), var(--surface-1))`,
         border: `1px solid ${isHovered ? buttonHoverColor : buttonColor}`,
         color: isHovered ? 'var(--bg-dark)' : buttonColor,
-        fontFamily: 'Orbitron, monospace',
-        letterSpacing: '0.08em',
         boxShadow: isHovered 
           ? `0 2px 8px ${buttonColor}40, inset 0 0 10px rgba(255, 255, 255, 0.1)`
           : `0 2px 4px rgba(0, 0, 0, 0.2)`,
