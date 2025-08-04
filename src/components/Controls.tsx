@@ -25,6 +25,19 @@ const Controls = React.memo(() => {
     [setFormation]
   );
 
+  const handleMouseEnter = React.useCallback(() => {
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+    }
+    setIsExpanded(true);
+  }, []);
+
+  const handleMouseLeave = React.useCallback(() => {
+    hoverTimeoutRef.current = setTimeout(() => {
+      setIsExpanded(false);
+    }, 150);
+  }, []);
+
   const handleOpenRoster = React.useCallback(() => {
     setIsRosterModalOpen(true);
   }, []);
@@ -67,19 +80,11 @@ const Controls = React.memo(() => {
         className="bg-white shadow-lg rounded-lg border border-gray-200 transition-all duration-300 ease-in-out"
         style={{
           width: isExpanded ? '320px' : '60px',
-          height: isExpanded ? 'auto' : '60px'
+          height: isExpanded ? 'auto' : '60px',
+          willChange: 'width, height'
         }}
-        onMouseEnter={() => {
-          if (hoverTimeoutRef.current) {
-            clearTimeout(hoverTimeoutRef.current);
-          }
-          setIsExpanded(true);
-        }}
-        onMouseLeave={() => {
-          hoverTimeoutRef.current = setTimeout(() => {
-            setIsExpanded(false);
-          }, 150);
-        }}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
       >
         {/* Toggle Button */}
         <div className="flex items-center justify-center p-4">

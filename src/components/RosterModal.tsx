@@ -19,7 +19,7 @@ const RosterModal = React.memo(({ isOpen, onClose }: RosterModalProps) => {
     }
   }, [isOpen, players]);
 
-  const handlePlayerChange = (playerId: string, field: keyof Player, value: string) => {
+  const handlePlayerChange = React.useCallback((playerId: string, field: keyof Player, value: string) => {
     setEditedPlayers(prev => 
       prev.map(player => 
         player.id === playerId 
@@ -27,9 +27,9 @@ const RosterModal = React.memo(({ isOpen, onClose }: RosterModalProps) => {
           : player
       )
     );
-  };
+  }, []);
 
-  const handleSave = () => {
+  const handleSave = React.useCallback(() => {
     editedPlayers.forEach(player => {
       const original = players.find(p => p.id === player.id);
       if (original && (
@@ -47,7 +47,7 @@ const RosterModal = React.memo(({ isOpen, onClose }: RosterModalProps) => {
       }
     });
     onClose();
-  };
+  }, [editedPlayers, players, updatePlayer, onClose]);
 
 
   if (!isOpen) return null;
@@ -61,6 +61,7 @@ const RosterModal = React.memo(({ isOpen, onClose }: RosterModalProps) => {
         className="bg-white rounded-xl p-4 sm:p-6 lg:p-8 
                    w-full max-w-md sm:max-w-3xl lg:max-w-5xl max-h-[90vh] overflow-y-auto text-gray-900 
                    relative shadow-2xl mx-auto border border-gray-200"
+        style={{ backgroundColor: '#ffffff', opacity: 1 }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close button */}
