@@ -10,7 +10,6 @@ interface RosterModalProps {
 const RosterModal = React.memo(({ isOpen, onClose }: RosterModalProps) => {
   const players = useGameStore(state => state.players);
   const updatePlayer = useGameStore(state => state.updatePlayer);
-  const clearAllPlayerNames = useGameStore(state => state.clearAllPlayerNames);
 
   const [editedPlayers, setEditedPlayers] = React.useState<Player[]>([]);
 
