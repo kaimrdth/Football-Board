@@ -61,12 +61,12 @@ const Controls = React.memo(() => {
   }, []);
 
   return (
-    <div className="fixed top-4 left-4 z-50">
+    <div className="relative z-50">
       {/* Compact Controls Toggle */}
       <div 
         className="bg-white shadow-lg rounded-lg border border-gray-200 transition-all duration-300 ease-in-out"
         style={{
-          width: isExpanded ? 'min(320px, calc(100vw - 2rem))' : '60px',
+          width: isExpanded ? '320px' : '60px',
           height: isExpanded ? 'auto' : '60px'
         }}
         onMouseEnter={() => {

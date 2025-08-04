@@ -15,13 +15,19 @@ function App() {
         {/* Title header */}
         <div className="text-center mb-6">
           <h1 className="text-2xl font-semibold text-gray-800">
-            Football Tactics Board
+            Footballboard
           </h1>
         </div>
         
         <DragContext>
-          <Pitch />
-          <Controls />
+          <div className="flex items-start gap-8 justify-center">
+            <div className="flex-shrink-0">
+              <Controls />
+            </div>
+            <div className="flex-shrink-0">
+              <Pitch />
+            </div>
+          </div>
         </DragContext>
         
         <PlayerEditModal 

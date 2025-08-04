@@ -8,7 +8,7 @@ const Pitch = React.memo(() => {
   const ball = useBall();
 
   return (
-    <div className="neo-brutalist-panel p-8 overflow-hidden mb-8">
+    <div className="neo-brutalist-panel p-8 overflow-hidden">
       
       <div 
         className="relative mx-auto pitch-neo overflow-hidden"
@@ -26,10 +26,6 @@ const Pitch = React.memo(() => {
         <Ball ball={ball} />
       </div>
       
-      {/* Bottom info bar */}
-      <div className="flex justify-center mt-6 text-xs text-gray-500">
-        <span>Drag & drop to reposition • Double-click to edit</span>
-      </div>
     </div>
   );
 });
