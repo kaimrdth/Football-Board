@@ -38,7 +38,7 @@ const PitchMarkings = React.memo(() => (
     
     {/* Half line (horizontal) */}
     <div 
-      className="absolute left-0 w-full h-px bg-black/40"
+      className="absolute left-0 w-full h-0.5 bg-black"
       style={{ top: '50%', transform: 'translateY(-50%)' }}
     />
     
