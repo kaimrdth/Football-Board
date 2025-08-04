@@ -2,7 +2,6 @@ import React from 'react';
 import { useDraggable } from '@dnd-kit/core';
 import { Player as PlayerType, DragData } from '../types';
 import { useGameStore } from '../stores/gameStore';
-import { getPlayerDisplayColor, isColorBright } from '../utils';
 
 interface PlayerProps {
   player: PlayerType;
@@ -65,8 +64,8 @@ const Player = React.memo(({ player, isDragging = false, style }: PlayerProps) =
     willChange: 'transform', // Optimize for animations
   } : undefined;
 
-  const playerColor = getPlayerDisplayColor(player.color);
-  const textColor = isColorBright(playerColor) ? '#000000' : '#ffffff';
+  const teamColor = player.team === 'red' ? 'var(--secondary-neon)' : 'var(--accent-cyan)';
+  const teamAccent = player.team === 'red' ? 'var(--error-red)' : 'var(--primary-neon)';
 
   return (
     <div
@@ -75,22 +74,11 @@ const Player = React.memo(({ player, isDragging = false, style }: PlayerProps) =
         position: 'absolute',
         left: isDragging ? 0 : player.position.x,
         top: isDragging ? 0 : player.position.y,
-        width: '24px',
-        height: '24px',
-        borderRadius: '50%',
-        backgroundColor: playerColor,
-        border: isSelected ? '3px solid #ffd700' : '2px solid #ffffff',
-        color: textColor,
+        width: '28px',
+        height: '28px',
         cursor: 'move',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontSize: '10px',
-        fontWeight: 'bold',
-        boxShadow: '0 4px 8px rgba(0,0,0,0.3)',
-        transform: transformStyle ? undefined : 'scale(1)', // Let transformStyle handle scaling when dragging
         zIndex: (isDndKitDragging || isDragging) ? 1000 : 10,
-        transition: 'none', // Remove all transitions for instant response
+        transition: 'none',
         userSelect: 'none',
         touchAction: 'none',
         ...transformStyle,
@@ -100,30 +88,79 @@ const Player = React.memo(({ player, isDragging = false, style }: PlayerProps) =
       {...listeners}
       {...attributes}
     >
-      <span style={{ fontSize: '10px', fontWeight: 'bold', lineHeight: '1', color: textColor }}>
-        {player.number}
-      </span>
-      
-      {/* Player name label */}
+      {/* Main player shape */}
       <div 
+        className="player-neo w-full h-full flex items-center justify-center animate-pulse"
         style={{
-          position: 'absolute',
+          background: `conic-gradient(from 0deg, ${teamColor}, ${teamAccent}, ${teamColor})`,
+          border: isSelected ? `3px solid var(--warning-orange)` : `2px solid var(--text-primary)`,
+          boxShadow: isSelected 
+            ? `0 0 20px var(--warning-orange), inset 0 0 10px rgba(255, 255, 255, 0.2)`
+            : `0 0 15px ${teamColor}, inset 0 0 10px rgba(255, 255, 255, 0.2)`,
+          animationDelay: `${player.number * 0.1}s`
+        }}
+      >
+        {/* Player number */}
+        <span 
+          className="font-mono font-bold neon-glow"
+          style={{ 
+            fontSize: '11px', 
+            color: 'var(--text-primary)',
+            textShadow: `0 0 8px var(--text-primary)`,
+            position: 'relative',
+            zIndex: 2
+          }}
+        >
+          {player.number}
+        </span>
+      </div>
+      
+      {/* Player status indicators */}
+      <div 
+        className="absolute -top-1 -right-1 w-2 h-2 rounded-full animate-pulse"
+        style={{
+          background: teamAccent,
+          boxShadow: `0 0 6px ${teamAccent}`,
+          animationDelay: `${player.number * 0.15}s`
+        }}
+      />
+      
+      {/* Player name label with futuristic styling */}
+      <div 
+        className="absolute font-mono"
+        style={{
           top: '100%',
           left: '50%',
           transform: 'translateX(-50%)',
-          marginTop: '4px',
-          fontSize: '10px',
+          marginTop: '6px',
+          fontSize: '9px',
           whiteSpace: 'nowrap',
-          color: '#000000',
-          fontWeight: 'bold',
+          color: teamColor,
+          fontWeight: '700',
           pointerEvents: 'none',
-          textShadow: '1px 1px 2px rgba(255,255,255,0.8)',
-          opacity: (isDndKitDragging || isDragging) ? 0 : 0.8,
-          transition: 'none' // Instant visibility changes
+          textShadow: `0 0 6px ${teamColor}`,
+          opacity: (isDndKitDragging || isDragging) ? 0 : 0.9,
+          transition: 'none',
+          letterSpacing: '0.05em',
+          textTransform: 'uppercase'
         }}
       >
         {player.name}
       </div>
+      
+      {/* Selection glow effect */}
+      {isSelected && (
+        <div 
+          className="absolute inset-0 rounded-full animate-pulse"
+          style={{
+            background: 'transparent',
+            border: '2px solid var(--warning-orange)',
+            boxShadow: '0 0 25px var(--warning-orange)',
+            transform: 'scale(1.4)',
+            pointerEvents: 'none'
+          }}
+        />
+      )}
     </div>
   );
 });
