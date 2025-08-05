@@ -19,7 +19,7 @@ const PlayerEditModal = React.memo(({ player, onClose }: PlayerEditModalProps) =
       setName(player.name);
       setNumber(player.number);
       setColor(player.color.includes('rgba') ? 
-        player.team === 'red' ? '#ff4444' : '#4444ff' 
+        player.team === 'team1' ? '#ff4444' : '#4444ff' 
         : player.color
       );
     }
@@ -146,7 +146,7 @@ const PlayerEditModal = React.memo(({ player, onClose }: PlayerEditModalProps) =
           </div>
           <div>
             <div style={{ 
-              color: player.team === 'red' ? '#f87171' : '#60a5fa',
+              color: player.team === 'team1' ? '#f87171' : '#60a5fa',
               fontWeight: '600',
               textTransform: 'uppercase',
               fontSize: '12px',
@@ -191,8 +191,8 @@ const PlayerEditModal = React.memo(({ player, onClose }: PlayerEditModalProps) =
                 backdropFilter: 'blur(8px)'
               }}
               onFocus={(e) => {
-                e.target.style.borderColor = player.team === 'red' ? '#f87171' : '#60a5fa';
-                e.target.style.boxShadow = `0 0 0 2px ${player.team === 'red' ? '#f87171' : '#60a5fa'}20`;
+                e.target.style.borderColor = player.team === 'team1' ? '#f87171' : '#60a5fa';
+                e.target.style.boxShadow = `0 0 0 2px ${player.team === 'team1' ? '#f87171' : '#60a5fa'}20`;
               }}
               onBlur={(e) => {
                 e.target.style.borderColor = 'rgba(74, 85, 104, 0.4)';
@@ -235,8 +235,8 @@ const PlayerEditModal = React.memo(({ player, onClose }: PlayerEditModalProps) =
                   backdropFilter: 'blur(8px)'
                 }}
                 onFocus={(e) => {
-                  e.target.style.borderColor = player.team === 'red' ? '#f87171' : '#60a5fa';
-                  e.target.style.boxShadow = `0 0 0 2px ${player.team === 'red' ? '#f87171' : '#60a5fa'}20`;
+                  e.target.style.borderColor = player.team === 'team1' ? '#f87171' : '#60a5fa';
+                  e.target.style.boxShadow = `0 0 0 2px ${player.team === 'team1' ? '#f87171' : '#60a5fa'}20`;
                 }}
                 onBlur={(e) => {
                   e.target.style.borderColor = 'rgba(74, 85, 104, 0.4)';
@@ -273,8 +273,8 @@ const PlayerEditModal = React.memo(({ player, onClose }: PlayerEditModalProps) =
                   transition: 'all 0.2s ease'
                 }}
                 onFocus={(e) => {
-                  e.target.style.borderColor = player.team === 'red' ? '#f87171' : '#60a5fa';
-                  e.target.style.boxShadow = `0 0 0 2px ${player.team === 'red' ? '#f87171' : '#60a5fa'}20`;
+                  e.target.style.borderColor = player.team === 'team1' ? '#f87171' : '#60a5fa';
+                  e.target.style.boxShadow = `0 0 0 2px ${player.team === 'team1' ? '#f87171' : '#60a5fa'}20`;
                 }}
                 onBlur={(e) => {
                   e.target.style.borderColor = 'rgba(74, 85, 104, 0.4)';
@@ -323,8 +323,8 @@ const PlayerEditModal = React.memo(({ player, onClose }: PlayerEditModalProps) =
             onClick={handleSave}
             style={{
               padding: '12px 20px',
-              backgroundColor: player.team === 'red' ? 'rgba(248, 113, 113, 0.8)' : 'rgba(96, 165, 250, 0.8)',
-              border: `1px solid ${player.team === 'red' ? 'rgba(248, 113, 113, 0.4)' : 'rgba(96, 165, 250, 0.4)'}`,
+              backgroundColor: player.team === 'team1' ? 'rgba(248, 113, 113, 0.8)' : 'rgba(96, 165, 250, 0.8)',
+              border: `1px solid ${player.team === 'team1' ? 'rgba(248, 113, 113, 0.4)' : 'rgba(96, 165, 250, 0.4)'}`,
               color: '#ffffff',
               borderRadius: '6px',
               cursor: 'pointer',
@@ -338,10 +338,10 @@ const PlayerEditModal = React.memo(({ player, onClose }: PlayerEditModalProps) =
               boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)'
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = player.team === 'red' ? 'rgba(248, 113, 113, 1)' : 'rgba(96, 165, 250, 1)';
+              e.currentTarget.style.backgroundColor = player.team === 'team1' ? 'rgba(248, 113, 113, 1)' : 'rgba(96, 165, 250, 1)';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = player.team === 'red' ? 'rgba(248, 113, 113, 0.8)' : 'rgba(96, 165, 250, 0.8)';
+              e.currentTarget.style.backgroundColor = player.team === 'team1' ? 'rgba(248, 113, 113, 0.8)' : 'rgba(96, 165, 250, 0.8)';
             }}
           >
             Save Changes
