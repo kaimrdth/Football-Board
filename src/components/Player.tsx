@@ -70,9 +70,8 @@ const Player = React.memo(({ player, isDragging = false, style }: PlayerProps) =
   const teamColor = player.color || (player.team === 'red' ? '#dc2626' : '#2563eb');
   const textColor = isColorBright(teamColor) ? '#000000' : '#ffffff';
   
-  // Player names are displayed against the pitch background (#4ade80 - bright green)
-  const pitchColor = '#4ade80';
-  const nameTextColor = isColorBright(pitchColor) ? '#000000' : '#ffffff';
+  // Player names are displayed directly on the bright green pitch - always use black for readability
+  const nameTextColor = '#000000';
 
   return (
     <div

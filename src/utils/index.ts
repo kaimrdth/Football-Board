@@ -83,6 +83,6 @@ export function isColorBright(color: string): boolean {
   // Calculate relative luminance using the formula from WCAG
   const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
   
-  // Return true if luminance is above threshold (bright color needs dark text)
-  return luminance > 0.6;
+  // More sensitive threshold - bright colors need dark text
+  return luminance > 0.4;
 }
