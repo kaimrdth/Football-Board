@@ -145,7 +145,7 @@ const PitchMarkings = React.memo(() => (
       }}
     />
     
-/* LEFT PENALTY ARC */
+{/* LEFT PENALTY ARC */}
 <svg
   className="absolute"
   style={{
@@ -168,7 +168,7 @@ const PitchMarkings = React.memo(() => (
   </g>
 </svg>
 
-/* RIGHT PENALTY ARC */
+{/* RIGHT PENALTY ARC */}
 <svg
   className="absolute"
   style={{
