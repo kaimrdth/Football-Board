@@ -14,24 +14,20 @@ const FormationBar = React.memo(() => {
   );
 
   return (
-    <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-40">
-      <div className="bg-white/95 backdrop-blur-md border border-white/50 shadow-lg rounded-lg px-6 py-3">
-        <div className="flex items-center gap-8">
-          <FormationSelector 
-            team="team1" 
-            onFormationChange={handleFormationChange}
-            teamInfo={teams.team1}
-          />
-          
-          <div className="w-px h-8 bg-gray-200" />
-          
-          <FormationSelector 
-            team="team2" 
-            onFormationChange={handleFormationChange}
-            teamInfo={teams.team2}
-          />
-        </div>
-      </div>
+    <div className="flex items-center gap-6">
+      <FormationSelector 
+        team="team1" 
+        onFormationChange={handleFormationChange}
+        teamInfo={teams.team1}
+      />
+      
+      <div className="w-px h-6 bg-gray-300" />
+      
+      <FormationSelector 
+        team="team2" 
+        onFormationChange={handleFormationChange}
+        teamInfo={teams.team2}
+      />
     </div>
   );
 });

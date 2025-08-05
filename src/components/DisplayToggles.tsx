@@ -10,7 +10,7 @@ const DisplayToggles = React.memo(() => {
   } = useGameStore();
 
   return (
-    <div className="fixed top-4 right-4 z-40 flex flex-col gap-2">
+    <div className="flex gap-2">
       <ToggleButton
         onClick={togglePlayerNames}
         isActive={showPlayerNames}
