@@ -78,24 +78,46 @@ const Controls = React.memo(() => {
       {/* Compact Controls Toggle */}
       <div 
         className={`neo-brutalist-panel transition-all duration-300 ease-in-out ${
-          isExpanded ? 'bg-white/95 backdrop-blur-md' : 'bg-white/20 backdrop-blur-sm border-white/30'
-        }`}
+          isExpanded 
+            ? 'bg-white/95 backdrop-blur-md border-white/50' 
+            : 'bg-white/5 backdrop-blur-sm border-white/20 hover:bg-white/10 hover:border-white/30'
+        } ${!isExpanded ? 'animate-pulse-subtle' : ''}`}
         style={{
           width: isExpanded ? '320px' : '60px',
           height: isExpanded ? 'auto' : '60px',
-          willChange: 'width, height'
+          willChange: 'width, height',
+          boxShadow: isExpanded 
+            ? '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
+            : '0 0 0 1px rgba(255, 255, 255, 0.1), 0 0 8px rgba(255, 255, 255, 0.05)'
         }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
         {/* Toggle Button */}
-        <div className="flex items-center justify-center p-4">
+        <div className="flex items-center justify-center p-4 relative group">
           <div className="w-6 h-6 flex items-center justify-center">
-            <svg className={`w-5 h-5 ${isExpanded ? 'text-gray-600' : 'text-gray-800'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
+            <svg 
+              className={`w-5 h-5 transition-colors duration-200 ${
+                isExpanded ? 'text-gray-600' : 'text-white drop-shadow-md'
+              }`} 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
             </svg>
           </div>
           {isExpanded && <span className="ml-2 text-sm font-medium text-gray-700">Controls</span>}
+          
+          {/* Subtle tooltip hint for collapsed state */}
+          {!isExpanded && (
+            <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-70 transition-opacity duration-200 pointer-events-none">
+              <div className="bg-black/80 text-white text-xs px-2 py-1 rounded whitespace-nowrap backdrop-blur-sm">
+                Controls
+              </div>
+              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full border-4 border-transparent border-b-black/80"></div>
+            </div>
+          )}
         </div>
 
         {/* Expanded Content */}
