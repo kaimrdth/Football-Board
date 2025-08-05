@@ -1,9 +1,10 @@
 import React from 'react';
 import { useGameStore } from '../stores/gameStore';
-import { FormationType } from '../types';
+import { FormationType, Team } from '../types';
 import { getFormationName } from '../utils/formations';
 import RosterModal from './RosterModal';
 import SaveLoadModal from './SaveLoadModal';
+import TeamCustomizationModal from './TeamCustomizationModal';
 
 const Controls = React.memo(() => {
   const {
@@ -16,14 +17,17 @@ const Controls = React.memo(() => {
     togglePlayerNumbers,
     showPlayerNames,
     showPlayerNumbers,
+    teams,
+    updateTeamInfo,
   } = useGameStore();
 
   const [isRosterModalOpen, setIsRosterModalOpen] = React.useState(false);
   const [isSaveModalOpen, setIsSaveModalOpen] = React.useState(false);
   const [isLoadModalOpen, setIsLoadModalOpen] = React.useState(false);
+  const [isTeamModalOpen, setIsTeamModalOpen] = React.useState(false);
 
   const handleFormationChange = React.useCallback(
-    (team: 'red' | 'blue', formation: FormationType) => {
+    (team: Team, formation: FormationType) => {
       setFormation(team, formation);
     },
     [setFormation]
@@ -64,6 +68,14 @@ const Controls = React.memo(() => {
 
   const handleCloseLoad = React.useCallback(() => {
     setIsLoadModalOpen(false);
+  }, []);
+
+  const handleOpenTeam = React.useCallback(() => {
+    setIsTeamModalOpen(true);
+  }, []);
+
+  const handleCloseTeam = React.useCallback(() => {
+    setIsTeamModalOpen(false);
   }, []);
 
   const [isExpanded, setIsExpanded] = React.useState(false);
@@ -130,8 +142,8 @@ const Controls = React.memo(() => {
                 Formations
               </h3>
               <div className="space-y-2">
-                <FormationSelector team="red" onFormationChange={handleFormationChange} />
-                <FormationSelector team="blue" onFormationChange={handleFormationChange} />
+                <FormationSelector team="team1" onFormationChange={handleFormationChange} />
+                <FormationSelector team="team2" onFormationChange={handleFormationChange} />
               </div>
             </div>
 
@@ -167,6 +179,7 @@ const Controls = React.memo(() => {
                 <ControlButton onClick={switchSides}>Switch Sides</ControlButton>
                 <ControlButton onClick={resetFormations}>Reset</ControlButton>
                 <ControlButton onClick={handleOpenRoster}>Roster</ControlButton>
+                <ControlButton onClick={handleOpenTeam}>Teams</ControlButton>
                 <ControlButton onClick={handleOpenSave}>Save</ControlButton>
                 <ControlButton onClick={handleOpenLoad}>Load</ControlButton>
               </div>
@@ -191,20 +204,29 @@ const Controls = React.memo(() => {
         onClose={handleCloseLoad}
         mode="load"
       />
+      
+      <TeamCustomizationModal 
+        isOpen={isTeamModalOpen}
+        onClose={handleCloseTeam}
+        teams={teams}
+        updateTeamInfo={updateTeamInfo}
+      />
     </div>
   );
 });
 
 interface FormationSelectorProps {
-  team: 'red' | 'blue';
-  onFormationChange: (team: 'red' | 'blue', formation: FormationType) => void;
+  team: Team;
+  onFormationChange: (team: Team, formation: FormationType) => void;
 }
 
 const FormationSelector = React.memo(({ team, onFormationChange }: FormationSelectorProps) => {
   const formations: FormationType[] = ['4-4-2', '4-3-3', '3-5-2', '5-3-2', '4-2-3-1'];
+  const teams = useGameStore(state => state.teams);
 
-  const teamColor = team === 'red' ? 'var(--team-red)' : 'var(--team-blue)';
-  const teamName = team === 'red' ? 'Red' : 'Blue';
+  const teamInfo = teams[team];
+  const teamColor = teamInfo.kitColor;
+  const teamName = teamInfo.name;
 
   return (
     <div className="relative">
@@ -221,7 +243,7 @@ const FormationSelector = React.memo(({ team, onFormationChange }: FormationSele
       <select
         className="formation-selector w-full p-2 text-xs"
         onChange={(e) => onFormationChange(team, e.target.value as FormationType)}
-        defaultValue={team === 'red' ? '4-4-2' : '4-3-3'}
+        defaultValue={team === 'team1' ? '4-4-2' : '4-3-3'}
       >
         {formations.map(formation => (
           <option key={formation} value={formation}>

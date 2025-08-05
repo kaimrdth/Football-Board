@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import { subscribeWithSelector } from 'zustand/middleware';
-import { Player, Ball, Team, Position, FormationType } from '../types';
+import { Player, Ball, Team, Position, FormationType, TeamInfo } from '../types';
 import { FORMATIONS, createDefaultPlayers } from '../utils/formations';
 
 interface GameStore {
@@ -11,6 +11,10 @@ interface GameStore {
   selectedPlayer: Player | null;
   showPlayerNames: boolean;
   showPlayerNumbers: boolean;
+  teams: {
+    team1: TeamInfo;
+    team2: TeamInfo;
+  };
   
   // Actions
   updatePlayerPosition: (playerId: string, position: Position) => void;
@@ -25,6 +29,7 @@ interface GameStore {
   clearAllPlayerNames: () => void;
   togglePlayerNames: () => void;
   togglePlayerNumbers: () => void;
+  updateTeamInfo: (team: Team, updates: Partial<TeamInfo>) => void;
 }
 
 const PITCH_WIDTH = 1200;
@@ -39,6 +44,18 @@ export const useGameStore = create<GameStore>()(
       selectedPlayer: null,
       showPlayerNames: true,
       showPlayerNumbers: true,
+      teams: {
+        team1: {
+          name: 'Team 1',
+          kitColor: '#dc2626',
+          gkKitColor: '#16a34a'
+        },
+        team2: {
+          name: 'Team 2', 
+          kitColor: '#2563eb',
+          gkKitColor: '#ca8a04'
+        }
+      },
 
       // Actions
       updatePlayerPosition: (playerId: string, position: Position) =>
@@ -76,13 +93,13 @@ export const useGameStore = create<GameStore>()(
             const player = teamPlayers[i];
             const position = positions[i];
             
-            if (team === 'red') {
+            if (team === 'team1') {
               player.position = {
                 x: (position.x / 100) * (PITCH_WIDTH - 25),
                 y: (position.y / 100) * (PITCH_HEIGHT - 25)
               };
             } else {
-              // Mirror for blue team
+              // Mirror for team2
               player.position = {
                 x: ((100 - position.x) / 100) * (PITCH_WIDTH - 25),
                 y: (position.y / 100) * (PITCH_HEIGHT - 25)
@@ -137,6 +154,11 @@ export const useGameStore = create<GameStore>()(
       togglePlayerNumbers: () =>
         set((state) => {
           state.showPlayerNumbers = !state.showPlayerNumbers;
+        }),
+
+      updateTeamInfo: (team: Team, updates: Partial<TeamInfo>) =>
+        set((state) => {
+          Object.assign(state.teams[team], updates);
         }),
     }))
   )

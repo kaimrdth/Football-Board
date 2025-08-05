@@ -15,6 +15,7 @@ const Player = React.memo(({ player, isDragging = false, style }: PlayerProps) =
   const selectedPlayer = useGameStore(state => state.selectedPlayer);
   const showPlayerNames = useGameStore(state => state.showPlayerNames);
   const showPlayerNumbers = useGameStore(state => state.showPlayerNumbers);
+  const teams = useGameStore(state => state.teams);
   
   const isSelected = selectedPlayer?.id === player.id;
   const [clickCount, setClickCount] = React.useState(0);
@@ -67,7 +68,9 @@ const Player = React.memo(({ player, isDragging = false, style }: PlayerProps) =
     willChange: 'transform', // Optimize for animations
   } : undefined;
 
-  const teamColor = player.color || (player.team === 'red' ? '#dc2626' : '#2563eb');
+  const teamInfo = teams[player.team];
+  const isGoalkeeper = player.number === 1;
+  const teamColor = isGoalkeeper ? teamInfo.gkKitColor : teamInfo.kitColor;
   const textColor = isColorBright(teamColor) ? '#000000' : '#ffffff';
   
   // Player names are displayed directly on the bright green pitch - always use black for readability

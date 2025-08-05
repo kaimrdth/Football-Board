@@ -10,6 +10,7 @@ interface RosterModalProps {
 const RosterModal = React.memo(({ isOpen, onClose }: RosterModalProps) => {
   const players = useGameStore(state => state.players);
   const updatePlayer = useGameStore(state => state.updatePlayer);
+  const teams = useGameStore(state => state.teams);
 
   const [editedPlayers, setEditedPlayers] = React.useState<Player[]>([]);
 
@@ -97,11 +98,15 @@ const RosterModal = React.memo(({ isOpen, onClose }: RosterModalProps) => {
                   }`}
                 >
                   <td className="px-2 sm:px-3 py-3">
-                    <span className={`font-bold capitalize text-xs sm:text-sm ${
-                      player.team === 'red' ? 'text-red-600' : 'text-blue-600'
-                    }`}>
-                      {player.team}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <div 
+                        className="w-3 h-3 rounded-full border border-gray-300"
+                        style={{ backgroundColor: teams[player.team].kitColor }}
+                      />
+                      <span className="font-bold text-xs sm:text-sm text-gray-700">
+                        {teams[player.team].name}
+                      </span>
+                    </div>
                   </td>
                   <td className="px-2 sm:px-3 py-3">
                     <input

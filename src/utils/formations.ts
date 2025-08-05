@@ -74,16 +74,16 @@ const PITCH_HEIGHT = 780;
 export function createDefaultPlayers(): Player[] {
   const players: Player[] = [];
   
-  // Create Red team (4-4-2 formation)
-  const redPositions = FORMATIONS['4-4-2'];
+  // Create Team 1 (4-4-2 formation)
+  const team1Positions = FORMATIONS['4-4-2'];
   for (let i = 0; i < 11; i++) {
-    const position = redPositions[i];
+    const position = team1Positions[i];
     players.push({
-      id: `player_red_${i + 1}`,
+      id: `player_team1_${i + 1}`,
       number: i + 1,
       name: `Player ${i + 1}`,
-      color: i === 0 ? '#eab308' : '#dc2626', // Yellow for goalkeeper, red for others
-      team: 'red',
+      color: i === 0 ? '#16a34a' : '#dc2626', // Green for goalkeeper, red for others
+      team: 'team1',
       position: {
         x: (position.x / 100) * (PITCH_WIDTH - 25),
         y: (position.y / 100) * (PITCH_HEIGHT - 25)
@@ -91,16 +91,16 @@ export function createDefaultPlayers(): Player[] {
     });
   }
   
-  // Create Blue team (4-3-3 formation, mirrored)
-  const bluePositions = FORMATIONS['4-3-3'];
+  // Create Team 2 (4-3-3 formation, mirrored)
+  const team2Positions = FORMATIONS['4-3-3'];
   for (let i = 0; i < 11; i++) {
-    const position = bluePositions[i];
+    const position = team2Positions[i];
     players.push({
-      id: `player_blue_${i + 1}`,
+      id: `player_team2_${i + 1}`,
       number: i + 1,
       name: `Player ${i + 1}`,
-      color: i === 0 ? '#166534' : '#2563eb', // Dark green for goalkeeper, blue for others
-      team: 'blue',
+      color: i === 0 ? '#ca8a04' : '#2563eb', // Yellow for goalkeeper, blue for others
+      team: 'team2',
       position: {
         x: ((100 - position.x) / 100) * (PITCH_WIDTH - 25),
         y: (position.y / 100) * (PITCH_HEIGHT - 25)
