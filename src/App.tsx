@@ -12,17 +12,16 @@ function App() {
     <div className="min-h-screen p-6 relative">
 
       <div className="max-w-7xl mx-auto relative z-10">
-        {/* Title header with controls */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex-1">
-            <Controls />
-          </div>
-          <div className="flex-1 text-center">
-            <h1 className="text-2xl font-semibold text-gray-800">
-              Footballboard
-            </h1>
-          </div>
-          <div className="flex-1"></div>
+        {/* Title header */}
+        <div className="flex items-center justify-center mb-6">
+          <h1 className="text-2xl font-semibold text-gray-800">
+            Footballboard
+          </h1>
+        </div>
+        
+        {/* Absolute positioned controls */}
+        <div className="absolute top-6 left-6 z-50">
+          <Controls />
         </div>
         
         <DragContext>

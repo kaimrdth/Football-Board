@@ -83,8 +83,9 @@ const Controls = React.memo(() => {
             : 'bg-white/5 backdrop-blur-sm border-white/20 hover:bg-white/10 hover:border-white/30'
         } ${!isExpanded ? 'animate-pulse-subtle' : ''}`}
         style={{
-          width: isExpanded ? '320px' : '60px',
-          height: isExpanded ? 'auto' : '60px',
+          width: isExpanded ? '320px' : 'auto',
+          height: isExpanded ? 'auto' : 'auto',
+          minWidth: isExpanded ? '320px' : '80px',
           willChange: 'width, height',
           boxShadow: isExpanded 
             ? '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
@@ -94,7 +95,9 @@ const Controls = React.memo(() => {
         onMouseLeave={handleMouseLeave}
       >
         {/* Toggle Button */}
-        <div className="flex items-center justify-center p-4 relative group">
+        <div className={`flex items-center justify-center relative group ${
+          isExpanded ? 'p-4' : 'px-4 py-3'
+        }`}>
           {isExpanded ? (
             <>
               <div className="w-6 h-6 flex items-center justify-center">
