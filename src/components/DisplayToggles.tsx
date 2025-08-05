@@ -47,14 +47,19 @@ const ToggleButton = React.memo(({ onClick, isActive, icon, tooltip }: ToggleBut
   return (
     <button
       onClick={onClick}
-      className={`p-2.5 rounded-lg shadow-sm transition-all duration-200 transform hover:scale-105 active:scale-95 min-w-[40px] min-h-[40px] flex items-center justify-center ${
+      className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
         isActive 
-          ? 'bg-blue-500 text-white shadow-md' 
-          : 'bg-white/90 text-gray-600 hover:bg-white hover:text-gray-800'
+          ? 'bg-blue-600 text-white' 
+          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
       }`}
       title={tooltip}
     >
-      {icon}
+      <div className="flex items-center gap-1.5">
+        {icon}
+        <span className="text-xs">
+          {isActive ? (tooltip.includes('Names') ? 'Names' : 'Numbers') : (tooltip.includes('Names') ? 'Names' : 'Numbers')}
+        </span>
+      </div>
     </button>
   );
 });
