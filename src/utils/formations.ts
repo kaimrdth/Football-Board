@@ -82,7 +82,7 @@ export function createDefaultPlayers(): Player[] {
       id: `player_red_${i + 1}`,
       number: i + 1,
       name: `Player ${i + 1}`,
-      color: '#dc2626',
+      color: i === 0 ? '#eab308' : '#dc2626', // Yellow for goalkeeper, red for others
       team: 'red',
       position: {
         x: (position.x / 100) * (PITCH_WIDTH - 25),
@@ -99,7 +99,7 @@ export function createDefaultPlayers(): Player[] {
       id: `player_blue_${i + 1}`,
       number: i + 1,
       name: `Player ${i + 1}`,
-      color: '#2563eb',
+      color: i === 0 ? '#166534' : '#2563eb', // Dark green for goalkeeper, blue for others
       team: 'blue',
       position: {
         x: ((100 - position.x) / 100) * (PITCH_WIDTH - 25),
