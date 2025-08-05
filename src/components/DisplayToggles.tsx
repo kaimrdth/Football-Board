@@ -10,7 +10,7 @@ const DisplayToggles = React.memo(() => {
   } = useGameStore();
 
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-2 min-w-fit">
       <ToggleButton
         onClick={togglePlayerNames}
         isActive={showPlayerNames}
@@ -47,7 +47,7 @@ const ToggleButton = React.memo(({ onClick, isActive, icon, tooltip }: ToggleBut
   return (
     <button
       onClick={onClick}
-      className={`p-2.5 rounded-lg shadow-sm transition-all duration-200 transform hover:scale-105 active:scale-95 ${
+      className={`p-2.5 rounded-lg shadow-sm transition-all duration-200 transform hover:scale-105 active:scale-95 min-w-[40px] min-h-[40px] flex items-center justify-center ${
         isActive 
           ? 'bg-blue-500 text-white shadow-md' 
           : 'bg-white/90 text-gray-600 hover:bg-white hover:text-gray-800'

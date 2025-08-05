@@ -40,7 +40,7 @@ const SettingsMenu = React.memo(() => {
   }, []);
 
   return (
-    <div className="relative" ref={menuRef}>
+    <div className="relative min-w-fit" ref={menuRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="p-3 bg-white/90 hover:bg-white text-gray-700 rounded-lg shadow-sm hover:shadow-md transition-all duration-200 transform hover:scale-105 active:scale-95"

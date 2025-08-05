@@ -14,7 +14,7 @@ const FormationBar = React.memo(() => {
   );
 
   return (
-    <div className="flex items-center gap-6">
+    <div className="flex items-center gap-6 min-w-fit">
       <FormationSelector 
         team="team1" 
         onFormationChange={handleFormationChange}
@@ -54,7 +54,7 @@ const FormationSelector = React.memo(({ team, onFormationChange, teamInfo }: For
       </div>
       
       <select
-        className="bg-white/80 border border-gray-200 rounded-md px-3 py-1.5 text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-300 transition-colors"
+        className="bg-white/80 border border-gray-200 rounded-md px-3 py-1.5 text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-300 transition-colors min-w-[80px]"
         onChange={(e) => onFormationChange(team, e.target.value as FormationType)}
         defaultValue={team === 'team1' ? '4-4-2' : '4-3-3'}
       >

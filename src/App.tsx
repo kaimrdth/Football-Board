@@ -15,15 +15,15 @@ function App() {
     <div className="min-h-screen relative">
       {/* Fixed Header with Controls */}
       <div className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
+        <div className="w-full max-w-7xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between min-h-[60px] w-full">
             {/* Left: Settings Menu */}
-            <div className="flex-1">
+            <div className="flex-1 flex justify-start min-w-0">
               <SettingsMenu />
             </div>
             
             {/* Center: Title and Formation Bar */}
-            <div className="flex-1 flex flex-col items-center gap-3">
+            <div className="flex-1 flex flex-col items-center gap-3 min-w-0">
               <h1 className="text-xl font-semibold text-gray-800">
                 Football Board
               </h1>
@@ -31,7 +31,7 @@ function App() {
             </div>
             
             {/* Right: Display Toggles */}
-            <div className="flex-1 flex justify-end">
+            <div className="flex-1 flex justify-end min-w-0">
               <DisplayToggles />
             </div>
           </div>
@@ -39,8 +39,8 @@ function App() {
       </div>
       
       {/* Main Content with top padding to account for fixed header */}
-      <div className="pt-32 p-6">
-        <div className="max-w-7xl mx-auto relative z-10">
+      <div className="pt-32 p-6 w-full">
+        <div className="w-full max-w-7xl mx-auto relative z-10">
         
           <DragContext>
             <div className="flex justify-center">
