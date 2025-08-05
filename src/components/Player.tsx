@@ -2,6 +2,7 @@ import React from 'react';
 import { useDraggable } from '@dnd-kit/core';
 import { Player as PlayerType, DragData } from '../types';
 import { useGameStore } from '../stores/gameStore';
+import { isColorBright } from '../utils';
 
 interface PlayerProps {
   player: PlayerType;
@@ -67,6 +68,7 @@ const Player = React.memo(({ player, isDragging = false, style }: PlayerProps) =
   } : undefined;
 
   const teamColor = player.color || (player.team === 'red' ? '#dc2626' : '#2563eb');
+  const textColor = isColorBright(teamColor) ? '#000000' : '#ffffff';
 
   return (
     <div
@@ -103,13 +105,14 @@ const Player = React.memo(({ player, isDragging = false, style }: PlayerProps) =
         {/* Player number */}
         {showPlayerNumbers && (
           <span 
-            className="font-semibold text-white"
+            className="font-semibold"
             style={{ 
               fontSize: '11px', 
               position: 'relative',
               zIndex: 2,
               fontFamily: 'Inter, system-ui, sans-serif',
-              fontWeight: '600'
+              fontWeight: '600',
+              color: textColor
             }}
           >
             {player.number}
