@@ -12,6 +12,8 @@ interface PlayerProps {
 const Player = React.memo(({ player, isDragging = false, style }: PlayerProps) => {
   const selectPlayer = useGameStore(state => state.selectPlayer);
   const selectedPlayer = useGameStore(state => state.selectedPlayer);
+  const showPlayerNames = useGameStore(state => state.showPlayerNames);
+  const showPlayerNumbers = useGameStore(state => state.showPlayerNumbers);
   
   const isSelected = selectedPlayer?.id === player.id;
   const [clickCount, setClickCount] = React.useState(0);
@@ -99,41 +101,45 @@ const Player = React.memo(({ player, isDragging = false, style }: PlayerProps) =
         }}
       >
         {/* Player number */}
-        <span 
-          className="font-semibold text-white"
-          style={{ 
-            fontSize: '11px', 
-            position: 'relative',
-            zIndex: 2,
-            fontFamily: 'Inter, system-ui, sans-serif',
-            fontWeight: '600'
-          }}
-        >
-          {player.number}
-        </span>
+        {showPlayerNumbers && (
+          <span 
+            className="font-semibold text-white"
+            style={{ 
+              fontSize: '11px', 
+              position: 'relative',
+              zIndex: 2,
+              fontFamily: 'Inter, system-ui, sans-serif',
+              fontWeight: '600'
+            }}
+          >
+            {player.number}
+          </span>
+        )}
       </div>
       
       
       {/* Player name label */}
-      <div 
-        className="absolute"
-        style={{
-          top: '100%',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          marginTop: '4px',
-          fontSize: '10px',
-          whiteSpace: 'nowrap',
-          color: teamColor,
-          fontWeight: '500',
-          pointerEvents: 'none',
-          opacity: (isDndKitDragging || isDragging) ? 0 : 0.8,
-          transition: 'opacity 0.2s ease',
-          fontFamily: 'Inter, system-ui, sans-serif'
-        }}
-      >
-        {player.name}
-      </div>
+      {showPlayerNames && (
+        <div 
+          className="absolute"
+          style={{
+            top: '100%',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            marginTop: '4px',
+            fontSize: '10px',
+            whiteSpace: 'nowrap',
+            color: teamColor,
+            fontWeight: '500',
+            pointerEvents: 'none',
+            opacity: (isDndKitDragging || isDragging) ? 0 : 0.8,
+            transition: 'opacity 0.2s ease',
+            fontFamily: 'Inter, system-ui, sans-serif'
+          }}
+        >
+          {player.name}
+        </div>
+      )}
       
     </div>
   );

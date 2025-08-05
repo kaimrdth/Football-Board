@@ -12,6 +12,10 @@ const Controls = React.memo(() => {
     switchSides,
     resetFormations,
     setFormation,
+    togglePlayerNames,
+    togglePlayerNumbers,
+    showPlayerNames,
+    showPlayerNumbers,
   } = useGameStore();
 
   const [isRosterModalOpen, setIsRosterModalOpen] = React.useState(false);
@@ -131,6 +135,27 @@ const Controls = React.memo(() => {
               </div>
             </div>
 
+            {/* Display Controls */}
+            <div className="space-y-3">
+              <h3 className="text-xs font-medium text-gray-500 uppercase tracking-wide">
+                Display
+              </h3>
+              <div className="grid grid-cols-2 gap-2">
+                <ToggleButton 
+                  onClick={togglePlayerNames} 
+                  isActive={showPlayerNames}
+                >
+                  {showPlayerNames ? 'Hide Names' : 'Show Names'}
+                </ToggleButton>
+                <ToggleButton 
+                  onClick={togglePlayerNumbers} 
+                  isActive={showPlayerNumbers}
+                >
+                  {showPlayerNumbers ? 'Hide Numbers' : 'Show Numbers'}
+                </ToggleButton>
+              </div>
+            </div>
+
             {/* Action Controls */}
             <div className="space-y-3">
               <h3 className="text-xs font-medium text-gray-500 uppercase tracking-wide">
@@ -233,8 +258,30 @@ const ControlButton = React.memo(({ children, onClick }: ControlButtonProps) => 
   );
 });
 
+interface ToggleButtonProps {
+  children: React.ReactNode;
+  onClick: () => void;
+  isActive: boolean;
+}
+
+const ToggleButton = React.memo(({ children, onClick, isActive }: ToggleButtonProps) => {
+  const buttonClass = isActive 
+    ? 'bg-blue-50/80 text-blue-600 border-blue-200/60 hover:bg-blue-100/90'
+    : 'bg-gray-50/80 text-gray-600 border-gray-200/60 hover:bg-gray-100/90';
+
+  return (
+    <button
+      className={`retro-button w-full py-2 px-3 text-xs font-medium transition-colors duration-150 ${buttonClass}`}
+      onClick={onClick}
+    >
+      {children}
+    </button>
+  );
+});
+
 FormationSelector.displayName = 'FormationSelector';
 ControlButton.displayName = 'ControlButton';
+ToggleButton.displayName = 'ToggleButton';
 Controls.displayName = 'Controls';
 
 export default Controls;

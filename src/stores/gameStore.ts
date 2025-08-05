@@ -9,6 +9,8 @@ interface GameStore {
   players: Player[];
   ball: Ball;
   selectedPlayer: Player | null;
+  showPlayerNames: boolean;
+  showPlayerNumbers: boolean;
   
   // Actions
   updatePlayerPosition: (playerId: string, position: Position) => void;
@@ -21,6 +23,8 @@ interface GameStore {
   clearAll: () => void;
   resetFormations: () => void;
   clearAllPlayerNames: () => void;
+  togglePlayerNames: () => void;
+  togglePlayerNumbers: () => void;
 }
 
 const PITCH_WIDTH = 1200;
@@ -33,6 +37,8 @@ export const useGameStore = create<GameStore>()(
       players: createDefaultPlayers(),
       ball: { position: { x: PITCH_WIDTH / 2 - 7.5, y: PITCH_HEIGHT / 2 - 7.5 } },
       selectedPlayer: null,
+      showPlayerNames: true,
+      showPlayerNumbers: true,
 
       // Actions
       updatePlayerPosition: (playerId: string, position: Position) =>
@@ -121,6 +127,16 @@ export const useGameStore = create<GameStore>()(
           state.players.forEach((player: Player) => {
             player.name = `Player ${player.number}`;
           });
+        }),
+
+      togglePlayerNames: () =>
+        set((state) => {
+          state.showPlayerNames = !state.showPlayerNames;
+        }),
+
+      togglePlayerNumbers: () =>
+        set((state) => {
+          state.showPlayerNumbers = !state.showPlayerNumbers;
         }),
     }))
   )
