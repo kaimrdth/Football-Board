@@ -1,6 +1,9 @@
 import DragContext from './components/DragContext';
 import Pitch from './components/Pitch';
-import Controls from './components/Controls';
+import FormationBar from './components/FormationBar';
+import FloatingResetButton from './components/FloatingResetButton';
+import DisplayToggles from './components/DisplayToggles';
+import SettingsMenu from './components/SettingsMenu';
 import PlayerEditModal from './components/PlayerEditModal';
 import { useGameStore } from './stores/gameStore';
 
@@ -10,6 +13,11 @@ function App() {
 
   return (
     <div className="min-h-screen p-6 relative">
+      {/* New UI Layout */}
+      <FormationBar />
+      <SettingsMenu />
+      <DisplayToggles />
+      <FloatingResetButton />
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Title header */}
@@ -17,11 +25,6 @@ function App() {
           <h1 className="text-2xl font-semibold text-gray-800">
             Footballboard
           </h1>
-        </div>
-        
-        {/* Bottom-center floating controls */}
-        <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50">
-          <Controls />
         </div>
         
         <DragContext>
