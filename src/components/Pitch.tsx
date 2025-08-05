@@ -139,7 +139,7 @@ const PitchMarkings = React.memo(() => (
       style={{
         right: 126,
         top: '50%',
-        transform: 'translate(-50%, -50%)',
+        transform: 'translate(50%, -50%)',
         background: 'var(--pitch-line)',
         zIndex: 10
       }}
@@ -158,7 +158,7 @@ const PitchMarkings = React.memo(() => (
       }}
     >
       <path
-        d="M -90.8,-57.1 A 105,105 0 0,1 90.8,-57.1"
+        d="M 62.9,-83.6 A 105,105 0 0,1 62.9,83.6"
         fill="none"
         stroke="var(--pitch-line)"
         strokeWidth="2"
@@ -171,14 +171,14 @@ const PitchMarkings = React.memo(() => (
       style={{
         right: 126,
         top: '50%',
-        transform: 'translate(-50%, -50%)',
+        transform: 'translate(50%, -50%)',
         width: 210,
         height: 210,
         overflow: 'visible'
       }}
     >
       <path
-        d="M -90.8,-57.1 A 105,105 0 0,1 90.8,-57.1"
+        d="M -62.9,-83.6 A 105,105 0 0,0 -62.9,83.6"
         fill="none"
         stroke="var(--pitch-line)"
         strokeWidth="2"
