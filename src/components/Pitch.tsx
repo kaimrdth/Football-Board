@@ -143,6 +143,46 @@ const PitchMarkings = React.memo(() => (
       }}
     />
     
+    {/* Left penalty arc */}
+    <svg 
+      className="absolute"
+      style={{
+        left: 126,
+        top: '50%',
+        transform: 'translateY(-50%)',
+        width: 126,
+        height: 126,
+        overflow: 'visible'
+      }}
+    >
+      <path
+        d="M 0,-63 A 63,63 0 0,1 54.5,-30.8 A 63,63 0 0,1 54.5,30.8 A 63,63 0 0,1 0,63"
+        fill="none"
+        stroke="var(--pitch-line)"
+        strokeWidth="2"
+      />
+    </svg>
+    
+    {/* Right penalty arc */}
+    <svg 
+      className="absolute"
+      style={{
+        right: 126,
+        top: '50%',
+        transform: 'translateY(-50%)',
+        width: 126,
+        height: 126,
+        overflow: 'visible'
+      }}
+    >
+      <path
+        d="M 0,-63 A 63,63 0 0,0 -54.5,-30.8 A 63,63 0 0,0 -54.5,30.8 A 63,63 0 0,0 0,63"
+        fill="none"
+        stroke="var(--pitch-line)"
+        strokeWidth="2"
+      />
+    </svg>
+    
     {/* Corner markers */}
     {[{x: 0, y: 0}, {x: '100%', y: 0}, {x: 0, y: '100%'}, {x: '100%', y: '100%'}].map((pos, i) => (
       <div 
