@@ -12,7 +12,7 @@ const Pitch = React.memo(() => {
       
       <div 
         className="relative mx-auto pitch-neo overflow-hidden"
-        style={{ width: 800, height: 520 }}
+        style={{ width: 1200, height: 780 }}
       >
         {/* Pitch markings */}
         <PitchMarkings />
@@ -51,8 +51,8 @@ const PitchMarkings = React.memo(() => (
       style={{
         top: '50%',
         left: '50%',
-        width: 140,
-        height: 140,
+        width: 210,
+        height: 210,
         transform: 'translate(-50%, -50%)',
         border: '2px solid var(--pitch-line)'
       }}
@@ -75,8 +75,8 @@ const PitchMarkings = React.memo(() => (
       style={{
         left: 0,
         top: '50%',
-        width: 125,
-        height: 309,
+        width: 188,
+        height: 464,
         transform: 'translateY(-50%)',
         borderColor: 'var(--pitch-line)'
       }}
@@ -88,8 +88,8 @@ const PitchMarkings = React.memo(() => (
       style={{
         right: 0,
         top: '50%',
-        width: 125,
-        height: 309,
+        width: 188,
+        height: 464,
         transform: 'translateY(-50%)',
         borderColor: 'var(--pitch-line)'
       }}
@@ -101,8 +101,8 @@ const PitchMarkings = React.memo(() => (
       style={{
         left: 0,
         top: '50%',
-        width: 42,
-        height: 141,
+        width: 63,
+        height: 212,
         transform: 'translateY(-50%)',
         borderColor: 'var(--pitch-line)'
       }}
@@ -114,8 +114,8 @@ const PitchMarkings = React.memo(() => (
       style={{
         right: 0,
         top: '50%',
-        width: 42,
-        height: 141,
+        width: 63,
+        height: 212,
         transform: 'translateY(-50%)',
         borderColor: 'var(--pitch-line)'
       }}
@@ -125,7 +125,7 @@ const PitchMarkings = React.memo(() => (
     <div 
       className="absolute w-1.5 h-1.5 rounded-full"
       style={{
-        left: 84,
+        left: 126,
         top: '50%',
         transform: 'translateY(-50%)',
         background: 'var(--pitch-line)'
@@ -136,7 +136,7 @@ const PitchMarkings = React.memo(() => (
     <div 
       className="absolute w-1.5 h-1.5 rounded-full"
       style={{
-        right: 84,
+        right: 126,
         top: '50%',
         transform: 'translateY(-50%)',
         background: 'var(--pitch-line)'

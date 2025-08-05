@@ -20,8 +20,8 @@ function App() {
         </div>
         
         <DragContext>
-          <div className="flex items-start gap-8 justify-center">
-            <div className="flex-shrink-0">
+          <div className="flex justify-center relative">
+            <div className="absolute left-0 top-0 z-50">
               <Controls />
             </div>
             <div className="flex-shrink-0">
