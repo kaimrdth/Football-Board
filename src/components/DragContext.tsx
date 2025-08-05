@@ -64,14 +64,14 @@ export default function DragContext({ children }: DragContextProps) {
         const newPosition = constrainToPitch({
           x: player.position.x + delta.x,
           y: player.position.y + delta.y
-        });
+        }, 25, 25, 1200, 780);
         updatePlayerPosition(data.id, newPosition);
       }
     } else if (data.type === 'ball') {
       const newPosition = constrainToPitch({
         x: ball.position.x + delta.x,
         y: ball.position.y + delta.y
-      }, 15, 15);
+      }, 15, 15, 1200, 780);
       updateBallPosition(newPosition);
     }
 
