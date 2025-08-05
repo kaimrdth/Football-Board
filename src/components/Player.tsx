@@ -69,6 +69,10 @@ const Player = React.memo(({ player, isDragging = false, style }: PlayerProps) =
 
   const teamColor = player.color || (player.team === 'red' ? '#dc2626' : '#2563eb');
   const textColor = isColorBright(teamColor) ? '#000000' : '#ffffff';
+  
+  // Player names are displayed against the pitch background (#4ade80 - bright green)
+  const pitchColor = '#4ade80';
+  const nameTextColor = isColorBright(pitchColor) ? '#000000' : '#ffffff';
 
   return (
     <div
@@ -132,7 +136,7 @@ const Player = React.memo(({ player, isDragging = false, style }: PlayerProps) =
             marginTop: '4px',
             fontSize: '10px',
             whiteSpace: 'nowrap',
-            color: teamColor,
+            color: nameTextColor,
             fontWeight: '500',
             pointerEvents: 'none',
             opacity: (isDndKitDragging || isDragging) ? 0 : 0.8,
