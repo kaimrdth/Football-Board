@@ -23,8 +23,8 @@ interface GameStore {
   clearAllPlayerNames: () => void;
 }
 
-const PITCH_WIDTH = 800;
-const PITCH_HEIGHT = 520;
+const PITCH_WIDTH = 1200;
+const PITCH_HEIGHT = 780;
 
 export const useGameStore = create<GameStore>()(
   subscribeWithSelector(

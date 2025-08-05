@@ -77,7 +77,9 @@ const Controls = React.memo(() => {
     <div className="relative z-50">
       {/* Compact Controls Toggle */}
       <div 
-        className="bg-white shadow-lg rounded-lg border border-gray-200 transition-all duration-300 ease-in-out"
+        className={`neo-brutalist-panel transition-all duration-300 ease-in-out ${
+          isExpanded ? 'bg-white/95 backdrop-blur-md' : 'bg-white/20 backdrop-blur-sm border-white/30'
+        }`}
         style={{
           width: isExpanded ? '320px' : '60px',
           height: isExpanded ? 'auto' : '60px',
@@ -89,11 +91,11 @@ const Controls = React.memo(() => {
         {/* Toggle Button */}
         <div className="flex items-center justify-center p-4">
           <div className="w-6 h-6 flex items-center justify-center">
-            <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className={`w-5 h-5 ${isExpanded ? 'text-gray-600' : 'text-gray-800'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
             </svg>
           </div>
-          <span className="ml-2 text-sm font-medium text-gray-700">Controls</span>
+          {isExpanded && <span className="ml-2 text-sm font-medium text-gray-700">Controls</span>}
         </div>
 
         {/* Expanded Content */}
@@ -173,7 +175,7 @@ const FormationSelector = React.memo(({ team, onFormationChange }: FormationSele
       </div>
       
       <select
-        className="w-full p-2 text-xs border border-gray-200 rounded bg-white text-gray-700 focus:border-gray-400 focus:outline-none"
+        className="formation-selector w-full p-2 text-xs"
         onChange={(e) => onFormationChange(team, e.target.value as FormationType)}
         defaultValue={team === 'red' ? '4-4-2' : '4-3-3'}
       >
@@ -199,12 +201,12 @@ const ControlButton = React.memo(({ children, onClick }: ControlButtonProps) => 
   );
 
   const buttonClass = isDestructive 
-    ? 'bg-red-50 text-red-600 border-red-200 hover:bg-red-100'
-    : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100';
+    ? 'bg-red-50/80 text-red-600 border-red-200/60 hover:bg-red-100/90'
+    : '';
 
   return (
     <button
-      className={`w-full py-2 px-3 text-xs font-medium border rounded transition-colors duration-150 ${buttonClass}`}
+      className={`retro-button w-full py-2 px-3 text-xs font-medium transition-colors duration-150 ${buttonClass}`}
       onClick={onClick}
     >
       {children}
