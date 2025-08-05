@@ -123,40 +123,42 @@ const PitchMarkings = React.memo(() => (
     
     {/* Left penalty spot */}
     <div 
-      className="absolute w-1.5 h-1.5 rounded-full"
+      className="absolute w-2 h-2 rounded-full"
       style={{
         left: 126,
         top: '50%',
-        transform: 'translateY(-50%)',
-        background: 'var(--pitch-line)'
+        transform: 'translate(-50%, -50%)',
+        background: 'var(--pitch-line)',
+        zIndex: 10
       }}
     />
     
     {/* Right penalty spot */}
     <div 
-      className="absolute w-1.5 h-1.5 rounded-full"
+      className="absolute w-2 h-2 rounded-full"
       style={{
         right: 126,
         top: '50%',
-        transform: 'translateY(-50%)',
-        background: 'var(--pitch-line)'
+        transform: 'translate(50%, -50%)',
+        background: 'var(--pitch-line)',
+        zIndex: 10
       }}
     />
     
     {/* Left penalty arc */}
-    <svg 
+    <svg
       className="absolute"
       style={{
         left: 126,
         top: '50%',
-        transform: 'translateY(-50%)',
-        width: 126,
-        height: 126,
+        transform: 'translate(-50%, -50%)',
+        width: 210,
+        height: 210,
         overflow: 'visible'
       }}
     >
       <path
-        d="M 0,-63 A 63,63 0 0,1 54.5,-30.8 A 63,63 0 0,1 54.5,30.8 A 63,63 0 0,1 0,63"
+        d="M 0,-105 A 105,105 0 0,1 63,-84 A 105,105 0 0,1 63,84 A 105,105 0 0,1 0,105"
         fill="none"
         stroke="var(--pitch-line)"
         strokeWidth="2"
@@ -164,19 +166,19 @@ const PitchMarkings = React.memo(() => (
     </svg>
     
     {/* Right penalty arc */}
-    <svg 
+    <svg
       className="absolute"
       style={{
         right: 126,
         top: '50%',
-        transform: 'translateY(-50%)',
-        width: 126,
-        height: 126,
+        transform: 'translate(50%, -50%)',
+        width: 210,
+        height: 210,
         overflow: 'visible'
       }}
     >
       <path
-        d="M 0,-63 A 63,63 0 0,0 -54.5,-30.8 A 63,63 0 0,0 -54.5,30.8 A 63,63 0 0,0 0,63"
+        d="M 0,-105 A 105,105 0 0,0 -63,-84 A 105,105 0 0,0 -63,84 A 105,105 0 0,0 0,105"
         fill="none"
         stroke="var(--pitch-line)"
         strokeWidth="2"
