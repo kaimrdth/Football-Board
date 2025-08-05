@@ -19,8 +19,8 @@ function App() {
           </h1>
         </div>
         
-        {/* Absolute positioned controls */}
-        <div className="absolute top-6 left-6 z-50">
+        {/* Bottom-center floating controls */}
+        <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50">
           <Controls />
         </div>
         

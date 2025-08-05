@@ -90,29 +90,26 @@ const Controls = React.memo(() => {
   }, []);
 
   return (
-    <div className="relative z-50">
-      {/* Compact Controls Toggle */}
+    <div className="relative">
+      {/* Bottom-center floating controls panel */}
       <div 
-        className={`neo-brutalist-panel transition-all duration-300 ease-in-out ${
+        className={`neo-brutalist-panel transition-all duration-300 ease-in-out rounded-xl ${
           isExpanded 
-            ? 'bg-white/95 backdrop-blur-md border-white/50' 
-            : 'bg-white/5 backdrop-blur-sm border-white/20 hover:bg-white/10 hover:border-white/30'
+            ? 'bg-white/95 backdrop-blur-md border-white/50 shadow-xl' 
+            : 'bg-white/10 backdrop-blur-sm border-white/30 hover:bg-white/15 hover:border-white/40 shadow-lg'
         } ${!isExpanded ? 'animate-pulse-subtle' : ''}`}
         style={{
-          width: isExpanded ? '320px' : 'auto',
-          height: isExpanded ? 'auto' : 'auto',
-          minWidth: isExpanded ? '320px' : '80px',
-          willChange: 'width, height',
-          boxShadow: isExpanded 
-            ? '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
-            : '0 0 0 1px rgba(255, 255, 255, 0.1), 0 0 8px rgba(255, 255, 255, 0.05)'
+          width: isExpanded ? '400px' : 'auto',
+          minWidth: isExpanded ? '400px' : '120px',
+          willChange: 'width, transform',
+          transform: isExpanded ? 'translateY(-8px)' : 'translateY(0px)'
         }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
         {/* Toggle Button */}
-        <div className={`flex items-center justify-center relative group ${
-          isExpanded ? 'p-4' : 'px-4 py-3'
+        <div className={`flex items-center justify-center relative cursor-pointer ${
+          isExpanded ? 'px-6 py-4' : 'px-6 py-3'
         }`}>
           {isExpanded ? (
             <>
@@ -126,16 +123,38 @@ const Controls = React.memo(() => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
                 </svg>
               </div>
-              <span className="ml-2 text-sm font-medium text-gray-700">Controls</span>
+              <span className="ml-2 text-sm font-medium text-gray-700">Football Controls</span>
+              <div className="ml-auto">
+                <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
             </>
           ) : (
-            <span className="text-sm font-medium text-white/70 drop-shadow-sm">Controls</span>
+            <>
+              <div className="w-5 h-5 flex items-center justify-center mr-2">
+                <svg 
+                  className="w-4 h-4 text-white/80" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
+                </svg>
+              </div>
+              <span className="text-sm font-medium text-white/80 drop-shadow-sm">Controls</span>
+              <div className="ml-2">
+                <svg className="w-4 h-4 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 11l3-3m0 0l3 3m-3-3v8" />
+                </svg>
+              </div>
+            </>
           )}
         </div>
 
         {/* Expanded Content */}
         {isExpanded && (
-          <div className="px-4 pb-4 space-y-4">
+          <div className="px-6 pb-6 space-y-4">
             {/* Formation Controls */}
             <div className="space-y-3">
               <h3 className="text-xs font-medium text-gray-500 uppercase tracking-wide">
@@ -173,15 +192,15 @@ const Controls = React.memo(() => {
               <h3 className="text-xs font-medium text-gray-500 uppercase tracking-wide">
                 Actions
               </h3>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-4 gap-2">
                 <ControlButton onClick={resetBall}>Reset Ball</ControlButton>
-                <ControlButton onClick={clearAll}>Clear All</ControlButton>
                 <ControlButton onClick={switchSides}>Switch Sides</ControlButton>
-                <ControlButton onClick={resetFormations}>Reset</ControlButton>
                 <ControlButton onClick={handleOpenRoster}>Roster</ControlButton>
                 <ControlButton onClick={handleOpenTeam}>Teams</ControlButton>
                 <ControlButton onClick={handleOpenSave}>Save</ControlButton>
                 <ControlButton onClick={handleOpenLoad}>Load</ControlButton>
+                <ControlButton onClick={clearAll}>Clear All</ControlButton>
+                <ControlButton onClick={resetFormations}>Reset</ControlButton>
               </div>
             </div>
           </div>
