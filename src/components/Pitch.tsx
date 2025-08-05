@@ -145,46 +145,50 @@ const PitchMarkings = React.memo(() => (
       }}
     />
     
-    {/* Left penalty arc */}
-    <svg
-      className="absolute"
-      style={{
-        left: 126,
-        top: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: 210,
-        height: 210,
-        overflow: 'visible'
-      }}
-    >
-      <path
-        d="M 62,-84.74 A 105,105 0 0,1 62,84.74"
-        fill="none"
-        stroke="var(--pitch-line)"
-        strokeWidth="2"
-      />
-    </svg>
-    
-    {/* Right penalty arc */}
-    <svg
-      className="absolute"
-      style={{
-        right: 126,
-        top: '50%',
-        transform: 'translate(50%, -50%)',
-        width: 210,
-        height: 210,
-        overflow: 'visible'
-      }}
-    >
-      <path
-        d="M -62,-84.74 A 105,105 0 0,0 -62,84.74"
-        fill="none"
-        stroke="var(--pitch-line)"
-        strokeWidth="2"
-      />
-    </svg>
-    
+/* LEFT PENALTY ARC */
+<svg
+  className="absolute"
+  style={{
+    left: 126,
+    top: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 210,
+    height: 210,
+    overflow: 'visible'
+  }}
+>
+  {/* centre the local coordinate system on (0,0) = penalty spot */}
+  <g transform="translate(105 105)">
+    <path
+      d="M 62,-84.74 A 105,105 0 0,1 62,84.74"
+      fill="none"
+      stroke="var(--pitch-line)"
+      strokeWidth="2"
+    />
+  </g>
+</svg>
+
+/* RIGHT PENALTY ARC */
+<svg
+  className="absolute"
+  style={{
+    right: 126,
+    top: '50%',
+    transform: 'translate(50%, -50%)',
+    width: 210,
+    height: 210,
+    overflow: 'visible'
+  }}
+>
+  <g transform="translate(105 105)">
+    <path
+      d="M -62,-84.74 A 105,105 0 0,0 -62,84.74"
+      fill="none"
+      stroke="var(--pitch-line)"
+      strokeWidth="2"
+    />
+  </g>
+</svg>
     {/* Corner markers */}
     {[{x: 0, y: 0}, {x: '100%', y: 0}, {x: 0, y: '100%'}, {x: '100%', y: '100%'}].map((pos, i) => (
       <div 
