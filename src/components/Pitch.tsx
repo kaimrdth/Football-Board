@@ -158,7 +158,7 @@ const PitchMarkings = React.memo(() => (
       }}
     >
       <path
-        d="M 0,-105 A 105,105 0 0,1 63,-84 A 105,105 0 0,1 63,84 A 105,105 0 0,1 0,105"
+        d="M -90.8,-57.1 A 105,105 0 0,1 90.8,-57.1"
         fill="none"
         stroke="var(--pitch-line)"
         strokeWidth="2"
@@ -178,7 +178,7 @@ const PitchMarkings = React.memo(() => (
       }}
     >
       <path
-        d="M 0,-105 A 105,105 0 0,0 -63,-84 A 105,105 0 0,0 -63,84 A 105,105 0 0,0 0,105"
+        d="M -90.8,-57.1 A 105,105 0 0,0 90.8,-57.1"
         fill="none"
         stroke="var(--pitch-line)"
         strokeWidth="2"
