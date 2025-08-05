@@ -35,8 +35,8 @@ function App() {
       </div>
       
       {/* Main Content with top padding to account for fixed header */}
-      <div className="pt-24 sm:pt-28 p-4 sm:p-6 w-full">
-        <div className="w-full max-w-7xl mx-auto relative z-10">
+      <div className="pt-20 p-4 sm:p-6 w-full">
+        <div className="w-full max-w-7xl mx-auto">
         
           <DragContext>
             <div className="flex justify-center">
