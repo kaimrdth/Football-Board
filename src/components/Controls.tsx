@@ -95,28 +95,22 @@ const Controls = React.memo(() => {
       >
         {/* Toggle Button */}
         <div className="flex items-center justify-center p-4 relative group">
-          <div className="w-6 h-6 flex items-center justify-center">
-            <svg 
-              className={`w-5 h-5 transition-colors duration-200 ${
-                isExpanded ? 'text-gray-600' : 'text-white drop-shadow-md'
-              }`} 
-              fill="none" 
-              stroke="currentColor" 
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
-            </svg>
-          </div>
-          {isExpanded && <span className="ml-2 text-sm font-medium text-gray-700">Controls</span>}
-          
-          {/* Subtle tooltip hint for collapsed state */}
-          {!isExpanded && (
-            <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-70 transition-opacity duration-200 pointer-events-none">
-              <div className="bg-black/80 text-white text-xs px-2 py-1 rounded whitespace-nowrap backdrop-blur-sm">
-                Controls
+          {isExpanded ? (
+            <>
+              <div className="w-6 h-6 flex items-center justify-center">
+                <svg 
+                  className="w-5 h-5 transition-colors duration-200 text-gray-600" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
+                </svg>
               </div>
-              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full border-4 border-transparent border-b-black/80"></div>
-            </div>
+              <span className="ml-2 text-sm font-medium text-gray-700">Controls</span>
+            </>
+          ) : (
+            <span className="text-sm font-medium text-white/70 drop-shadow-sm">Controls</span>
           )}
         </div>
 

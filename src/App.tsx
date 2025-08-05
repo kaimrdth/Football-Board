@@ -12,18 +12,21 @@ function App() {
     <div className="min-h-screen p-6 relative">
 
       <div className="max-w-7xl mx-auto relative z-10">
-        {/* Title header */}
-        <div className="text-center mb-6">
-          <h1 className="text-2xl font-semibold text-gray-800">
-            Footballboard
-          </h1>
+        {/* Title header with controls */}
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex-1">
+            <Controls />
+          </div>
+          <div className="flex-1 text-center">
+            <h1 className="text-2xl font-semibold text-gray-800">
+              Footballboard
+            </h1>
+          </div>
+          <div className="flex-1"></div>
         </div>
         
         <DragContext>
-          <div className="flex justify-center relative">
-            <div className="absolute left-0 top-0 z-50">
-              <Controls />
-            </div>
+          <div className="flex justify-center">
             <div className="flex-shrink-0">
               <Pitch />
             </div>
