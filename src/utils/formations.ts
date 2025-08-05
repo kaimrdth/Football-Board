@@ -68,8 +68,8 @@ export const FORMATIONS: Record<FormationType, Position[]> = {
   ]
 };
 
-const PITCH_WIDTH = 800;
-const PITCH_HEIGHT = 520;
+const PITCH_WIDTH = 1200;
+const PITCH_HEIGHT = 780;
 
 export function createDefaultPlayers(): Player[] {
   const players: Player[] = [];
