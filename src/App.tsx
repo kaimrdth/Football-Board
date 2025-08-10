@@ -12,9 +12,9 @@ function App() {
   const selectPlayer = useGameStore(state => state.selectPlayer);
 
   return (
-    <div className="min-h-screen relative">
-      {/* Fixed Header with Controls */}
-      <div className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200 shadow-sm h-20">
+    <div className="min-h-screen flex flex-col">
+      {/* Header Section */}
+      <header className="bg-white border-b border-gray-200 shadow-sm">
         <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-4">
           <div className="flex items-center justify-between">
             {/* Left: Title */}
@@ -32,12 +32,11 @@ function App() {
             </div>
           </div>
         </div>
-      </div>
+      </header>
       
-      {/* Main Content with top padding to account for fixed header */}
-      <div className="pt-20 p-4 sm:p-6 w-full">
+      {/* Main Content Section */}
+      <main className="flex-1 p-4 sm:p-6 w-full">
         <div className="w-full max-w-7xl mx-auto">
-        
           <DragContext>
             <div className="flex justify-center">
               <div className="flex-shrink-0">
@@ -51,7 +50,7 @@ function App() {
             onClose={() => selectPlayer(null)}
           />
         </div>
-      </div>
+      </main>
       
       <FloatingResetButton />
     </div>
