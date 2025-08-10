@@ -44,10 +44,6 @@ const FormationSelector = React.memo(({ team, onFormationChange, teamInfo }: For
   return (
     <div className="flex flex-col items-center gap-2">
       <div className="flex items-center gap-2">
-        <div 
-          className="w-4 h-4 rounded-full border-2 border-white shadow-md"
-          style={{ background: teamInfo.kitColor }}
-        />
         <span className="text-sm font-semibold text-gray-800 min-w-[4rem]">
           {teamInfo.name}
         </span>

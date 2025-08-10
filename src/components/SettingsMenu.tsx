@@ -17,6 +17,10 @@ const SettingsMenu = React.memo(() => {
     resetFormations,
     teams,
     updateTeamInfo,
+    togglePlayerNames,
+    togglePlayerNumbers,
+    showPlayerNames,
+    showPlayerNumbers,
   } = useGameStore();
 
   const menuRef = React.useRef<HTMLDivElement>(null);
@@ -43,20 +47,42 @@ const SettingsMenu = React.memo(() => {
     <div className="relative min-w-fit" ref={menuRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="px-3 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-md text-sm font-medium transition-colors flex items-center"
+        className={`px-4 py-2.5 bg-white/50 backdrop-blur-sm rounded-xl text-sm font-medium transition-all duration-200 border border-white/30 shadow-md hover:shadow-lg hover:scale-105 ${
+          isOpen 
+            ? 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-lg' 
+            : 'bg-white/60 text-gray-700 hover:bg-white/80'
+        }`}
         title="Settings Menu"
       >
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-2">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
-          <span className="text-xs">Settings</span>
+          <span className="text-xs font-semibold">Settings</span>
         </div>
       </button>
 
       {isOpen && (
-        <div className="absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 animate-in fade-in slide-in-from-top-2 duration-200">
+        <div className="absolute top-full right-0 mt-3 w-56 bg-white/95 backdrop-blur-md rounded-xl shadow-xl border border-white/20 py-3 animate-in fade-in slide-in-from-top-2 duration-200 z-50">
+          <MenuButton onClick={() => handleAction(togglePlayerNames)}>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+            </svg>
+            <span className="flex-1">{showPlayerNames ? 'Hide Player Names' : 'Show Player Names'}</span>
+            <div className={`w-2 h-2 rounded-full ${showPlayerNames ? 'bg-emerald-500' : 'bg-gray-300'}`} />
+          </MenuButton>
+
+          <MenuButton onClick={() => handleAction(togglePlayerNumbers)}>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
+            </svg>
+            <span className="flex-1">{showPlayerNumbers ? 'Hide Player Numbers' : 'Show Player Numbers'}</span>
+            <div className={`w-2 h-2 rounded-full ${showPlayerNumbers ? 'bg-emerald-500' : 'bg-gray-300'}`} />
+          </MenuButton>
+
+          <div className="border-t border-gray-100 my-1" />
+
           <MenuButton onClick={() => handleAction(() => setIsRosterModalOpen(true))}>
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />

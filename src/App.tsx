@@ -2,7 +2,6 @@ import DragContext from './components/DragContext';
 import Pitch from './components/Pitch';
 import FormationBar from './components/FormationBar';
 import FloatingResetButton from './components/FloatingResetButton';
-import DisplayToggles from './components/DisplayToggles';
 import SettingsMenu from './components/SettingsMenu';
 import PlayerEditModal from './components/PlayerEditModal';
 import { useGameStore } from './stores/gameStore';
@@ -35,9 +34,8 @@ function App() {
               <FormationBar />
             </div>
             
-            {/* Right: All Controls */}
-            <div className="flex items-center gap-3">
-              <DisplayToggles />
+            {/* Right: Settings */}
+            <div className="flex items-center">
               <SettingsMenu />
             </div>
           </div>
