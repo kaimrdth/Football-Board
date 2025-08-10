@@ -14,14 +14,14 @@ const FormationBar = React.memo(() => {
   );
 
   return (
-    <div className="flex items-center gap-6 min-w-fit">
+    <div className="flex items-center gap-8 min-w-fit bg-white/60 backdrop-blur-sm rounded-2xl px-6 py-3 shadow-lg border border-white/40">
       <FormationSelector 
         team="team1" 
         onFormationChange={handleFormationChange}
         teamInfo={teams.team1}
       />
       
-      <div className="w-px h-6 bg-gray-300" />
+      <div className="w-px h-8 bg-gradient-to-b from-transparent via-gray-300 to-transparent" />
       
       <FormationSelector 
         team="team2" 
@@ -42,19 +42,19 @@ const FormationSelector = React.memo(({ team, onFormationChange, teamInfo }: For
   const formations: FormationType[] = ['4-4-2', '4-3-3', '3-5-2', '5-3-2', '4-2-3-1'];
 
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex flex-col items-center gap-2">
       <div className="flex items-center gap-2">
         <div 
-          className="w-3 h-3 rounded-full border border-white/30"
+          className="w-4 h-4 rounded-full border-2 border-white shadow-md"
           style={{ background: teamInfo.kitColor }}
         />
-        <span className="text-sm font-medium text-gray-700 min-w-[4rem]">
+        <span className="text-sm font-semibold text-gray-800 min-w-[4rem]">
           {teamInfo.name}
         </span>
       </div>
       
       <select
-        className="bg-white/80 border border-gray-200 rounded-md px-3 py-1.5 text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-300 transition-colors min-w-[80px]"
+        className="bg-white/90 backdrop-blur-sm border border-white/50 rounded-lg px-3 py-2 text-xs font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-400/50 focus:border-emerald-300 transition-all duration-200 shadow-sm hover:shadow-md min-w-[100px] cursor-pointer"
         onChange={(e) => onFormationChange(team, e.target.value as FormationType)}
         defaultValue={team === 'team1' ? '4-4-2' : '4-3-3'}
       >
