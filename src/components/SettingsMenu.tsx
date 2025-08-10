@@ -43,7 +43,7 @@ const SettingsMenu = React.memo(() => {
     <div className="relative min-w-fit" ref={menuRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="px-3 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-md text-sm font-medium transition-colors"
+        className="px-3 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-md text-sm font-medium transition-colors flex items-center"
         title="Settings Menu"
       >
         <div className="flex items-center gap-1.5">
