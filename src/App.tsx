@@ -29,14 +29,16 @@ function App() {
               </h1>
             </div>
             
-            {/* Center: Formation Controls */}
+            {/* Center: Formation Controls & Settings */}
             <div className="flex-1 flex justify-center px-8">
-              <FormationBar />
+              <div className="flex items-center gap-4">
+                <FormationBar />
+                <SettingsMenu />
+              </div>
             </div>
             
-            {/* Right: Settings */}
+            {/* Right: Empty for balance */}
             <div className="flex items-center">
-              <SettingsMenu />
             </div>
           </div>
         </div>
