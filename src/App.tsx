@@ -31,7 +31,7 @@ function App() {
             
             {/* Center: Formation Controls & Settings */}
             <div className="flex-1 flex justify-center px-8">
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-12">
                 <FormationBar />
                 <SettingsMenu />
               </div>

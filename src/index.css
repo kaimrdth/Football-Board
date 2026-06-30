@@ -18,10 +18,24 @@
   --text-secondary: #64748b;
   --grid-color: rgba(34, 197, 94, 0.05);
   --border-subtle: #e2e8f0;
-  
-  /* Clean pitch marking colors */
-  --pitch-line: #ffffff;
-  --pitch-bg: #4ade80;
+
+  /* Elevation scale — one consistent shadow ramp */
+  --elev-1: 0 1px 2px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.10);
+  --elev-2: 0 2px 4px rgba(15, 23, 42, 0.06), 0 4px 8px rgba(15, 23, 42, 0.08);
+  --elev-3: 0 8px 16px -4px rgba(15, 23, 42, 0.12), 0 4px 8px -4px rgba(15, 23, 42, 0.10);
+  --elev-4: 0 16px 32px -8px rgba(15, 23, 42, 0.18), 0 8px 16px -8px rgba(15, 23, 42, 0.12);
+
+  /* Radius scale */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+
+  /* Pitch — refined grass + markings */
+  --pitch-line: rgba(255, 255, 255, 0.88);
+  --pitch-stripe-a: #2f9e50;
+  --pitch-stripe-b: #36a95a;
+  --pitch-bg: #2f9e50;
+  --selection: #f59e0b;
   --team-red: #dc2626;
   --team-blue: #2563eb;
 }
@@ -85,32 +99,47 @@
 
 
   .pitch-neo {
-    background: var(--pitch-bg);
-    border: 2px solid var(--border-subtle);
-    border-radius: 8px;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+    background-color: var(--pitch-stripe-a);
+    /* Mowing stripes */
+    background-image: repeating-linear-gradient(
+      90deg,
+      var(--pitch-stripe-a) 0,
+      var(--pitch-stripe-a) 120px,
+      var(--pitch-stripe-b) 120px,
+      var(--pitch-stripe-b) 240px
+    );
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: var(--radius-md);
+    box-shadow:
+      var(--elev-3),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.05);
     position: relative;
   }
 
-
-  .player-neo {
-    background: var(--surface-1);
-    border: 2px solid currentColor;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-    position: relative;
-    border-radius: 50%;
-  }
-
-  .player-neo::before {
+  /* Soft vignette for depth — sits below lines & players */
+  .pitch-neo::after {
     content: '';
     position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 6px;
-    height: 6px;
-    background: currentColor;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
+    inset: 0;
+    pointer-events: none;
+    z-index: 5;
+    border-radius: inherit;
+    background: radial-gradient(
+      ellipse at center,
+      transparent 52%,
+      rgba(0, 0, 0, 0.20) 100%
+    );
+  }
+
+
+  /* Player token — crisp marker with hover/drag affordance */
+  .player-disc {
+    transition: transform 0.14s ease, box-shadow 0.14s ease;
+    will-change: transform;
+  }
+
+  .player-disc:hover {
+    transform: scale(1.12);
   }
 
   .ball-neo {
@@ -228,6 +257,16 @@
   /* Reduce layout thrashing */
   .contain-layout {
     contain: layout style;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
 

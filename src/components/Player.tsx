@@ -19,7 +19,7 @@ const Player = React.memo(({ player, isDragging = false, style }: PlayerProps) =
   
   const isSelected = selectedPlayer?.id === player.id;
   const [clickCount, setClickCount] = React.useState(0);
-  const clickTimeoutRef = React.useRef<number | null>(null);
+  const clickTimeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const dragData: DragData = {
     type: 'player',
@@ -72,9 +72,9 @@ const Player = React.memo(({ player, isDragging = false, style }: PlayerProps) =
   const isGoalkeeper = player.number === 1;
   const teamColor = isGoalkeeper ? teamInfo.gkKitColor : teamInfo.kitColor;
   const textColor = isColorBright(teamColor) ? '#000000' : '#ffffff';
-  
-  // Player names are displayed directly on the bright green pitch - always use black for readability
-  const nameTextColor = '#000000';
+
+  // Names sit directly on the grass — white with a dark halo stays legible over any stripe
+  const nameTextColor = '#ffffff';
 
   return (
     <div
@@ -85,7 +85,7 @@ const Player = React.memo(({ player, isDragging = false, style }: PlayerProps) =
         top: isDragging ? 0 : player.position.y,
         width: '28px',
         height: '28px',
-        cursor: 'move',
+        cursor: (isDndKitDragging || isDragging) ? 'grabbing' : 'grab',
         zIndex: (isDndKitDragging || isDragging) ? 1000 : 10,
         transition: 'none',
         userSelect: 'none',
@@ -98,27 +98,33 @@ const Player = React.memo(({ player, isDragging = false, style }: PlayerProps) =
       {...attributes}
     >
       {/* Main player shape */}
-      <div 
-        className="w-full h-full flex items-center justify-center rounded-full transition-all duration-200"
+      <div
+        className="player-disc w-full h-full flex items-center justify-center rounded-full"
         style={{
           background: teamColor,
-          border: isSelected ? `3px solid #f59e0b` : `2px solid #ffffff`,
-          boxShadow: isSelected 
-            ? `0 0 0 2px #f59e0b`
-            : `0 2px 4px rgba(0, 0, 0, 0.1)`
+          border: '2px solid #ffffff',
+          boxShadow: isSelected
+            ? '0 0 0 3px var(--selection), 0 2px 6px rgba(0, 0, 0, 0.45)'
+            : (isDndKitDragging || isDragging)
+              ? '0 6px 14px rgba(0, 0, 0, 0.4)'
+              : '0 1px 3px rgba(0, 0, 0, 0.4)'
         }}
       >
         {/* Player number */}
         {showPlayerNumbers && (
-          <span 
+          <span
             className="font-semibold"
-            style={{ 
-              fontSize: '11px', 
+            style={{
+              fontSize: '11px',
               position: 'relative',
               zIndex: 2,
               fontFamily: 'Inter, system-ui, sans-serif',
               fontWeight: '600',
-              color: textColor
+              color: textColor,
+              textShadow: textColor === '#ffffff'
+                ? '0 1px 1px rgba(0, 0, 0, 0.35)'
+                : 'none',
+              lineHeight: 1
             }}
           >
             {player.number}
@@ -139,9 +145,11 @@ const Player = React.memo(({ player, isDragging = false, style }: PlayerProps) =
             fontSize: '10px',
             whiteSpace: 'nowrap',
             color: nameTextColor,
-            fontWeight: '500',
+            fontWeight: '600',
+            letterSpacing: '0.01em',
+            textShadow: '0 1px 2px rgba(0, 0, 0, 0.7), 0 0 2px rgba(0, 0, 0, 0.5)',
             pointerEvents: 'none',
-            opacity: (isDndKitDragging || isDragging) ? 0 : 0.8,
+            opacity: (isDndKitDragging || isDragging) ? 0 : 1,
             transition: 'opacity 0.2s ease',
             fontFamily: 'Inter, system-ui, sans-serif'
           }}
