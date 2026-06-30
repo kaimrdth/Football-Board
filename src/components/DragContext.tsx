@@ -20,10 +20,24 @@ interface DragContextProps {
   children: React.ReactNode;
 }
 
+// Logical board size; positions are stored in this coordinate space.
+const PITCH_W = 1200;
+const PITCH_H = 780;
+
+// The board is CSS-scaled to fit the viewport, so screen pixels != logical
+// pixels. Read the live scale from the rendered board.
+const getBoardScale = () => {
+  const el = document.getElementById('pitch-board');
+  if (!el) return 1;
+  const rect = el.getBoundingClientRect();
+  return rect.width > 0 ? rect.width / PITCH_W : 1;
+};
+
 export default function DragContext({ children }: DragContextProps) {
   const [activeId, setActiveId] = React.useState<string | null>(null);
   const [activeType, setActiveType] = React.useState<'player' | 'ball' | null>(null);
-  
+  const [dragScale, setDragScale] = React.useState(1);
+
   const updatePlayerPosition = useGameStore(state => state.updatePlayerPosition);
   const updateBallPosition = useGameStore(state => state.updateBallPosition);
   const players = useGameStore(state => state.players);
@@ -47,7 +61,8 @@ export default function DragContext({ children }: DragContextProps) {
   const handleDragStart = (event: DragStartEvent) => {
     const { active } = event;
     const data = active.data.current as DragData;
-    
+
+    setDragScale(getBoardScale());
     setActiveId(active.id as string);
     setActiveType(data.type);
   };
@@ -58,20 +73,25 @@ export default function DragContext({ children }: DragContextProps) {
 
     if (!data) return;
 
+    // delta is in screen px; convert to logical board px.
+    const scale = getBoardScale();
+    const dx = delta.x / scale;
+    const dy = delta.y / scale;
+
     if (data.type === 'player') {
       const player = players.find(p => p.id === data.id);
       if (player) {
         const newPosition = constrainToPitch({
-          x: player.position.x + delta.x,
-          y: player.position.y + delta.y
-        }, 25, 25, 1200, 780);
+          x: player.position.x + dx,
+          y: player.position.y + dy
+        }, 25, 25, PITCH_W, PITCH_H);
         updatePlayerPosition(data.id, newPosition);
       }
     } else if (data.type === 'ball') {
       const newPosition = constrainToPitch({
-        x: ball.position.x + delta.x,
-        y: ball.position.y + delta.y
-      }, 15, 15, 1200, 780);
+        x: ball.position.x + dx,
+        y: ball.position.y + dy
+      }, 15, 15, PITCH_W, PITCH_H);
       updateBallPosition(newPosition);
     }
 
@@ -82,31 +102,21 @@ export default function DragContext({ children }: DragContextProps) {
   const renderDragOverlay = () => {
     if (!activeId || !activeType) return null;
 
+    const scaled = (node: React.ReactNode) => (
+      <div style={{ transform: `scale(${dragScale})`, transformOrigin: 'top left' }}>
+        {node}
+      </div>
+    );
+
     if (activeType === 'player') {
       const player = players.find(p => p.id === activeId);
       if (!player) return null;
-      
-      return (
-        <Player 
-          player={player} 
-          isDragging 
-          style={{ 
-            opacity: 0.9 
-          }}
-        />
-      );
+
+      return scaled(<Player player={player} isDragging style={{ opacity: 0.9 }} />);
     }
 
     if (activeType === 'ball') {
-      return (
-        <Ball 
-          ball={ball} 
-          isDragging 
-          style={{ 
-            opacity: 0.9 
-          }}
-        />
-      );
+      return scaled(<Ball ball={ball} isDragging style={{ opacity: 0.9 }} />);
     }
 
     return null;

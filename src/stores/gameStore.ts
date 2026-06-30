@@ -46,7 +46,7 @@ export const useGameStore = create<GameStore>()(
       players: createDefaultPlayers(),
       ball: { position: { x: PITCH_WIDTH / 2 - 7.5, y: PITCH_HEIGHT / 2 - 7.5 } },
       selectedPlayer: null,
-      showPlayerNames: true,
+      showPlayerNames: false,
       showPlayerNumbers: true,
       showThirds: false,
       showChannels: false,

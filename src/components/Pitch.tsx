@@ -4,32 +4,61 @@ import Player from './Player';
 import Ball from './Ball';
 import PitchOverlays from './PitchOverlays';
 
+export const PITCH_WIDTH = 1200;
+export const PITCH_HEIGHT = 780;
+
 const Pitch = React.memo(() => {
   const players = usePlayers();
   const ball = useBall();
+  const wrapRef = React.useRef<HTMLDivElement>(null);
+  const [scale, setScale] = React.useState(1);
+
+  React.useLayoutEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    const measure = () => setScale(el.clientWidth / PITCH_WIDTH);
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
 
   return (
-    <div className="neo-brutalist-panel p-8 overflow-hidden">
-      
-      <div 
-        className="relative mx-auto pitch-neo overflow-hidden"
-        style={{ width: 1200, height: 780 }}
+    <div className="neo-brutalist-panel p-3 sm:p-5 lg:p-7 w-full">
+      {/* Aspect-ratio box keeps layout height correct while the board scales */}
+      <div
+        ref={wrapRef}
+        className="relative w-full"
+        style={{ aspectRatio: `${PITCH_WIDTH} / ${PITCH_HEIGHT}` }}
       >
-        {/* Pitch markings */}
-        <PitchMarkings />
+        <div
+          id="pitch-board"
+          className="pitch-neo overflow-hidden"
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: PITCH_WIDTH,
+            height: PITCH_HEIGHT,
+            transform: `scale(${scale})`,
+            transformOrigin: 'top left',
+          }}
+        >
+          {/* Pitch markings */}
+          <PitchMarkings />
 
-        {/* Tactical overlays (thirds / channels) */}
-        <PitchOverlays />
+          {/* Tactical overlays (thirds / channels) */}
+          <PitchOverlays />
 
-        {/* Players */}
-        {players.map(player => (
-          <Player key={player.id} player={player} />
-        ))}
-        
-        {/* Ball */}
-        <Ball ball={ball} />
+          {/* Players */}
+          {players.map(player => (
+            <Player key={player.id} player={player} />
+          ))}
+
+          {/* Ball */}
+          <Ball ball={ball} />
+        </div>
       </div>
-      
     </div>
   );
 });
@@ -37,20 +66,20 @@ const Pitch = React.memo(() => {
 const PitchMarkings = React.memo(() => (
   <>
     {/* Center line (vertical) */}
-    <div 
+    <div
       className="absolute top-0 h-full"
-      style={{ 
-        left: '50%', 
+      style={{
+        left: '50%',
         transform: 'translateX(-50%)',
         width: '2px',
         background: 'var(--pitch-line)',
         zIndex: 10
       }}
     />
-    
-    
+
+
     {/* Center circle */}
-    <div 
+    <div
       className="absolute rounded-full"
       style={{
         top: '50%',
@@ -61,9 +90,9 @@ const PitchMarkings = React.memo(() => (
         border: '2px solid var(--pitch-line)'
       }}
     />
-    
+
     {/* Center spot */}
-    <div 
+    <div
       className="absolute w-2 h-2 rounded-full"
       style={{
         top: '50%',
@@ -72,9 +101,9 @@ const PitchMarkings = React.memo(() => (
         background: 'var(--pitch-line)'
       }}
     />
-    
+
     {/* Left penalty area */}
-    <div 
+    <div
       className="absolute border-2 border-l-0"
       style={{
         left: 0,
@@ -85,9 +114,9 @@ const PitchMarkings = React.memo(() => (
         borderColor: 'var(--pitch-line)'
       }}
     />
-    
+
     {/* Right penalty area */}
-    <div 
+    <div
       className="absolute border-2 border-r-0"
       style={{
         right: 0,
@@ -98,9 +127,9 @@ const PitchMarkings = React.memo(() => (
         borderColor: 'var(--pitch-line)'
       }}
     />
-    
+
     {/* Left goal area */}
-    <div 
+    <div
       className="absolute border-2 border-l-0"
       style={{
         left: 0,
@@ -111,9 +140,9 @@ const PitchMarkings = React.memo(() => (
         borderColor: 'var(--pitch-line)'
       }}
     />
-    
+
     {/* Right goal area */}
-    <div 
+    <div
       className="absolute border-2 border-r-0"
       style={{
         right: 0,
@@ -124,9 +153,9 @@ const PitchMarkings = React.memo(() => (
         borderColor: 'var(--pitch-line)'
       }}
     />
-    
+
     {/* Left penalty spot */}
-    <div 
+    <div
       className="absolute w-2 h-2 rounded-full"
       style={{
         left: 126,
@@ -136,9 +165,9 @@ const PitchMarkings = React.memo(() => (
         zIndex: 10
       }}
     />
-    
+
     {/* Right penalty spot */}
-    <div 
+    <div
       className="absolute w-2 h-2 rounded-full"
       style={{
         right: 126,
@@ -148,7 +177,7 @@ const PitchMarkings = React.memo(() => (
         zIndex: 10
       }}
     />
-    
+
 {/* LEFT PENALTY ARC */}
 <svg
   className="absolute"
@@ -195,7 +224,7 @@ const PitchMarkings = React.memo(() => (
 </svg>
     {/* Corner markers */}
     {[{x: 0, y: 0}, {x: '100%', y: 0}, {x: 0, y: '100%'}, {x: '100%', y: '100%'}].map((pos, i) => (
-      <div 
+      <div
         key={i}
         className="absolute w-1 h-1"
         style={{

@@ -87,6 +87,9 @@ const Player = React.memo(({ player, isDragging = false, style }: PlayerProps) =
         height: '28px',
         cursor: (isDndKitDragging || isDragging) ? 'grabbing' : 'grab',
         zIndex: (isDndKitDragging || isDragging) ? 1000 : 10,
+        // The board is CSS-scaled, so dnd-kit's transform on the original would
+        // move it incorrectly. Hide the original and let the scaled overlay show.
+        opacity: (isDndKitDragging && !isDragging) ? 0 : 1,
         transition: 'none',
         userSelect: 'none',
         touchAction: 'none',
