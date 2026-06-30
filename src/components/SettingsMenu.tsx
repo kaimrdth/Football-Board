@@ -21,6 +21,10 @@ const SettingsMenu = React.memo(() => {
     togglePlayerNumbers,
     showPlayerNames,
     showPlayerNumbers,
+    toggleThirds,
+    toggleChannels,
+    showThirds,
+    showChannels,
   } = useGameStore();
 
   const menuRef = React.useRef<HTMLDivElement>(null);
@@ -79,6 +83,22 @@ const SettingsMenu = React.memo(() => {
             </svg>
             <span className="flex-1">{showPlayerNumbers ? 'Hide Player Numbers' : 'Show Player Numbers'}</span>
             <div className={`w-2 h-2 rounded-full ${showPlayerNumbers ? 'bg-emerald-500' : 'bg-gray-300'}`} />
+          </MenuButton>
+
+          <MenuButton onClick={toggleThirds}>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4h16v16H4z M10 4v16 M14.5 4v16" />
+            </svg>
+            <span className="flex-1">{showThirds ? 'Hide Thirds' : 'Show Thirds'}</span>
+            <div className={`w-2 h-2 rounded-full ${showThirds ? 'bg-emerald-500' : 'bg-gray-300'}`} />
+          </MenuButton>
+
+          <MenuButton onClick={toggleChannels}>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4h16v16H4z M4 9.3h16 M4 14.7h16" />
+            </svg>
+            <span className="flex-1">{showChannels ? 'Hide Half-spaces' : 'Show Half-spaces'}</span>
+            <div className={`w-2 h-2 rounded-full ${showChannels ? 'bg-emerald-500' : 'bg-gray-300'}`} />
           </MenuButton>
 
           <div className="border-t border-gray-100 my-1" />

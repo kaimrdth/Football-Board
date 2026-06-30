@@ -2,6 +2,7 @@ import React from 'react';
 import { usePlayers, useBall } from '../stores/gameStore';
 import Player from './Player';
 import Ball from './Ball';
+import PitchOverlays from './PitchOverlays';
 
 const Pitch = React.memo(() => {
   const players = usePlayers();
@@ -16,7 +17,10 @@ const Pitch = React.memo(() => {
       >
         {/* Pitch markings */}
         <PitchMarkings />
-        
+
+        {/* Tactical overlays (thirds / channels) */}
+        <PitchOverlays />
+
         {/* Players */}
         {players.map(player => (
           <Player key={player.id} player={player} />

@@ -11,6 +11,8 @@ interface GameStore {
   selectedPlayer: Player | null;
   showPlayerNames: boolean;
   showPlayerNumbers: boolean;
+  showThirds: boolean;
+  showChannels: boolean;
   teams: {
     team1: TeamInfo;
     team2: TeamInfo;
@@ -29,6 +31,8 @@ interface GameStore {
   clearAllPlayerNames: () => void;
   togglePlayerNames: () => void;
   togglePlayerNumbers: () => void;
+  toggleThirds: () => void;
+  toggleChannels: () => void;
   updateTeamInfo: (team: Team, updates: Partial<TeamInfo>) => void;
 }
 
@@ -44,6 +48,8 @@ export const useGameStore = create<GameStore>()(
       selectedPlayer: null,
       showPlayerNames: true,
       showPlayerNumbers: true,
+      showThirds: false,
+      showChannels: false,
       teams: {
         team1: {
           name: 'Team 1',
@@ -154,6 +160,16 @@ export const useGameStore = create<GameStore>()(
       togglePlayerNumbers: () =>
         set((state) => {
           state.showPlayerNumbers = !state.showPlayerNumbers;
+        }),
+
+      toggleThirds: () =>
+        set((state) => {
+          state.showThirds = !state.showThirds;
+        }),
+
+      toggleChannels: () =>
+        set((state) => {
+          state.showChannels = !state.showChannels;
         }),
 
       updateTeamInfo: (team: Team, updates: Partial<TeamInfo>) =>
