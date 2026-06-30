@@ -30,7 +30,7 @@ const Pitch = React.memo(() => {
       style={{
         // Fit the whole board on screen: bounded by width AND viewport height
         // so you can see everything at once while watching.
-        maxWidth: `min(100%, calc((100vh - 180px) * ${PITCH_WIDTH} / ${PITCH_HEIGHT}))`,
+        maxWidth: `min(100%, calc((100vh - 180px) * ${PITCH_WIDTH} / ${PITCH_HEIGHT} * 0.65))`,
       }}
     >
       {/* Aspect-ratio box keeps layout height correct while the board scales */}
