@@ -25,7 +25,14 @@ const Pitch = React.memo(() => {
   }, []);
 
   return (
-    <div className="neo-brutalist-panel p-3 sm:p-5 lg:p-7 w-full">
+    <div
+      className="neo-brutalist-panel p-3 sm:p-5 lg:p-7 w-full mx-auto"
+      style={{
+        // Fit the whole board on screen: bounded by width AND viewport height
+        // so you can see everything at once while watching.
+        maxWidth: `min(100%, calc((100vh - 180px) * ${PITCH_WIDTH} / ${PITCH_HEIGHT}))`,
+      }}
+    >
       {/* Aspect-ratio box keeps layout height correct while the board scales */}
       <div
         ref={wrapRef}
