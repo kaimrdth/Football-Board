@@ -15,10 +15,12 @@ export interface Player {
   id: string;
   number: number;
   name: string;
-  color: string;
+  role: string; // position code, e.g. GK, RCB, CDM, ST — derived from formation
   team: Team;
   position: Position;
 }
+
+export type MarkerMode = 'number' | 'position' | 'none';
 
 export interface Formation {
   name: string;

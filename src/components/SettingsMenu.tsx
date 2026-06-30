@@ -18,9 +18,9 @@ const SettingsMenu = React.memo(() => {
     teams,
     updateTeamInfo,
     togglePlayerNames,
-    togglePlayerNumbers,
+    markerMode,
+    setMarkerMode,
     showPlayerNames,
-    showPlayerNumbers,
     toggleThirds,
     toggleChannels,
     showThirds,
@@ -77,13 +77,33 @@ const SettingsMenu = React.memo(() => {
             <div className={`w-2 h-2 rounded-full ${showPlayerNames ? 'bg-emerald-500' : 'bg-gray-300'}`} />
           </MenuButton>
 
-          <MenuButton onClick={() => handleAction(togglePlayerNumbers)}>
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
-            </svg>
-            <span className="flex-1">{showPlayerNumbers ? 'Hide Player Numbers' : 'Show Player Numbers'}</span>
-            <div className={`w-2 h-2 rounded-full ${showPlayerNumbers ? 'bg-emerald-500' : 'bg-gray-300'}`} />
-          </MenuButton>
+          <div className="px-4 py-2">
+            <div className="flex items-center gap-2 mb-2 text-sm text-gray-700">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
+              </svg>
+              <span>Marker label</span>
+            </div>
+            <div className="flex rounded-lg bg-gray-100 p-0.5">
+              {([
+                { mode: 'number', label: '#' },
+                { mode: 'position', label: 'POS' },
+                { mode: 'none', label: 'Off' },
+              ] as const).map(({ mode, label }) => (
+                <button
+                  key={mode}
+                  onClick={() => setMarkerMode(mode)}
+                  className={`flex-1 rounded-md py-1 text-xs font-semibold transition-all ${
+                    markerMode === mode
+                      ? 'bg-white text-emerald-600 shadow-sm'
+                      : 'text-gray-500 hover:text-gray-700'
+                  }`}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+          </div>
 
           <MenuButton onClick={toggleThirds}>
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

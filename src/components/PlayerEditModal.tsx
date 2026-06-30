@@ -9,19 +9,15 @@ interface PlayerEditModalProps {
 
 const PlayerEditModal = React.memo(({ player, onClose }: PlayerEditModalProps) => {
   const updatePlayer = useGameStore(state => state.updatePlayer);
-  
+  const teams = useGameStore(state => state.teams);
+
   const [name, setName] = React.useState('');
   const [number, setNumber] = React.useState(1);
-  const [color, setColor] = React.useState('#ff4444');
 
   React.useEffect(() => {
     if (player) {
       setName(player.name);
       setNumber(player.number);
-      setColor(player.color.includes('rgba') ? 
-        player.team === 'team1' ? '#ff4444' : '#4444ff' 
-        : player.color
-      );
     }
   }, [player]);
 
@@ -30,13 +26,12 @@ const PlayerEditModal = React.memo(({ player, onClose }: PlayerEditModalProps) =
       updatePlayer(player.id, {
         name,
         number,
-        color,
         team: player.team,
         position: player.position
       });
     }
     onClose();
-  }, [player, name, number, color, updatePlayer, onClose]);
+  }, [player, name, number, updatePlayer, onClose]);
 
   const handleKeyDown = React.useCallback((e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
@@ -47,6 +42,10 @@ const PlayerEditModal = React.memo(({ player, onClose }: PlayerEditModalProps) =
   }, [handleSave, onClose]);
 
   if (!player) return null;
+
+  const kitColor = player.number === 1
+    ? teams[player.team].gkKitColor
+    : teams[player.team].kitColor;
 
   return (
     <div 
@@ -131,7 +130,7 @@ const PlayerEditModal = React.memo(({ player, onClose }: PlayerEditModalProps) =
               width: '40px',
               height: '40px',
               borderRadius: '50%',
-              backgroundColor: color,
+              backgroundColor: kitColor,
               border: '2px solid #ffffff',
               display: 'flex',
               alignItems: 'center',
@@ -153,7 +152,7 @@ const PlayerEditModal = React.memo(({ player, onClose }: PlayerEditModalProps) =
               letterSpacing: '0.05em',
               fontFamily: 'ui-monospace, Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace'
             }}>
-              {player.team} Team
+              {player.team} Team · {player.role}
             </div>
           </div>
         </div>
@@ -201,87 +200,47 @@ const PlayerEditModal = React.memo(({ player, onClose }: PlayerEditModalProps) =
             />
           </div>
 
-          <div style={{ display: 'flex', gap: '15px' }}>
-            <div style={{ flex: 1 }}>
-              <label style={{ 
-                display: 'block', 
-                marginBottom: '8px', 
-                color: '#cbd5e0',
-                fontSize: '13px',
+          <div>
+            <label style={{
+              display: 'block',
+              marginBottom: '8px',
+              color: '#cbd5e0',
+              fontSize: '13px',
+              fontWeight: '500',
+              textTransform: 'uppercase',
+              letterSpacing: '0.05em',
+              fontFamily: 'ui-monospace, Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace'
+            }}>
+              Jersey Number
+            </label>
+            <input
+              type="number"
+              min="1"
+              max="99"
+              value={number}
+              onChange={(e) => setNumber(parseInt(e.target.value) || 1)}
+              style={{
+                width: '100%',
+                padding: '12px 16px',
+                backgroundColor: 'rgba(45, 55, 72, 0.6)',
+                color: '#e2e8f0',
+                border: '1px solid rgba(74, 85, 104, 0.4)',
+                borderRadius: '6px',
+                fontSize: '14px',
                 fontWeight: '500',
-                textTransform: 'uppercase',
-                letterSpacing: '0.05em',
-                fontFamily: 'ui-monospace, Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace'
-              }}>
-                Jersey Number
-              </label>
-              <input
-                type="number"
-                min="1"
-                max="99"
-                value={number}
-                onChange={(e) => setNumber(parseInt(e.target.value) || 1)}
-                style={{
-                  width: '100%',
-                  padding: '12px 16px',
-                  backgroundColor: 'rgba(45, 55, 72, 0.6)',
-                  color: '#e2e8f0',
-                  border: '1px solid rgba(74, 85, 104, 0.4)',
-                  borderRadius: '6px',
-                  fontSize: '14px',
-                  fontWeight: '500',
-                  outline: 'none',
-                  transition: 'all 0.2s ease',
-                  backdropFilter: 'blur(8px)'
-                }}
-                onFocus={(e) => {
-                  e.target.style.borderColor = player.team === 'team1' ? '#f87171' : '#60a5fa';
-                  e.target.style.boxShadow = `0 0 0 2px ${player.team === 'team1' ? '#f87171' : '#60a5fa'}20`;
-                }}
-                onBlur={(e) => {
-                  e.target.style.borderColor = 'rgba(74, 85, 104, 0.4)';
-                  e.target.style.boxShadow = 'none';
-                }}
-              />
-            </div>
-
-            <div style={{ flex: 1 }}>
-              <label style={{ 
-                display: 'block', 
-                marginBottom: '8px', 
-                color: '#cbd5e0',
-                fontSize: '13px',
-                fontWeight: '500',
-                textTransform: 'uppercase',
-                letterSpacing: '0.05em',
-                fontFamily: 'ui-monospace, Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace'
-              }}>
-                Jersey Color
-              </label>
-              <input
-                type="color"
-                value={color}
-                onChange={(e) => setColor(e.target.value)}
-                style={{
-                  width: '100%',
-                  height: '46px',
-                  border: '1px solid rgba(74, 85, 104, 0.4)',
-                  borderRadius: '6px',
-                  cursor: 'pointer',
-                  backgroundColor: 'transparent',
-                  outline: 'none',
-                  transition: 'all 0.2s ease'
-                }}
-                onFocus={(e) => {
-                  e.target.style.borderColor = player.team === 'team1' ? '#f87171' : '#60a5fa';
-                  e.target.style.boxShadow = `0 0 0 2px ${player.team === 'team1' ? '#f87171' : '#60a5fa'}20`;
-                }}
-                onBlur={(e) => {
-                  e.target.style.borderColor = 'rgba(74, 85, 104, 0.4)';
-                  e.target.style.boxShadow = 'none';
-                }}
-              />
-            </div>
+                outline: 'none',
+                transition: 'all 0.2s ease',
+                backdropFilter: 'blur(8px)'
+              }}
+              onFocus={(e) => {
+                e.target.style.borderColor = player.team === 'team1' ? '#f87171' : '#60a5fa';
+                e.target.style.boxShadow = `0 0 0 2px ${player.team === 'team1' ? '#f87171' : '#60a5fa'}20`;
+              }}
+              onBlur={(e) => {
+                e.target.style.borderColor = 'rgba(74, 85, 104, 0.4)';
+                e.target.style.boxShadow = 'none';
+              }}
+            />
           </div>
         </div>
 

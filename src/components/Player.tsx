@@ -12,14 +12,13 @@ interface PlayerProps {
 
 const Player = React.memo(({ player, isDragging = false, style }: PlayerProps) => {
   const selectPlayer = useGameStore(state => state.selectPlayer);
+  const setEditingPlayer = useGameStore(state => state.setEditingPlayer);
   const selectedPlayer = useGameStore(state => state.selectedPlayer);
   const showPlayerNames = useGameStore(state => state.showPlayerNames);
-  const showPlayerNumbers = useGameStore(state => state.showPlayerNumbers);
+  const markerMode = useGameStore(state => state.markerMode);
   const teams = useGameStore(state => state.teams);
-  
+
   const isSelected = selectedPlayer?.id === player.id;
-  const [clickCount, setClickCount] = React.useState(0);
-  const clickTimeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const dragData: DragData = {
     type: 'player',
@@ -38,30 +37,18 @@ const Player = React.memo(({ player, isDragging = false, style }: PlayerProps) =
     disabled: isDragging, // Disable when in overlay
   });
 
+  // Single click/tap: toggle highlight (track a player while watching).
   const handleClick = React.useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
-    
-    setClickCount(prev => prev + 1);
-    
-    if (clickTimeoutRef.current) {
-      clearTimeout(clickTimeoutRef.current);
-    }
-    
-    clickTimeoutRef.current = setTimeout(() => {
-      if (clickCount + 1 >= 2) {
-        selectPlayer(player);
-      }
-      setClickCount(0);
-    }, 300);
-  }, [player, selectPlayer, clickCount]);
+    selectPlayer(isSelected ? null : player);
+  }, [player, selectPlayer, isSelected]);
 
-  React.useEffect(() => {
-    return () => {
-      if (clickTimeoutRef.current) {
-        clearTimeout(clickTimeoutRef.current);
-      }
-    };
-  }, []);
+  // Double click/tap: open the editor. (touchAction:none on the marker
+  // suppresses double-tap zoom, so this is reliable on touch too.)
+  const handleDoubleClick = React.useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    setEditingPlayer(player);
+  }, [player, setEditingPlayer]);
 
   const transformStyle = transform ? {
     transform: `translate3d(${transform.x}px, ${transform.y}px, 0) scale(1.1)`,
@@ -97,6 +84,7 @@ const Player = React.memo(({ player, isDragging = false, style }: PlayerProps) =
         ...style,
       }}
       onClick={handleClick}
+      onDoubleClick={handleDoubleClick}
       {...listeners}
       {...attributes}
     >
@@ -113,26 +101,32 @@ const Player = React.memo(({ player, isDragging = false, style }: PlayerProps) =
               : '0 1px 3px rgba(0, 0, 0, 0.4)'
         }}
       >
-        {/* Player number */}
-        {showPlayerNumbers && (
-          <span
-            className="font-semibold"
-            style={{
-              fontSize: '11px',
-              position: 'relative',
-              zIndex: 2,
-              fontFamily: 'Inter, system-ui, sans-serif',
-              fontWeight: '600',
-              color: textColor,
-              textShadow: textColor === '#ffffff'
-                ? '0 1px 1px rgba(0, 0, 0, 0.35)'
-                : 'none',
-              lineHeight: 1
-            }}
-          >
-            {player.number}
-          </span>
-        )}
+        {/* Marker label: number or position code */}
+        {markerMode !== 'none' && (() => {
+          const label = markerMode === 'position' ? player.role : String(player.number);
+          // Fit longer codes (e.g. RCB, CAM) inside the 28px disc.
+          const fontSize = label.length >= 3 ? '8px' : label.length === 2 ? '10px' : '11px';
+          return (
+            <span
+              className="font-semibold"
+              style={{
+                fontSize,
+                position: 'relative',
+                zIndex: 2,
+                fontFamily: 'Inter, system-ui, sans-serif',
+                fontWeight: '700',
+                letterSpacing: label.length >= 3 ? '-0.02em' : '0',
+                color: textColor,
+                textShadow: textColor === '#ffffff'
+                  ? '0 1px 1px rgba(0, 0, 0, 0.35)'
+                  : 'none',
+                lineHeight: 1
+              }}
+            >
+              {label}
+            </span>
+          );
+        })()}
       </div>
       
       

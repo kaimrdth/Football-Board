@@ -35,13 +35,11 @@ const RosterModal = React.memo(({ isOpen, onClose }: RosterModalProps) => {
       const original = players.find(p => p.id === player.id);
       if (original && (
         original.name !== player.name ||
-        original.number !== player.number ||
-        original.color !== player.color
+        original.number !== player.number
       )) {
         updatePlayer(player.id, {
           name: player.name,
           number: player.number,
-          color: player.color,
           team: player.team,
           position: player.position
         });
@@ -86,7 +84,7 @@ const RosterModal = React.memo(({ isOpen, onClose }: RosterModalProps) => {
                 <th className="px-2 sm:px-3 py-4 text-left text-gray-700 font-bold text-xs tracking-wider w-16">Team</th>
                 <th className="px-2 sm:px-3 py-4 text-left text-gray-700 font-bold text-xs tracking-wider">Name</th>
                 <th className="px-2 sm:px-3 py-4 text-left text-gray-700 font-bold text-xs tracking-wider w-12">#</th>
-                <th className="px-2 sm:px-3 py-4 text-left text-gray-700 font-bold text-xs tracking-wider w-16">Color</th>
+                <th className="px-2 sm:px-3 py-4 text-left text-gray-700 font-bold text-xs tracking-wider w-16">Pos</th>
               </tr>
             </thead>
             <tbody>
@@ -129,13 +127,9 @@ const RosterModal = React.memo(({ isOpen, onClose }: RosterModalProps) => {
                     />
                   </td>
                   <td className="px-2 sm:px-3 py-3">
-                    <input
-                      type="color"
-                      value={player.color}
-                      onChange={(e) => handlePlayerChange(player.id, 'color', e.target.value)}
-                      className="w-10 sm:w-12 h-8 sm:h-9 border-2 border-gray-300 rounded-md cursor-pointer 
-                                transition-all duration-200 hover:border-gray-400"
-                    />
+                    <span className="inline-block px-2 py-1 rounded bg-gray-200 text-gray-700 font-bold text-xs tracking-wide">
+                      {player.role}
+                    </span>
                   </td>
                 </tr>
               ))}

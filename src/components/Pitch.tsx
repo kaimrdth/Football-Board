@@ -1,5 +1,5 @@
 import React from 'react';
-import { usePlayers, useBall } from '../stores/gameStore';
+import { usePlayers, useBall, useGameStore } from '../stores/gameStore';
 import Player from './Player';
 import Ball from './Ball';
 import PitchOverlays from './PitchOverlays';
@@ -10,6 +10,7 @@ export const PITCH_HEIGHT = 780;
 const Pitch = React.memo(() => {
   const players = usePlayers();
   const ball = useBall();
+  const selectPlayer = useGameStore(state => state.selectPlayer);
   const wrapRef = React.useRef<HTMLDivElement>(null);
   const [scale, setScale] = React.useState(1);
 
@@ -34,6 +35,7 @@ const Pitch = React.memo(() => {
         <div
           id="pitch-board"
           className="pitch-neo overflow-hidden"
+          onClick={() => selectPlayer(null)}
           style={{
             position: 'absolute',
             top: 0,

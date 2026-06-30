@@ -7,8 +7,8 @@ import PlayerEditModal from './components/PlayerEditModal';
 import { useGameStore } from './stores/gameStore';
 
 function App() {
-  const selectedPlayer = useGameStore(state => state.selectedPlayer);
-  const selectPlayer = useGameStore(state => state.selectPlayer);
+  const editingPlayer = useGameStore(state => state.editingPlayer);
+  const setEditingPlayer = useGameStore(state => state.setEditingPlayer);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -46,8 +46,8 @@ function App() {
           </DragContext>
 
           <PlayerEditModal
-            player={selectedPlayer}
-            onClose={() => selectPlayer(null)}
+            player={editingPlayer}
+            onClose={() => setEditingPlayer(null)}
           />
         </div>
       </main>

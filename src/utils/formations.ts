@@ -1,5 +1,14 @@
 import { Position, Player, FormationType } from '../types';
 
+// Position/role codes parallel to each formation's slots (same order).
+export const FORMATION_ROLES: Record<FormationType, string[]> = {
+  '4-4-2': ['GK', 'RB', 'RCB', 'LCB', 'LB', 'RM', 'RCM', 'LCM', 'LM', 'ST', 'ST'],
+  '4-3-3': ['GK', 'RB', 'RCB', 'LCB', 'LB', 'RCM', 'CM', 'LCM', 'RW', 'ST', 'LW'],
+  '3-5-2': ['GK', 'RCB', 'CB', 'LCB', 'RWB', 'RCM', 'CM', 'LCM', 'LWB', 'ST', 'ST'],
+  '5-3-2': ['GK', 'RWB', 'RCB', 'CB', 'LCB', 'LWB', 'RCM', 'CM', 'LCM', 'ST', 'ST'],
+  '4-2-3-1': ['GK', 'RB', 'RCB', 'LCB', 'LB', 'RDM', 'LDM', 'RW', 'CAM', 'LW', 'ST'],
+};
+
 export const FORMATIONS: Record<FormationType, Position[]> = {
   '4-4-2': [
     { x: 5, y: 50 },   // Goalkeeper
@@ -76,13 +85,14 @@ export function createDefaultPlayers(): Player[] {
   
   // Create Team 1 (4-4-2 formation)
   const team1Positions = FORMATIONS['4-4-2'];
+  const team1Roles = FORMATION_ROLES['4-4-2'];
   for (let i = 0; i < 11; i++) {
     const position = team1Positions[i];
     players.push({
       id: `player_team1_${i + 1}`,
       number: i + 1,
       name: `Player ${i + 1}`,
-      color: i === 0 ? '#16a34a' : '#dc2626', // Green for goalkeeper, red for others
+      role: team1Roles[i],
       team: 'team1',
       position: {
         x: (position.x / 100) * (PITCH_WIDTH - 25),
@@ -90,16 +100,17 @@ export function createDefaultPlayers(): Player[] {
       }
     });
   }
-  
+
   // Create Team 2 (4-3-3 formation, mirrored)
   const team2Positions = FORMATIONS['4-3-3'];
+  const team2Roles = FORMATION_ROLES['4-3-3'];
   for (let i = 0; i < 11; i++) {
     const position = team2Positions[i];
     players.push({
       id: `player_team2_${i + 1}`,
       number: i + 1,
       name: `Player ${i + 1}`,
-      color: i === 0 ? '#ca8a04' : '#2563eb', // Yellow for goalkeeper, blue for others
+      role: team2Roles[i],
       team: 'team2',
       position: {
         x: ((100 - position.x) / 100) * (PITCH_WIDTH - 25),
@@ -107,7 +118,7 @@ export function createDefaultPlayers(): Player[] {
       }
     });
   }
-  
+
   return players;
 }
 

@@ -75,7 +75,6 @@ export const useSaveLoad = () => {
               updatePlayer(player.id, {
                 name: player.name,
                 number: player.number,
-                color: player.color,
                 team: player.team,
                 position: player.position
               });
@@ -137,7 +136,6 @@ export const useSaveLoad = () => {
         updatePlayer(player.id, {
           name: player.name,
           number: player.number,
-          color: player.color,
           team: player.team,
           position: player.position
         });
